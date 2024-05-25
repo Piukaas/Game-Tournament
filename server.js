@@ -1,14 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
-const routes = require("./express/routes");
+const cors = require("cors");
+const apiRoutes = require("./express/routes/apiRoutes");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-app.use("/games", routes.gameRoutes);
+app.use("/api", apiRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)

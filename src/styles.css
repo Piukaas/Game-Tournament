@@ -1,1 +1,118 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Good Dog";
+  src: url("./assets/fonts/GOODDP__.TTF") format("truetype");
+}
+
+/* Basics */
+body {
+  font-family: "Good Dog", sans-serif;
+}
+
+::selection {
+  color: white;
+  background: #8a4672;
+}
+
+.content {
+  margin: 75px;
+  height: 100vh; /* This makes the container take up the full viewport height */
+}
+
+.bg-purple {
+  background-color: #8a4672;
+}
+
+.txt-purple {
+  color: #8a4672;
+}
+
+.txt-white {
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  z-index: 2;
+  user-select: none;
+}
+
+.wave-bottom {
+  fill: #8a4672;
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  transform: rotate(180deg);
+}
+
+.logo {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 6%;
+}
+
+.logo:hover {
+  cursor: pointer;
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.navbar-toggler {
+  margin-right: 10px;
+}
+
+.nav-link {
+  margin-right: 10px;
+  font-size: 30px;
+  color: white;
+  transition: 1s;
+  display: inline-block;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  margin-bottom: 10px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom left;
+  transition: transform 0.25s ease-out;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.login a {
+  position: absolute;
+  right: 0px;
+}
