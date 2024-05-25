@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Game = require("../models/game");
+const authenticateToken = require("./authMiddleware");
 
 // Create a new game
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   const game = new Game(req.body);
   try {
     await game.save();
@@ -37,7 +38,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a game by id
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticateToken, async (req, res) => {
   try {
     const game = await Game.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -53,7 +54,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Delete a game by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   try {
     const game = await Game.findByIdAndDelete(req.params.id);
     if (!game) {

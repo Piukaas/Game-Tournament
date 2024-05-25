@@ -14,35 +14,28 @@ body {
 }
 
 .content {
-  margin: 75px;
-  height: 100vh; /* This makes the container take up the full viewport height */
+  margin: 50px 100px 100px 100px;
+  height: 1vh;
 }
 
 .bg-purple {
-  background-color: #8a4672;
+  background-color: #8a4672 !important;
 }
 
 .txt-purple {
-  color: #8a4672;
+  color: #8a4672 !important;
 }
 
 .txt-white {
-  color: #fff;
+  color: #fff !important;
 }
 
 /* Navbar */
 .navbar {
   z-index: 2;
   user-select: none;
-}
-
-.wave-bottom {
-  fill: #8a4672;
-  z-index: 1;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  transform: rotate(180deg);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .logo {
@@ -82,7 +75,7 @@ body {
 .nav-link {
   margin-right: 10px;
   font-size: 30px;
-  color: white;
+  color: white !important;
   transition: 1s;
   display: inline-block;
   position: relative;
@@ -115,4 +108,9 @@ body {
 .login a {
   position: absolute;
   right: 0px;
+}
+
+/* Login */
+.password-field {
+  font-family: "Arial, sans-serif";
 }
