@@ -13,4 +13,9 @@ export class UserService {
   setUsername(username: string | null) {
     this.usernameSubject.next(username);
   }
+
+  isAuthenticated() {
+    const token = localStorage.getItem('token');
+    return token !== null;
+  }
 }

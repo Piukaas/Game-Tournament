@@ -9,15 +9,23 @@ import { HomeComponent } from './core/home/home.component';
 import { LoginComponent } from './core/login/login.component';
 import { NavbarComponent } from './core/navbar/navbar.component';
 import { RegisterComponent } from './core/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

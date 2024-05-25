@@ -7,16 +7,23 @@ const authenticateToken = require("./authMiddleware");
 
 // Register a new user
 router.post("/register", async (req, res) => {
+  // Check if username already exists
+  const existingUser = await User.findOne({ username: req.body.username });
+  if (existingUser) {
+    return res.status(400).json({ message: "Username already exists" });
+  }
+
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = new User({
     username: req.body.username,
     password: hashedPassword,
   });
+
   try {
     const savedUser = await user.save();
     res.json(savedUser);
   } catch (err) {
-    res.json({ message: err });
+    res.status(500).json({ message: err });
   }
 });
 
@@ -26,7 +33,7 @@ router.get("/", async (req, res) => {
     const users = await User.find({}, "username wins");
     res.json(users);
   } catch (err) {
-    res.json({ message: err });
+    res.status(400).send(err);
   }
 });
 
@@ -59,7 +66,7 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
       res.json({ user: user, token: token });
     } else {
-      res.send("Not Allowed");
+      res.status(400).send("Cannot find user");
     }
   } catch {
     res.status(500).send();

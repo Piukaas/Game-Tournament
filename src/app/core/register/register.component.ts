@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -10,28 +11,47 @@ import { throwError } from 'rxjs';
 export class RegisterComponent {
   username!: string;
   password!: string;
+  form!: FormGroup;
+  error!: string;
+  submitted: boolean = false;
+  submittedUser!: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
 
   onRegister() {
-    if (this.username && this.password) {
+    if (this.form.valid) {
+      const { username, password } = this.form.value;
       this.http
         .post('http://localhost:3000/api/users/register', {
-          username: this.username,
-          password: this.password,
+          username,
+          password,
         })
         .pipe(
           catchError((error) => {
-            alert('Registration failed');
-            return throwError(error);
+            if (error.status === 400) {
+              this.error = 'Gebruikersnaam bestaat al';
+            } else {
+              this.error =
+                'Er is een fout opgetreden. Probeer het later opnieuw.';
+            }
+            throw of(error);
           })
         )
         .subscribe((response) => {
-          // Handle successful registration here
-          console.log(response);
+          if (response !== null) {
+            this.submitted = true;
+            this.submittedUser = username;
+          }
         });
     } else {
-      alert('Please enter both username and password');
+      this.error = 'Voer zowel een gebruikersnaam als een wachtwoord in';
     }
   }
 }

@@ -4,13 +4,75 @@
 }
 
 /* Basics */
+:root {
+  --accent: #8a4672;
+  --accent2: #683556;
+  --white: #fcfbfa;
+  --gray: #a9a9a9;
+  --gray2: #5c5c5c;
+  --black: black;
+  --background: #362734;
+  --danger: red;
+  --danger2: darkred;
+}
+
 body {
+  background-color: var(--background);
+  color: var(--black);
   font-family: "Good Dog", sans-serif;
 }
 
 ::selection {
-  color: white;
-  background: #8a4672;
+  color: var(--white);
+  background: var(--accent);
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 2.25em;
+}
+
+h4 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.75em;
+}
+
+p,
+label,
+span,
+.btn,
+.form-control {
+  font-size: 1.5em;
+}
+
+.required:after {
+  content: " *";
+  color: var(--danger);
+}
+
+.validations {
+  color: var(--danger);
+}
+
+.form {
+  background-color: var(--white);
+  border-radius: 25px;
+  box-shadow: 3px 3px 10px var(--black);
+}
+
+.form-control {
+  background-color: var(--white);
+  border: var(--black) 1px solid;
 }
 
 .content {
@@ -19,15 +81,57 @@ body {
 }
 
 .bg-purple {
-  background-color: #8a4672 !important;
+  background-color: var(--accent) !important;
 }
 
 .txt-purple {
-  color: #8a4672 !important;
+  color: var(--accent) !important;
 }
 
 .txt-white {
-  color: #fff !important;
+  color: var(--white) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--white);
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent2);
+  color: var(--white);
+  transform: scale(1.1);
+  border-color: #c9bb50;
+}
+
+.btn-secondary {
+  background-color: var(--gray);
+  color: var(--white);
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray2);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--accent2);
+  text-decoration: underline;
 }
 
 /* Navbar */
@@ -74,15 +178,15 @@ body {
 
 .nav-link {
   margin-right: 10px;
-  font-size: 30px;
-  color: white !important;
+  font-size: 2em;
+  color: var(--white) !important;
   transition: 1s;
   display: inline-block;
   position: relative;
 }
 
 .nav-link:hover {
-  color: white;
+  color: var(--white);
   cursor: pointer;
 }
 
@@ -95,7 +199,7 @@ body {
   margin-bottom: 10px;
   bottom: 0;
   left: 0;
-  background-color: white;
+  background-color: var(--white);
   transform-origin: bottom left;
   transition: transform 0.25s ease-out;
 }

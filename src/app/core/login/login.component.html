@@ -1,25 +1,71 @@
-<h1>Login</h1>
-<form (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="username">Username:</label>
-    <input
-      type="text"
-      name="username"
-      [(ngModel)]="username"
-      class="form-control"
-      required
-    />
+<div class="col-md-6 p-4 mx-auto form">
+  <h1>Login</h1>
+
+  <div *ngIf="error" class="p-1 alert alert-danger">
+    <p class="m-0">{{ error }}</p>
   </div>
-  <div class="form-group">
-    <label for="password">Wachtwoord:</label>
-    <input
-      type="password"
-      name="password"
-      [(ngModel)]="password"
-      class="form-control password-field"
-      required
-    />
-  </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<p>Don't have an account? <a routerLink="/register">Register</a></p>
+
+  <form (ngSubmit)="onLogin()" [formGroup]="form">
+    <div class="form-group">
+      <label class="required" for="username">Gebruikersnaam</label>
+      <input
+        id="username"
+        class="form-control"
+        formControlName="username"
+        type="text"
+        required
+        [class.invalid]="
+          form.controls['username'].invalid && form.controls['username'].touched
+        "
+      />
+      <div
+        *ngIf="
+          form.controls['username'].invalid && form.controls['username'].touched
+        "
+        class="validations"
+      >
+        <p *ngIf="form.controls['username'].hasError('required')">
+          Gebruikersnaam is verplicht
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="required" for="password">Wachtwoord</label>
+      <input
+        id="password"
+        class="form-control password-field"
+        formControlName="password"
+        type="password"
+        [class.invalid]="
+          form.controls['password'].invalid && form.controls['password'].touched
+        "
+        required
+      />
+      <div
+        *ngIf="
+          form.controls['password'].invalid && form.controls['password'].touched
+        "
+        class="validations"
+      >
+        <p *ngIf="form.controls['password'].hasError('required')">
+          Wachtwoord is verplicht
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Nog geen account?
+      <a class="link" routerLink="/register">Registreer hier</a>
+    </p>
+
+    <div class="form-group row">
+      <div class="col-md-6">
+        <button routerLink="/" class="btn btn-secondary">Annuleren</button>
+      </div>
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-primary">Inloggen</button>
+      </div>
+    </div>
+  </form>
+</div>

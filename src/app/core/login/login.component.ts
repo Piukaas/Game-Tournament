@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -12,35 +13,51 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent {
   username!: string;
   password!: string;
+  form!: FormGroup;
+  error!: string;
 
   constructor(
+    private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private userService: UserService
   ) {}
 
-  onSubmit() {
-    if (this.username && this.password) {
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  onLogin() {
+    if (this.form.valid) {
+      const { username, password } = this.form.value;
       this.http
         .post<{ token: string }>('http://localhost:3000/api/users/login', {
-          username: this.username,
-          password: this.password,
+          username,
+          password,
         })
         .pipe(
           catchError((error) => {
-            alert('Login failed');
-            return throwError(error);
+            if (error.status === 403) {
+              this.error = 'Het account is nog niet geactiveerd';
+            } else {
+              this.error = 'Login informatie klopt niet';
+            }
+            throw of(error);
           })
         )
         .subscribe((response) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username', this.username);
-          this.userService.setUsername(this.username);
-
-          this.router.navigate(['/']);
+          if (response !== null) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('username', username);
+            this.userService.setUsername(username);
+            this.router.navigate(['/']);
+          }
         });
     } else {
-      alert('Please enter both username and password');
+      this.error = 'Voer zowel een gebruikersnaam als een wachtwoord in';
     }
   }
 }
