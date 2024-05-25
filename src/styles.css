@@ -96,7 +96,6 @@ span,
 .btn-primary {
   background-color: var(--accent);
   color: var(--white);
-  width: 100%;
   border-radius: 20px;
   border: none;
   transition: 1s;
@@ -112,7 +111,6 @@ span,
 .btn-secondary {
   background-color: var(--gray);
   color: var(--white);
-  width: 100%;
   border-radius: 20px;
   border: none;
   transition: 1s;
@@ -217,4 +215,20 @@ span,
 /* Login */
 .password-field {
   font-family: "Arial, sans-serif";
+}
+
+/* Home */
+.home-image {
+  margin: auto;
+  display: block;
+  width: 65%;
+  border-radius: 25px;
+  box-shadow: 3px 3px 10px var(--black);
+}
+
+.home-button {
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
 }
