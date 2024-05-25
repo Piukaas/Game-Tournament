@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -16,9 +18,18 @@ export class RegisterComponent {
   submitted: boolean = false;
   submittedUser!: string;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate(['/']);
+    }
+
     this.form = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
