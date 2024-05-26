@@ -24,4 +24,8 @@ export class UserService {
     const token = localStorage.getItem('token');
     return token !== null;
   }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
 }

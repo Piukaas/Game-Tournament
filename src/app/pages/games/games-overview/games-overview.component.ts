@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-games-overview',
@@ -10,7 +11,7 @@ export class GamesOverviewComponent implements OnInit {
   selectedGame!: any;
   loading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public userService: UserService) {}
 
   ngOnInit() {
     this.loading = true;

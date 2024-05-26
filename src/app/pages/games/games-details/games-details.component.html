@@ -4,9 +4,21 @@
   <div *ngIf="!loading">
     <div *ngIf="game; else noGame">
       <div class="row">
-        <h1 class="col-md-10">{{ game.name }}</h1>
-        <div class="col-md-2 edit-buttons">
-          <button class="btn btn-danger">
+        <h1 class="col-md-8">{{ game.name }}</h1>
+        <div
+          class="col-md-4 edit-buttons"
+          *ngIf="userService.isAuthenticated()"
+        >
+          <div *ngIf="confirmDelete" style="display: flex; gap: 10px">
+            <span>Zeker?</span>
+            <button class="btn btn-secondary" (click)="confirmDelete = false">
+              <i class="fa fa-xmark"></i>
+            </button>
+          </div>
+          <button
+            class="btn btn-danger"
+            (click)="confirmDelete ? deleteGame() : (confirmDelete = true)"
+          >
             <i class="fa fa-trash-can"></i>
           </button>
           <button class="btn btn-primary">

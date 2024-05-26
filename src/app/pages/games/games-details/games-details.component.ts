@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-games-details',
@@ -9,9 +11,15 @@ import { ActivatedRoute } from '@angular/router';
 export class GamesDetailsComponent implements OnInit {
   gameId!: string;
   game!: any;
-  loading = false;
+  loading: boolean = false;
+  confirmDelete: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router,
+    public userService: UserService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -32,5 +40,22 @@ export class GamesDetailsComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  deleteGame() {
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http
+      .delete(`http://localhost:3000/api/games/${this.gameId}`, { headers })
+      .subscribe(
+        () => {
+          this.confirmDelete = false;
+          this.router.navigate(['/games']);
+        },
+        (error) => {
+          throw of(error);
+        }
+      );
   }
 }

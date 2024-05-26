@@ -1,21 +1,32 @@
 <div class="col-md-9 p-4 mx-auto content-card">
-  <h1>Spelletjes</h1>
-  <app-spinner *ngIf="loading"></app-spinner>
+  <div class="row">
+    <h1 class="col-md-8">Spelletjes</h1>
+    <div class="col-md-4 edit-buttons" *ngIf="userService.isAuthenticated()">
+      <button class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Nieuw spel aanmaken
+      </button>
+    </div>
+    <app-spinner *ngIf="loading"></app-spinner>
 
-  <div *ngIf="!loading">
-    <div class="row">
-      <div *ngFor="let game of games" class="col-md-3">
-        <div class="card" routerLink="/games/{{ game._id }}">
-          <div class="card-body">
-            <div class="card-img-top">
-              <img
-                [src]="game.imageUrl"
-                class="img-fluid d-block game-image no-user-select"
-              />
+    <div *ngIf="!loading">
+      <div class="row">
+        <div *ngFor="let game of games" class="col-md-3">
+          <div class="card" routerLink="/games/{{ game._id }}">
+            <div class="card-body">
+              <div class="card-img-top">
+                <img
+                  [src]="game.imageUrl"
+                  class="img-fluid d-block game-image no-user-select"
+                />
+              </div>
+              <p class="card-title align-center">{{ game.name }}</p>
             </div>
-            <p class="card-title align-center">{{ game.name }}</p>
           </div>
         </div>
+      </div>
+      <div *ngIf="games.length === 0" class="no-games-found">
+        <p>Geen spellen gevonden</p>
       </div>
     </div>
   </div>
