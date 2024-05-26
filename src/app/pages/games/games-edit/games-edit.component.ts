@@ -7,10 +7,10 @@ import { catchError } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-games-create',
-  templateUrl: './games-create.component.html',
+  selector: 'app-games-edit',
+  templateUrl: './games-edit.component.html',
 })
-export class GamesCreateComponent {
+export class GamesEditComponent {
   form!: FormGroup;
   error!: string;
   gameId!: string | null;

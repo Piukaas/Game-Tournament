@@ -12,7 +12,7 @@ import { RegisterComponent } from './core/register/register.component';
 import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
 import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
 import { SpinnerComponent } from './core/spinner/spinner.component';
-import { GamesCreateComponent } from './pages/games/games-create/games-create.component';
+import { GamesEditComponent } from './pages/games/games-edit/games-edit.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { GamesCreateComponent } from './pages/games/games-create/games-create.co
     GamesOverviewComponent,
     GamesDetailsComponent,
     SpinnerComponent,
-    GamesCreateComponent,
+    GamesEditComponent,
   ],
   imports: [
     BrowserModule,
