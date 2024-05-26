@@ -51,8 +51,7 @@
           </p>
           <h4>Regels:</h4>
           <div class="rules mt-10" *ngFor="let rule of game.rules">
-            <h5>{{ rule.type }}</h5>
-            <p>{{ rule.rule }}</p>
+            <h5>{{ rule.type }} - {{ rule.rule }}</h5>
             <p>
               {{ rule.playerAmount }}
               {{ rule.playerAmount == 1 ? "speler" : "spelers" }} -
