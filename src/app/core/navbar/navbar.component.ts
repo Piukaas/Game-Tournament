@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   username!: string | null;
   private authSub: Subscription | undefined;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.authSub = this.userService.username$.subscribe((username) => {
@@ -28,5 +29,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     this.userService.setUsername(null);
+    this.router.navigate(['/']);
   }
 }

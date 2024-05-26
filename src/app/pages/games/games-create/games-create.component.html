@@ -1,0 +1,285 @@
+<div class="col-md-9 p-4 mx-auto content-card">
+  <h1>Spel maken</h1>
+  <div *ngIf="error" class="p-1 alert alert-danger">
+    <p class="m-0">{{ error }}</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="row">
+      <div class="col-md-3">
+        <img
+          [src]="form.get('imageUrl')?.value"
+          class="preview-image no-user-select"
+          *ngIf="form.get('imageUrl')?.value"
+        />
+
+        <div class="form-group">
+          <label class="required" for="imageUrl">Afbeelding URL</label>
+          <input
+            id="imageUrl"
+            class="form-control"
+            formControlName="imageUrl"
+            type="text"
+            required
+            [class.invalid]="
+              form.controls['imageUrl'].invalid &&
+              form.controls['imageUrl'].touched
+            "
+          />
+          <div
+            *ngIf="
+              form.controls['imageUrl'].invalid &&
+              form.controls['imageUrl'].touched
+            "
+            class="validations"
+          >
+            <p *ngIf="form.controls['imageUrl'].hasError('required')">
+              Afbeelding is verplicht
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="form-group">
+          <label class="required" for="name">Naam</label>
+          <input
+            id="name"
+            class="form-control"
+            formControlName="name"
+            type="text"
+            required
+            [class.invalid]="
+              form.controls['name'].invalid && form.controls['name'].touched
+            "
+          />
+          <div
+            *ngIf="
+              form.controls['name'].invalid && form.controls['name'].touched
+            "
+            class="validations"
+          >
+            <p *ngIf="form.controls['name'].hasError('required')">
+              Naam is verplicht
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required" for="genre">Genre</label>
+          <select
+            id="genre"
+            id="genre"
+            class="form-control"
+            formControlName="genre"
+            required
+            [class.invalid]="
+              form.controls['genre'].invalid && form.controls['genre'].touched
+            "
+          >
+            <option value="" disabled>Selecteer een genre</option>
+            <option value="Singleplayer">Singleplayer</option>
+            <option value="Multiplayer">Multiplayer</option>
+            <option value="Co-op">Co-op</option>
+            <option value="PVP">PVP</option>
+          </select>
+          <div
+            *ngIf="
+              form.controls['genre'].invalid && form.controls['genre'].touched
+            "
+            class="validations"
+          >
+            <p *ngIf="form.controls['genre'].hasError('required')">
+              Genre is verplicht
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required" for="platform">Platform</label>
+          <select
+            id="platform"
+            id="platform"
+            class="form-control"
+            formControlName="platform"
+            required
+            [class.invalid]="
+              form.controls['platform'].invalid &&
+              form.controls['platform'].touched
+            "
+          >
+            <option value="" disabled>Selecteer een platform</option>
+            <option value="Xbox Series X">Xbox Series X</option>
+            <option value="Xbox 360">Xbox 360</option>
+            <option value="Xbox 360 Kinect">Xbox 360 Kinect</option>
+            <option value="Playstation 4">Playstation 4</option>
+            <option value="Playstation 2">Playstation 2</option>
+            <option value="Nintendo Swithc">Nintendo Switch</option>
+            <option value="PC">PC</option>
+          </select>
+          <div
+            *ngIf="
+              form.controls['platform'].invalid &&
+              form.controls['platform'].touched
+            "
+            class="validations"
+          >
+            <p *ngIf="form.controls['platform'].hasError('required')">
+              Platform is verplicht
+            </p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex d-flex-gap-5">
+          <h4>Regels</h4>
+          <button type="button" class="btn btn-primary" (click)="addRule()">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <div formArrayName="rules">
+          <div
+            *ngFor="let rule of rules.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <hr />
+            <div class="form-group">
+              <label class="required" for="rule">Regel</label>
+              <div class="d-flex align-items-center d-flex-gap-5">
+                <input
+                  id="rule"
+                  class="form-control"
+                  formControlName="rule"
+                  type="text"
+                  required
+                  [class.invalid]="
+                    rule.get('rule')?.invalid && rule.get('rule')?.touched
+                  "
+                />
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="removeRule(i)"
+                  [disabled]="rules.controls.length === 1"
+                >
+                  <i class="fa fa-trash-can"></i>
+                </button>
+              </div>
+              <div
+                *ngIf="rule.get('rule')?.invalid && rule.get('rule')?.touched"
+                class="validations"
+              >
+                <p *ngIf="rule.get('rule')?.hasError('required')">
+                  Regel is verplicht
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="required" for="playerAmount"
+                  >Aantal spelers</label
+                >
+                <input
+                  id="playerAmount"
+                  class="form-control"
+                  formControlName="playerAmount"
+                  type="number"
+                  min="1"
+                  required
+                  [class.invalid]="
+                    rule.get('playerAmount')?.invalid &&
+                    rule.get('playerAmount')?.touched
+                  "
+                  (input)="
+                    rule.get('playerAmount')?.value < 1
+                      ? rule.get('playerAmount')?.setValue(1)
+                      : rule.get('playerAmount')?.value > 10
+                      ? rule.get('playerAmount')?.setValue(10)
+                      : null
+                  "
+                />
+                <div
+                  *ngIf="
+                    rule.get('playerAmount')?.invalid &&
+                    rule.get('playerAmount')?.touched
+                  "
+                  class="validations"
+                >
+                  <p *ngIf="rule.get('playerAmount')?.hasError('required')">
+                    Aantal spelers is verplicht
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="required" for="score">Score</label>
+                <input
+                  id="score"
+                  class="form-control"
+                  formControlName="score"
+                  type="number"
+                  min="1"
+                  max="100"
+                  required
+                  [class.invalid]="
+                    rule.get('score')?.invalid && rule.get('score')?.touched
+                  "
+                  (input)="
+                    rule.get('score')?.value < 1
+                      ? rule.get('score')?.setValue(1)
+                      : rule.get('score')?.value > 100
+                      ? rule.get('score')?.setValue(100)
+                      : null
+                  "
+                />
+                <div
+                  *ngIf="
+                    rule.get('score')?.invalid && rule.get('score')?.touched
+                  "
+                  class="validations"
+                >
+                  <p *ngIf="rule.get('score')?.hasError('required')">
+                    Score is verplicht
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="required" for="type">Type</label>
+                <select
+                  id="type"
+                  id="type"
+                  class="form-control"
+                  formControlName="type"
+                  required
+                  [class.invalid]="
+                    rule.get('type')?.invalid && rule.get('type')?.touched
+                  "
+                >
+                  <option value="" disabled>Selecteer een type</option>
+                  <option value="Speedrun">Speedrun</option>
+                  <option value="Highscore">Highscore</option>
+                  <option value="Survival">Survival</option>
+                </select>
+                <div
+                  *ngIf="rule.get('type')?.invalid && rule.get('type')?.touched"
+                  class="validations"
+                >
+                  <p *ngIf="rule.get('type')?.hasError('required')">
+                    Type is verplicht
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary submit-button">
+      <i class="fa fa-plus"></i>
+      Aanmaken
+    </button>
+  </form>
+</div>

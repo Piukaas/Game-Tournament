@@ -65,6 +65,14 @@ span,
   font-size: 1.5em;
 }
 
+.d-flex-gap-5 {
+  gap: 5px;
+}
+
+.d-flex-gap-10 {
+  gap: 10px;
+}
+
 .required:after {
   content: " *";
   color: var(--danger);
@@ -82,7 +90,8 @@ span,
 
 .form-control {
   background-color: var(--white);
-  border: var(--black) 1px solid;
+  border: var(--black) 2px solid;
+  border-radius: 25px;
 }
 
 .content {
@@ -113,6 +122,12 @@ span,
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.submit-button {
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
 }
 
 .align-left {
@@ -186,6 +201,7 @@ span,
 
 /* Cards */
 .card {
+  height: 100%;
   background-color: var(--white);
   border-radius: 25px;
   box-shadow: 1px 3px 10px var(--black);
@@ -310,4 +326,12 @@ span,
   padding: 5px;
   border-radius: 25px;
   border: 1px solid var(--black);
+}
+
+.preview-image {
+  margin: auto;
+  display: block;
+  width: 65%;
+  border-radius: 25px;
+  box-shadow: 3px 3px 10px var(--black);
 }
