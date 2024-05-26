@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'games', component: GamesOverviewComponent },
   { path: 'games/create', component: GamesCreateComponent },
+  { path: 'games/edit/:gameId', component: GamesCreateComponent },
   { path: 'games/:gameId', component: GamesDetailsComponent },
   { path: '**', redirectTo: '/' },
 ];

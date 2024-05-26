@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
@@ -13,18 +13,22 @@ import { UserService } from '../../../services/user.service';
 export class GamesCreateComponent {
   form!: FormGroup;
   error!: string;
+  gameId!: string | null;
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     if (!this.userService.isAuthenticated()) {
       this.router.navigate(['/']);
     }
+
+    this.gameId = this.route.snapshot.paramMap.get('gameId');
 
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -33,6 +37,23 @@ export class GamesCreateComponent {
       platform: ['', [Validators.required]],
       rules: this.fb.array([this.createRule()]),
     });
+
+    if (this.gameId) {
+      this.http
+        .get(`http://localhost:3000/api/games/${this.gameId}`)
+        .subscribe((game: any) => {
+          // Remove the initial rule
+          this.rules.removeAt(0);
+
+          // Create a new form group for each rule in the game data
+          game.rules.forEach((rule: any) => {
+            this.rules.push(this.fb.group(rule));
+          });
+
+          // Patch the form values
+          this.form.patchValue(game);
+        });
+    }
   }
 
   createRule(): FormGroup {
@@ -66,8 +87,17 @@ export class GamesCreateComponent {
         `Bearer ${this.userService.getToken()}`
       );
 
-      this.http
-        .post('http://localhost:3000/api/games/', this.form.value, { headers })
+      const request = this.gameId
+        ? this.http.patch(
+            `http://localhost:3000/api/games/${this.gameId}`,
+            this.form.value,
+            { headers }
+          )
+        : this.http.post('http://localhost:3000/api/games/', this.form.value, {
+            headers,
+          });
+
+      request
         .pipe(
           catchError((error) => {
             this.error =

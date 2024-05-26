@@ -130,6 +130,10 @@ span,
   margin-left: auto;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
 .align-left {
   text-align: left;
 }
@@ -140,6 +144,7 @@ span,
 
 /* Buttons */
 .btn-primary {
+  width: fit-content;
   background-color: var(--accent);
   color: var(--white);
   border-radius: 25px;
@@ -325,7 +330,7 @@ span,
 .rules {
   padding: 5px;
   border-radius: 25px;
-  border: 1px solid var(--black);
+  border: 2px solid var(--black);
 }
 
 .preview-image {

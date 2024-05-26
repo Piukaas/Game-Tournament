@@ -21,7 +21,10 @@
           >
             <i class="fa fa-trash-can"></i>
           </button>
-          <button class="btn btn-primary">
+          <button
+            class="btn btn-primary"
+            [routerLink]="['/games/edit/', game._id]"
+          >
             <i class="fa fa-pencil"></i>
           </button>
         </div>
@@ -46,21 +49,26 @@
             </i>
             {{ game.platform }}
           </p>
-          <h5>Regels:</h5>
-          <p class="rules" *ngFor="let rule of game.rules">
-            {{ rule.rule }} - {{ rule.playerAmount }}
-            {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
-            ({{ rule.score }} {{ rule.score == 1 ? "punt" : "punten" }})
-          </p>
+          <h4>Regels:</h4>
+          <div class="rules mt-10" *ngFor="let rule of game.rules">
+            <h5>{{ rule.type }}</h5>
+            <p>{{ rule.rule }}</p>
+            <p>
+              {{ rule.playerAmount }}
+              {{ rule.playerAmount == 1 ? "speler" : "spelers" }} -
+              {{ rule.score }}
+              {{ rule.score == 1 ? "punt" : "punten" }}
+            </p>
+          </div>
         </div>
       </div>
-      <button routerLink="/games" class="btn btn-primary">
+      <button routerLink="/games" class="btn btn-primary mt-10">
         <i class="fa fa-arrow-left"></i> Terug naar spelletjes
       </button>
     </div>
     <ng-template #noGame>
       <h1 class="align-center">Het spel is niet gevonden</h1>
-      <button routerLink="/games" class="btn btn-primary center-button">
+      <button routerLink="/games" class="btn btn-primary center-button mt-10">
         Terug naar spelletjes
       </button></ng-template
     >
