@@ -8,13 +8,21 @@ import { HttpClient } from '@angular/common/http';
 export class GamesOverviewComponent implements OnInit {
   games: any[] = [];
   selectedGame!: any;
+  loading: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get('http://localhost:3000/api/games').subscribe((games: any) => {
-      this.games = games;
-    });
+    this.loading = true;
+    this.http.get('http://localhost:3000/api/games').subscribe(
+      (games: any) => {
+        this.games = games;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   setGame(selectedGame: any) {

@@ -1,16 +1,20 @@
 <div class="col-md-9 p-4 mx-auto content-card">
   <h1>Spelletjes</h1>
-  <div class="row">
-    <div *ngFor="let game of games" class="col-md-3">
-      <div class="card" routerLink="/games/{{ game._id }}">
-        <div class="card-body">
-          <div class="card-img-top">
-            <img
-              [src]="game.imageUrl"
-              class="img-fluid d-block card-image no-user-select"
-            />
+  <app-spinner *ngIf="loading"></app-spinner>
+
+  <div *ngIf="!loading">
+    <div class="row">
+      <div *ngFor="let game of games" class="col-md-3">
+        <div class="card" routerLink="/games/{{ game._id }}">
+          <div class="card-body">
+            <div class="card-img-top">
+              <img
+                [src]="game.imageUrl"
+                class="img-fluid d-block game-image no-user-select"
+              />
+            </div>
+            <p class="card-title align-center">{{ game.name }}</p>
           </div>
-          <p class="card-title align-center">{{ game.name }}</p>
         </div>
       </div>
     </div>

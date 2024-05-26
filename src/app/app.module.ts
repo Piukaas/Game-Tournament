@@ -11,6 +11,7 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { RegisterComponent } from './core/register/register.component';
 import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
 import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
+import { SpinnerComponent } from './core/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { GamesDetailsComponent } from './pages/games/games-details/games-details
     RegisterComponent,
     GamesOverviewComponent,
     GamesDetailsComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

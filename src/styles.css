@@ -7,6 +7,7 @@
 :root {
   --accent: #8a4672;
   --accent2: #683556;
+  --accent3: #4f2b4b;
   --white: #fcfbfa;
   --gray: #a9a9a9;
   --gray2: #5c5c5c;
@@ -25,6 +26,15 @@ body {
 ::selection {
   color: var(--white);
   background: var(--accent);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.spinner {
+  height: 50vh;
+  align-items: center;
 }
 
 h1 {
@@ -188,10 +198,6 @@ span,
   scale: 1.02;
 }
 
-.card-image {
-  border-radius: 25px;
-}
-
 /* Navbar */
 .navbar {
   z-index: 2;
@@ -281,7 +287,7 @@ span,
 .home-image {
   margin: auto;
   display: block;
-  width: 50%;
+  width: 65%;
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
 }
@@ -291,4 +297,17 @@ span,
   margin: auto;
   height: fit-content;
   width: fit-content;
+}
+
+/* Game */
+.game-image {
+  height: 100%;
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+.rules {
+  padding: 5px;
+  border-radius: 25px;
+  border: 1px solid var(--black);
 }

@@ -1,4 +1,6 @@
 <div class="col-md-9 p-4 mx-auto content-card">
+  <app-spinner *ngIf="loading"></app-spinner>
+
   <div *ngIf="!loading">
     <div *ngIf="game; else noGame">
       <div class="row">
@@ -13,7 +15,7 @@
         </div>
       </div>
       <div class="row">
-        <img [src]="game.imageUrl" class="col-md-2 card-image no-user-select" />
+        <img [src]="game.imageUrl" class="col-md-3 game-image no-user-select" />
         <div class="col-md-8">
           <h3 class="card-title">{{ game.genre }}</h3>
           <p>
@@ -32,16 +34,17 @@
             </i>
             {{ game.platform }}
           </p>
-          <label for="rules">Regels:</label>
-          <select class="form-control col-6">
-            <option *ngFor="let rule of game.rules" [value]="rule">
-              {{ rule.rule }} - {{ rule.playerAmount }}
-              {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
-              ({{ rule.score }} {{ rule.score == 1 ? "punt" : "punten" }})
-            </option>
-          </select>
+          <h5>Regels:</h5>
+          <p class="rules" *ngFor="let rule of game.rules">
+            {{ rule.rule }} - {{ rule.playerAmount }}
+            {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
+            ({{ rule.score }} {{ rule.score == 1 ? "punt" : "punten" }})
+          </p>
         </div>
       </div>
+      <button routerLink="/games" class="btn btn-primary">
+        <i class="fa fa-arrow-left"></i> Terug naar spelletjes
+      </button>
     </div>
     <ng-template #noGame>
       <h1 class="align-center">Het spel is niet gevonden</h1>
