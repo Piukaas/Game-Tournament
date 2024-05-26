@@ -64,7 +64,7 @@ span,
   color: var(--danger);
 }
 
-.form {
+.content-card {
   background-color: var(--white);
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
@@ -77,7 +77,6 @@ span,
 
 .content {
   margin: 50px 100px 100px 100px;
-  height: 1vh;
 }
 
 .bg-purple {
@@ -92,11 +91,33 @@ span,
   color: var(--white) !important;
 }
 
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.center-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.no-user-select {
+  user-select: none;
+}
+
 /* Buttons */
 .btn-primary {
   background-color: var(--accent);
   color: var(--white);
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
   transition: 1s;
 }
@@ -111,7 +132,7 @@ span,
 .btn-secondary {
   background-color: var(--gray);
   color: var(--white);
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
   transition: 1s;
 }
@@ -120,6 +141,27 @@ span,
   background-color: var(--gray2);
   color: var(--white);
   transform: scale(1.1);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: var(--white);
+  border-radius: 25px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger2);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
 }
 
 .link {
@@ -132,12 +174,30 @@ span,
   text-decoration: underline;
 }
 
+/* Cards */
+.card {
+  background-color: var(--white);
+  border-radius: 25px;
+  box-shadow: 1px 3px 10px var(--black);
+  margin-bottom: 20px;
+  transition: 1s;
+}
+
+.card:hover {
+  cursor: pointer;
+  scale: 1.02;
+}
+
+.card-image {
+  border-radius: 25px;
+}
+
 /* Navbar */
 .navbar {
   z-index: 2;
   user-select: none;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .logo {
@@ -221,7 +281,7 @@ span,
 .home-image {
   margin: auto;
   display: block;
-  width: 65%;
+  width: 50%;
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
 }

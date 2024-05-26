@@ -6,6 +6,7 @@ const authenticateToken = require("./authMiddleware");
 // Create a new game
 router.post("/", authenticateToken, async (req, res) => {
   const game = new Game(req.body);
+  console.log(req.body);
   try {
     await game.save();
     res.status(201).send(game);

@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +9,8 @@ import { HomeComponent } from './core/home/home.component';
 import { LoginComponent } from './core/login/login.component';
 import { NavbarComponent } from './core/navbar/navbar.component';
 import { RegisterComponent } from './core/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
+import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    GamesOverviewComponent,
+    GamesDetailsComponent,
   ],
   imports: [
     BrowserModule,

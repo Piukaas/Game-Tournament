@@ -1,0 +1,53 @@
+<div class="col-md-9 p-4 mx-auto content-card">
+  <div *ngIf="!loading">
+    <div *ngIf="game; else noGame">
+      <div class="row">
+        <h1 class="col-md-10">{{ game.name }}</h1>
+        <div class="col-md-2 edit-buttons">
+          <button class="btn btn-danger">
+            <i class="fa fa-trash-can"></i>
+          </button>
+          <button class="btn btn-primary">
+            <i class="fa fa-pencil"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <img [src]="game.imageUrl" class="col-md-2 card-image no-user-select" />
+        <div class="col-md-8">
+          <h3 class="card-title">{{ game.genre }}</h3>
+          <p>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('xbox')"
+              class="fab fa-xbox"
+            ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('playstation')"
+              class="fab fa-playstation"
+            ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('pc')"
+              class="fab fa-windows"
+            >
+            </i>
+            {{ game.platform }}
+          </p>
+          <label for="rules">Regels:</label>
+          <select class="form-control col-6">
+            <option *ngFor="let rule of game.rules" [value]="rule">
+              {{ rule.rule }} - {{ rule.playerAmount }}
+              {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
+              ({{ rule.score }} {{ rule.score == 1 ? "punt" : "punten" }})
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <ng-template #noGame>
+      <h1 class="align-center">Het spel is niet gevonden</h1>
+      <button routerLink="/games" class="btn btn-primary center-button">
+        Terug naar spelletjes
+      </button></ng-template
+    >
+  </div>
+</div>
