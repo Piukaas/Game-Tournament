@@ -9,18 +9,17 @@ import { of } from 'rxjs';
 })
 export class GamesOverviewComponent implements OnInit {
   games: any[] = [];
-  selectedGame!: any;
   loading: boolean = false;
   searchTerm: string = '';
 
   constructor(private http: HttpClient, public userService: UserService) {}
 
   ngOnInit() {
-    this.loading = true;
     this.searchGames();
   }
 
   searchGames() {
+    this.loading = true;
     this.http
       .get(`http://localhost:3000/api/games?search=${this.searchTerm}`)
       .subscribe(
@@ -29,13 +28,9 @@ export class GamesOverviewComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          throw of(error);
           this.loading = false;
+          throw of(error);
         }
       );
-  }
-
-  setGame(selectedGame: any) {
-    this.selectedGame = selectedGame;
   }
 }

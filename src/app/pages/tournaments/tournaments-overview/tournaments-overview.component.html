@@ -1,0 +1,64 @@
+<div class="col-md-9 p-4 mx-auto content-card">
+  <div class="row">
+    <h1 class="col-md-4">Toernooien</h1>
+    <div class="col-md-8 edit-buttons">
+      <label>Status:</label>
+      <select
+        class="form-control"
+        [(ngModel)]="status"
+        (change)="searchTournaments()"
+      >
+        <option value="">Allemaal</option>
+        <option value="Aankomend">Aankomend</option>
+        <option value="Actief">Actief</option>
+        <option value="Afgerond">Afgerond</option>
+      </select>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Zoek voor toernooien"
+        class="form-control"
+        (keyup.enter)="searchTournaments()"
+        (blur)="searchTournaments()"
+      />
+      <button
+        *ngIf="userService.isAuthenticated()"
+        class="btn btn-primary"
+        routerLink="/tournaments/create"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+
+    <spinner *ngIf="loading"></spinner>
+
+    <div *ngIf="!loading">
+      <div class="row mt-10">
+        <div *ngFor="let tournament of tournaments" class="col-md-12">
+          <div class="card" routerLink="/tournaments/{{ tournament._id }}">
+            <div class="card-body row">
+              <h4 class="card-title col-md-6">
+                {{ tournament.title }} -
+                <span [class]="getBadgeClass(tournament.status)">{{
+                  tournament.status
+                }}</span>
+              </h4>
+              <h4 class="col-md-6 align-right">
+                <span *ngIf="tournament.totalWinner" class="badge bg-warning">
+                  Winnaar: {{ tournament.totalWinner }}
+                </span>
+              </h4>
+              <p>
+                {{ tournament.date | date : "dd-MM-yyyy" }}
+                - Spelletjes: {{ tournament.gamesAmount }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tournaments.length === 0" class="no-games-found">
+        <p>Geen toernooien gevonden</p>
+      </div>
+    </div>
+  </div>
+</div>

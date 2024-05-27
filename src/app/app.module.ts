@@ -13,7 +13,7 @@ import { SpinnerComponent } from './core/spinner/spinner.component';
 import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
 import { GamesEditComponent } from './pages/games/games-edit/games-edit.component';
 import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
-import { TournamentsOverviewComponent } from './tournaments-overview/tournaments-overview.component';
+import { TournamentsOverviewComponent } from './pages/tournaments/tournaments-overview/tournaments-overview.component';
 
 @NgModule({
   declarations: [
