@@ -9,10 +9,11 @@ import { HomeComponent } from './core/home/home.component';
 import { LoginComponent } from './core/login/login.component';
 import { NavbarComponent } from './core/navbar/navbar.component';
 import { RegisterComponent } from './core/register/register.component';
-import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
-import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
 import { SpinnerComponent } from './core/spinner/spinner.component';
+import { GamesDetailsComponent } from './pages/games/games-details/games-details.component';
 import { GamesEditComponent } from './pages/games/games-edit/games-edit.component';
+import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
+import { TournamentsOverviewComponent } from './tournaments-overview/tournaments-overview.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { GamesEditComponent } from './pages/games/games-edit/games-edit.componen
     GamesDetailsComponent,
     SpinnerComponent,
     GamesEditComponent,
+    TournamentsOverviewComponent,
   ],
   imports: [
     BrowserModule,

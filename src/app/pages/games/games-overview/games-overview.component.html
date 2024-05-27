@@ -1,16 +1,26 @@
 <div class="col-md-9 p-4 mx-auto content-card">
   <div class="row">
-    <h1 class="col-md-8">Spelletjes</h1>
-    <div class="col-md-4 edit-buttons" *ngIf="userService.isAuthenticated()">
+    <h1 class="col-md-6">Spelletjes</h1>
+    <div class="col-md-6 edit-buttons" *ngIf="userService.isAuthenticated()">
+      <div class="input-group">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Zoek voor spelletjes"
+          class="form-control"
+          (keyup.enter)="searchGames()"
+          (blur)="searchGames()"
+        />
+      </div>
       <button class="btn btn-primary" routerLink="/games/create">
         <i class="fa fa-plus"></i>
-        Nieuw spel aanmaken
       </button>
     </div>
-    <app-spinner *ngIf="loading"></app-spinner>
+
+    <spinner *ngIf="loading"></spinner>
 
     <div *ngIf="!loading">
-      <div class="row">
+      <div class="row mt-10">
         <div *ngFor="let game of games" class="col-md-3">
           <div class="card" routerLink="/games/{{ game._id }}">
             <div class="card-body">

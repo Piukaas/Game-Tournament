@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-games-edit',
+  selector: 'games-edit',
   templateUrl: './games-edit.component.html',
 })
 export class GamesEditComponent {

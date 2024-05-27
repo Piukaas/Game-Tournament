@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'navbar',
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit, OnDestroy {

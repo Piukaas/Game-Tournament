@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 const ruleSchema = new mongoose.Schema({
-  rule: String,
-  type: String,
-  score: Number,
-  playerAmount: Number,
+  rule: { type: String, required: true },
+  type: { type: String, required: true },
+  score: { type: Number, required: true },
+  playerAmount: { type: Number, required: true },
 });
 
 const gameSchema = new mongoose.Schema({
-  name: String,
-  imageUrl: String,
-  genre: String,
+  name: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  genre: { type: String, required: true },
   rules: [ruleSchema],
-  platform: String,
+  platform: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Game", gameSchema);

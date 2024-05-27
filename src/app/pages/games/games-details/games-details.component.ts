@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-games-details',
+  selector: 'games-details',
   templateUrl: './games-details.component.html',
 })
 export class GamesDetailsComponent implements OnInit {

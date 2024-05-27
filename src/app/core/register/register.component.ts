@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'register',
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {

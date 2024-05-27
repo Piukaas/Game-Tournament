@@ -17,8 +17,11 @@ router.post("/", authenticateToken, async (req, res) => {
 
 // Get all games
 router.get("/", async (req, res) => {
+  const searchTerm = req.query.search || "";
   try {
-    const games = await Game.find();
+    const games = await Game.find({
+      name: { $regex: new RegExp(searchTerm, "i") },
+    });
     res.send(games);
   } catch (err) {
     res.status(500).send(err);
