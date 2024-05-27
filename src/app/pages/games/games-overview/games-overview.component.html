@@ -1,7 +1,7 @@
 <div class="col-md-9 p-4 mx-auto content-card">
   <div class="row">
     <h1 class="col-md-6">Spelletjes</h1>
-    <div class="col-md-6 edit-buttons" *ngIf="userService.isAuthenticated()">
+    <div class="col-md-6 edit-buttons">
       <div class="input-group">
         <input
           type="text"
@@ -12,7 +12,11 @@
           (blur)="searchGames()"
         />
       </div>
-      <button class="btn btn-primary" routerLink="/games/create">
+      <button
+        *ngIf="userService.isAuthenticated()"
+        class="btn btn-primary"
+        routerLink="/games/create"
+      >
         <i class="fa fa-plus"></i>
       </button>
     </div>
