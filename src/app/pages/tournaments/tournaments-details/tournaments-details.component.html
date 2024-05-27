@@ -1,1 +1,74 @@
-<p>tournaments-details works!</p>
+<div class="col-md-9 p-4 mx-auto content-card">
+  <spinner *ngIf="loading"></spinner>
+
+  <div *ngIf="!loading">
+    <div *ngIf="tournament; else noTournament">
+      <div class="row">
+        <h1 class="col-md-8">{{ tournament.title }}</h1>
+        <div
+          class="col-md-4 edit-buttons"
+          *ngIf="userService.isAuthenticated()"
+        >
+          <div *ngIf="confirmDelete" style="display: flex; gap: 10px">
+            <span>Zeker?</span>
+            <button class="btn btn-secondary" (click)="confirmDelete = false">
+              <i class="fa fa-xmark"></i>
+            </button>
+          </div>
+          <button
+            class="btn btn-danger"
+            (click)="
+              confirmDelete ? deleteTournament() : (confirmDelete = true)
+            "
+          >
+            <i class="fa fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="card-title">{{ tournament.status }}</h3>
+          <h4>Spelletjes:</h4>
+          <table class="table table-bordered table-striped mt-10">
+            <thead>
+              <tr>
+                <th>Spel</th>
+                <th>Regel</th>
+                <th>Type</th>
+                <th>Aantal spelers</th>
+                <th>Score</th>
+                <th>Winnaar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let game of tournament.games">
+                <td>{{ game.game.name }}</td>
+                <td>{{ game.rule.type }}</td>
+                <td>{{ game.rule.rule }}</td>
+                <td>
+                  {{ game.rule.playerAmount }}
+                </td>
+                <td>
+                  {{ game.rule.score }}
+                </td>
+                <td>{{ game.winner.username }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button routerLink="/tournaments" class="btn btn-primary mt-10">
+        <i class="fa fa-arrow-left"></i> Terug naar toernooien
+      </button>
+    </div>
+    <ng-template #noTournament>
+      <h1 class="align-center">Het toernooi is niet gevonden</h1>
+      <button
+        routerLink="/tournaments"
+        class="btn btn-primary center-button mt-10"
+      >
+        Terug naar toernooien
+      </button></ng-template
+    >
+  </div>
+</div>

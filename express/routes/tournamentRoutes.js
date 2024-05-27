@@ -60,7 +60,12 @@ router.get("/", async (req, res) => {
 // Get a tournament by id
 router.get("/:id", async (req, res) => {
   try {
-    const tournament = await Tournament.findById(req.params.id);
+    const tournament = await Tournament.findById(req.params.id)
+      .populate("users")
+      .populate("games.game")
+      .populate("games.winner")
+      .populate("totalWinner");
+
     if (!tournament) {
       return res.status(404).send();
     }
