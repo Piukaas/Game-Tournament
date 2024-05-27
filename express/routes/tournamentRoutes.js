@@ -27,8 +27,31 @@ router.get("/", async (req, res) => {
       query.status = status;
     }
 
-    const tournaments = await Tournament.find(query).sort({ date: -1 });
-    res.send(tournaments);
+    const tournaments = await Tournament.aggregate([
+      { $match: query },
+      {
+        $addFields: {
+          statusOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$status", "Actief"] }, then: 1 },
+                { case: { $eq: ["$status", "Aankomend"] }, then: 2 },
+                { case: { $eq: ["$status", "Afgerond"] }, then: 3 },
+              ],
+              default: 4,
+            },
+          },
+        },
+      },
+      { $sort: { statusOrder: 1, date: -1 } },
+      { $unset: "statusOrder" },
+    ]);
+
+    const populatedTournaments = await Tournament.populate(tournaments, {
+      path: "totalWinner",
+    });
+
+    res.send(populatedTournaments);
   } catch (err) {
     res.status(500).send(err);
   }

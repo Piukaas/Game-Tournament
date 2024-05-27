@@ -8,6 +8,7 @@ import { GamesDetailsComponent } from './pages/games/games-details/games-details
 import { GamesEditComponent } from './pages/games/games-edit/games-edit.component';
 import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
 import { TournamentsOverviewComponent } from './pages/tournaments/tournaments-overview/tournaments-overview.component';
+import { TournamentsDetailsComponent } from './pages/tournaments/tournaments-details/tournaments-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
 
   // Tournaments
   { path: 'tournaments', component: TournamentsOverviewComponent },
+  { path: 'tournaments/:tournamentId', component: TournamentsDetailsComponent },
 
   { path: '**', redirectTo: '/' },
 ];
