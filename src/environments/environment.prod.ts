@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://hammerhead-elegant-file.glitch.me/api',
+  apiUrl: 'https://game-toernooi.glitch.me/api',
 };
