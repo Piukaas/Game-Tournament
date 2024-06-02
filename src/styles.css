@@ -12,6 +12,7 @@
   --gray: #a9a9a9;
   --gray2: #5c5c5c;
   --black: black;
+  --black2: #494949;
   --background: #362734;
   --danger: red;
   --danger2: darkred;
@@ -96,6 +97,13 @@ td,
   background-color: var(--white);
   border: var(--black) 2px solid;
   border-radius: 25px;
+}
+
+td .form-control {
+  background-color: var(--white);
+  border: var(--black) 2px solid;
+  border-radius: 25px;
+  font-size: 0.75em;
 }
 
 .content {
@@ -245,6 +253,20 @@ td,
 
 .btn-success:hover {
   background-color: var(--success2);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.btn-dark {
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: 25px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-dark:hover {
+  background-color: var(--black2);
   color: var(--white);
   transform: scale(1.1);
 }

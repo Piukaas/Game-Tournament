@@ -62,4 +62,85 @@ export class TournamentsDetailsComponent implements OnInit {
         }
       );
   }
+
+  startTournament() {
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http
+      .patch(
+        `http://localhost:3000/api/tournaments/${this.tournament._id}/start`,
+        {},
+        {
+          headers,
+        }
+      )
+      .subscribe(
+        () => {
+          this.fetchTournament();
+        },
+        (error) => {
+          throw of(error);
+        }
+      );
+  }
+
+  endTournament() {
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http
+      .patch(
+        `http://localhost:3000/api/tournaments/${this.tournament._id}/end`,
+        {},
+        {
+          headers,
+        }
+      )
+      .subscribe(
+        () => {
+          this.fetchTournament();
+        },
+        (error) => {
+          throw of(error);
+        }
+      );
+  }
+
+  updateWinner(game: any) {
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const winner = this.tournament.users.find(
+      (user: any) => user.username === game.winner.username
+    );
+    game.winner = winner;
+
+    this.http
+      .patch(
+        `http://localhost:3000/api/tournaments/${this.tournament._id}`,
+        this.tournament,
+        { headers }
+      )
+      .subscribe(
+        () => {},
+        (error) => {
+          this.fetchTournament();
+          throw of(error);
+        }
+      );
+  }
+
+  getBadgeClass(status: string): string {
+    switch (status) {
+      case 'Aankomend':
+        return 'badge bg-primary';
+      case 'Afgerond':
+        return 'badge bg-danger';
+      case 'Actief':
+        return 'badge bg-success';
+      default:
+        return 'badge';
+    }
+  }
 }
