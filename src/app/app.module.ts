@@ -15,6 +15,7 @@ import { GamesEditComponent } from './pages/games/games-edit/games-edit.componen
 import { GamesOverviewComponent } from './pages/games/games-overview/games-overview.component';
 import { TournamentsOverviewComponent } from './pages/tournaments/tournaments-overview/tournaments-overview.component';
 import { TournamentsDetailsComponent } from './pages/tournaments/tournaments-details/tournaments-details.component';
+import { UsersOverviewComponent } from './pages/users/users-overview/users-overview.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TournamentsDetailsComponent } from './pages/tournaments/tournaments-det
     GamesEditComponent,
     TournamentsOverviewComponent,
     TournamentsDetailsComponent,
+    UsersOverviewComponent,
   ],
   imports: [
     BrowserModule,

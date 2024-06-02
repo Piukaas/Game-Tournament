@@ -60,7 +60,6 @@ export class GamesEditComponent {
     return this.fb.group({
       rule: ['', [Validators.required]],
       playerAmount: ['', [Validators.required]],
-      score: ['', [Validators.required]],
       type: ['', [Validators.required]],
     });
   }

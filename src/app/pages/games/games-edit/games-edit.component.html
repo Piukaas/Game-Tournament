@@ -214,39 +214,6 @@
               </div>
 
               <div class="form-group col-md-4">
-                <label class="required" for="score">Score</label>
-                <input
-                  id="score"
-                  class="form-control"
-                  formControlName="score"
-                  type="number"
-                  min="1"
-                  max="100"
-                  required
-                  [class.invalid]="
-                    rule.get('score')?.invalid && rule.get('score')?.touched
-                  "
-                  (input)="
-                    rule.get('score')?.value < 1
-                      ? rule.get('score')?.setValue(1)
-                      : rule.get('score')?.value > 100
-                      ? rule.get('score')?.setValue(100)
-                      : null
-                  "
-                />
-                <div
-                  *ngIf="
-                    rule.get('score')?.invalid && rule.get('score')?.touched
-                  "
-                  class="validations"
-                >
-                  <p *ngIf="rule.get('score')?.hasError('required')">
-                    Score is verplicht
-                  </p>
-                </div>
-              </div>
-
-              <div class="form-group col-md-4">
                 <label class="required" for="type">Type</label>
                 <select
                   id="type"

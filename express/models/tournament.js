@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const ruleSchema = new Schema({
   rule: { type: String, required: true },
   type: { type: String, required: true },
-  score: { type: Number, required: true },
   playerAmount: { type: Number, required: true },
 });
 
@@ -23,6 +22,7 @@ const tournamentSchema = new Schema({
     {
       game: { type: Schema.Types.ObjectId, ref: "Game" },
       rule: ruleSchema,
+      score: { type: Number, required: true },
       winner: { type: Schema.Types.ObjectId, ref: "User", default: null },
     },
   ],

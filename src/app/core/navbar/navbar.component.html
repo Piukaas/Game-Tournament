@@ -23,7 +23,7 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/games">Spelletjes</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticated()">
         <a class="nav-link" routerLink="/users">Gebruikers</a>
       </li>
       <li class="nav-item login" *ngIf="!username; else userLogout">

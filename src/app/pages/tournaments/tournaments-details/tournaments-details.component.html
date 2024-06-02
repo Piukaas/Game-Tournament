@@ -9,14 +9,17 @@
           class="col-md-4 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
-          <div *ngIf="confirmDelete" style="display: flex; gap: 10px">
+          <div *ngIf="confirmDelete" class="d-flex d-flex-gap-10">
             <span>Zeker?</span>
-            <button class="btn btn-secondary" (click)="confirmDelete = false">
+            <button
+              class="btn btn-secondary round-btn"
+              (click)="confirmDelete = false"
+            >
               <i class="fa fa-xmark"></i>
             </button>
           </div>
           <button
-            class="btn btn-danger"
+            class="btn btn-danger round-btn"
             (click)="
               confirmDelete ? deleteTournament() : (confirmDelete = true)
             "
@@ -36,7 +39,6 @@
                 <th>Regel</th>
                 <th>Type</th>
                 <th>Aantal spelers</th>
-                <th>Score</th>
                 <th>Winnaar</th>
               </tr>
             </thead>
@@ -47,9 +49,6 @@
                 <td>{{ game.rule.rule }}</td>
                 <td>
                   {{ game.rule.playerAmount }}
-                </td>
-                <td>
-                  {{ game.rule.score }}
                 </td>
                 <td>{{ game.winner.username }}</td>
               </tr>

@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  isAuthenticated() {
+    return this.userService.isAuthenticated();
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');

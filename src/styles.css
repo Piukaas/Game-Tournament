@@ -15,6 +15,8 @@
   --background: #362734;
   --danger: red;
   --danger2: darkred;
+  --success: green;
+  --success2: darkgreen;
 }
 
 body {
@@ -132,8 +134,52 @@ td,
   margin-left: auto;
 }
 
+.ml-5 {
+  margin-left: 5px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
 .mt-10 {
   margin-top: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.ml-20 {
+  margin-left: 20px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
 }
 
 .align-left {
@@ -189,11 +235,31 @@ td,
   transform: scale(1.1);
 }
 
+.btn-success {
+  background-color: var(--success);
+  color: var(--white);
+  border-radius: 25px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-success:hover {
+  background-color: var(--success2);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
 .edit-buttons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
+}
+
+.round-btn {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 
 .link {
@@ -204,6 +270,31 @@ td,
 .link:hover {
   color: var(--accent2);
   text-decoration: underline;
+}
+
+/* Badges */
+.badge {
+  border-radius: 25px;
+}
+
+.badge-primary {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+.badge-secondary {
+  background-color: var(--gray);
+  color: var(--white);
+}
+
+.badge-danger {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+.badge-success {
+  background-color: var(--success);
+  color: var(--white);
 }
 
 /* Cards */

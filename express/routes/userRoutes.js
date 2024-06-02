@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
 // Get all usernames and wins
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find({}, "username wins");
+    const users = await User.find({}, "username wins isActive");
     res.json(users);
   } catch (err) {
     res.status(400).send(err);

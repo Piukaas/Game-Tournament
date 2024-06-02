@@ -30,16 +30,18 @@ export class TournamentsDetailsComponent implements OnInit {
 
   fetchTournament() {
     this.loading = true;
-    this.http.get(`http://localhost:3000/api/tournaments/${this.tournamentId}`).subscribe(
-      (tournament) => {
-        this.tournament = tournament;
-        this.loading = false;
-      },
-      (error) => {
-        console.error(error);
-        this.loading = false;
-      }
-    );
+    this.http
+      .get(`http://localhost:3000/api/tournaments/${this.tournamentId}`)
+      .subscribe(
+        (tournament) => {
+          this.tournament = tournament;
+          this.loading = false;
+        },
+        (error) => {
+          console.error(error);
+          this.loading = false;
+        }
+      );
   }
 
   deleteTournament() {
@@ -47,7 +49,9 @@ export class TournamentsDetailsComponent implements OnInit {
     const headers = { Authorization: `Bearer ${token}` };
 
     this.http
-      .delete(`http://localhost:3000/api/tournaments/${this.tournamentId}`, { headers })
+      .delete(`http://localhost:3000/api/tournaments/${this.tournamentId}`, {
+        headers,
+      })
       .subscribe(
         () => {
           this.confirmDelete = false;

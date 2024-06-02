@@ -9,7 +9,7 @@
           class="col-md-4 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
-          <div *ngIf="confirmDelete" style="display: flex; gap: 10px">
+          <div *ngIf="confirmDelete" class="d-flex d-flex-gap-10">
             <span>Zeker?</span>
             <button class="btn btn-secondary" (click)="confirmDelete = false">
               <i class="fa fa-xmark"></i>
@@ -54,9 +54,7 @@
             <h5>{{ rule.type }} - {{ rule.rule }}</h5>
             <p>
               {{ rule.playerAmount }}
-              {{ rule.playerAmount == 1 ? "speler" : "spelers" }} -
-              {{ rule.score }}
-              {{ rule.score == 1 ? "punt" : "punten" }}
+              {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
             </p>
           </div>
         </div>
