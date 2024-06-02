@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'tournaments-details',
@@ -31,7 +32,7 @@ export class TournamentsDetailsComponent implements OnInit {
   fetchTournament() {
     this.loading = true;
     this.http
-      .get(`http://localhost:3000/api/tournaments/${this.tournamentId}`)
+      .get(`${environment.apiUrl}/tournaments/${this.tournamentId}`)
       .subscribe(
         (tournament) => {
           this.tournament = tournament;
@@ -49,7 +50,7 @@ export class TournamentsDetailsComponent implements OnInit {
     const headers = { Authorization: `Bearer ${token}` };
 
     this.http
-      .delete(`http://localhost:3000/api/tournaments/${this.tournamentId}`, {
+      .delete(`${environment.apiUrl}/tournaments/${this.tournamentId}`, {
         headers,
       })
       .subscribe(
@@ -69,7 +70,7 @@ export class TournamentsDetailsComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/tournaments/${this.tournament._id}/start`,
+        `${environment.apiUrl}/tournaments/${this.tournament._id}/start`,
         {},
         {
           headers,
@@ -91,7 +92,7 @@ export class TournamentsDetailsComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/tournaments/${this.tournament._id}/end`,
+        `${environment.apiUrl}/tournaments/${this.tournament._id}/end`,
         {},
         {
           headers,
@@ -118,7 +119,7 @@ export class TournamentsDetailsComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/tournaments/${this.tournament._id}`,
+        `${environment.apiUrl}/tournaments/${this.tournament._id}`,
         this.tournament,
         { headers }
       )

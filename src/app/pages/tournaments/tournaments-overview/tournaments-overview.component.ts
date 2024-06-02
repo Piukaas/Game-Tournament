@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'tournaments-overview',
@@ -23,7 +24,7 @@ export class TournamentsOverviewComponent implements OnInit {
     this.loading = true;
     this.http
       .get(
-        `http://localhost:3000/api/tournaments?title=${this.searchTerm}&status=${this.status}`
+        `${environment.apiUrl}/tournaments?title=${this.searchTerm}&status=${this.status}`
       )
       .subscribe(
         (tournaments: any) => {

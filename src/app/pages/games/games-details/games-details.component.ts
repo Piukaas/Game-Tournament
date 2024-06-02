@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'games-details',
@@ -30,7 +31,7 @@ export class GamesDetailsComponent implements OnInit {
 
   fetchGame() {
     this.loading = true;
-    this.http.get(`http://localhost:3000/api/games/${this.gameId}`).subscribe(
+    this.http.get(`${environment.apiUrl}/games/${this.gameId}`).subscribe(
       (game) => {
         this.game = game;
         this.loading = false;
@@ -47,7 +48,7 @@ export class GamesDetailsComponent implements OnInit {
     const headers = { Authorization: `Bearer ${token}` };
 
     this.http
-      .delete(`http://localhost:3000/api/games/${this.gameId}`, { headers })
+      .delete(`${environment.apiUrl}/games/${this.gameId}`, { headers })
       .subscribe(
         () => {
           this.confirmDelete = false;

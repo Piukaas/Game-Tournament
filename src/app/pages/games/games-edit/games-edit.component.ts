@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'games-edit',
@@ -40,7 +41,7 @@ export class GamesEditComponent {
 
     if (this.gameId) {
       this.http
-        .get(`http://localhost:3000/api/games/${this.gameId}`)
+        .get(`${environment.apiUrl}/games/${this.gameId}`)
         .subscribe((game: any) => {
           // Remove the initial rule
           this.rules.removeAt(0);
@@ -88,11 +89,11 @@ export class GamesEditComponent {
 
       const request = this.gameId
         ? this.http.patch(
-            `http://localhost:3000/api/games/${this.gameId}`,
+            `${environment.apiUrl}/games/${this.gameId}`,
             this.form.value,
             { headers }
           )
-        : this.http.post('http://localhost:3000/api/games/', this.form.value, {
+        : this.http.post(`${environment.apiUrl}/games/`, this.form.value, {
             headers,
           });
 

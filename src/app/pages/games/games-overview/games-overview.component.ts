@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'games-overview',
@@ -21,7 +22,7 @@ export class GamesOverviewComponent implements OnInit {
   searchGames() {
     this.loading = true;
     this.http
-      .get(`http://localhost:3000/api/games?search=${this.searchTerm}`)
+      .get(`${environment.apiUrl}/games?search=${this.searchTerm}`)
       .subscribe(
         (games: any) => {
           this.games = games;

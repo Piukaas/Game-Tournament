@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-users-overview',
@@ -28,7 +29,7 @@ export class UsersOverviewComponent {
 
   getUsers() {
     this.loading = true;
-    this.http.get('http://localhost:3000/api/users').subscribe(
+    this.http.get(`${environment.apiUrl}/users`).subscribe(
       (users: any) => {
         this.users = users;
         this.loading = false;
@@ -45,11 +46,7 @@ export class UsersOverviewComponent {
     const headers = { Authorization: `Bearer ${token}` };
 
     this.http
-      .patch(
-        `http://localhost:3000/api/users/${userId}/activate`,
-        {},
-        { headers }
-      )
+      .patch(`${environment.apiUrl}/users/${userId}/activate`, {}, { headers })
       .subscribe(
         () => {
           this.getUsers();

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'login',
@@ -38,7 +39,7 @@ export class LoginComponent {
     if (this.form.valid) {
       const { username, password } = this.form.value;
       this.http
-        .post<{ token: string }>('http://localhost:3000/api/users/login', {
+        .post<{ token: string }>(`${environment.apiUrl}/users/login`, {
           username,
           password,
         })

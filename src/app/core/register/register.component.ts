@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'register',
@@ -40,7 +41,7 @@ export class RegisterComponent {
     if (this.form.valid) {
       const { username, password } = this.form.value;
       this.http
-        .post('http://localhost:3000/api/users/register', {
+        .post(`${environment.apiUrl}/users/register`, {
           username,
           password,
         })
