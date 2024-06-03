@@ -36,6 +36,10 @@
           </button>
 
           <button
+            *ngIf="
+              tournament.status === 'Aankomend' ||
+              tournament.status === 'Actief'
+            "
             type="button"
             class="btn btn-primary round-btn"
             data-bs-toggle="modal"
