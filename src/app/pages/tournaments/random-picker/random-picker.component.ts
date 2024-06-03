@@ -6,16 +6,16 @@ import { Component } from '@angular/core';
 })
 export class RandomPickerComponent {
   items: any[] = [
-    { name: 'Perk 1', type: 'Perk' },
-    { name: 'Weakness 1', type: 'Weakness' },
-    { name: 'Perk 2', type: 'Perk' },
-    { name: 'Weakness 2', type: 'Weakness' },
-    { name: 'Perk 3', type: 'Perk' },
-    { name: 'Weakness 3', type: 'Weakness' },
-    { name: 'Perk 4', type: 'Perk' },
-    { name: 'Weakness 4', type: 'Weakness' },
-    { name: 'Perk 5', type: 'Perk' },
-    { name: 'Weakness 5', type: 'Weakness' },
+    { name: 'Perk 1', type: 'Perk', description: 'This is Perk 1' },
+    { name: 'Weakness 1', type: 'Weakness', description: 'This is Weakness 1' },
+    { name: 'Perk 2', type: 'Perk', description: 'This is Perk 2' },
+    { name: 'Weakness 2', type: 'Weakness', description: 'This is Weakness 2' },
+    { name: 'Perk 3', type: 'Perk', description: 'This is Perk 3' },
+    { name: 'Weakness 3', type: 'Weakness', description: 'This is Weakness 3' },
+    { name: 'Perk 4', type: 'Perk', description: 'This is Perk 4' },
+    { name: 'Weakness 4', type: 'Weakness', description: 'This is Weakness 4' },
+    { name: 'Perk 5', type: 'Perk', description: 'This is Perk 5' },
+    { name: 'Weakness 5', type: 'Weakness', description: 'This is Weakness 5' },
   ];
   displayedItems: any[] = [];
   transform: string = '';

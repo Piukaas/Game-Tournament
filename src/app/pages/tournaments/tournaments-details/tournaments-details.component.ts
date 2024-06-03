@@ -14,6 +14,7 @@ export class TournamentsDetailsComponent implements OnInit {
   tournament!: any;
   loading: boolean = false;
   confirmDelete: boolean = false;
+  selectedWinnerIds: { [gameId: string]: string } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +35,17 @@ export class TournamentsDetailsComponent implements OnInit {
     this.http
       .get(`${environment.apiUrl}/tournaments/${this.tournamentId}`)
       .subscribe(
-        (tournament) => {
+        (tournament: any) => {
           this.tournament = tournament;
           this.loading = false;
+
+          this.tournament.games.forEach((game: any) => {
+            this.selectedWinnerIds[game._id] = game.winner?._id || '';
+          });
         },
         (error) => {
-          console.error(error);
           this.loading = false;
+          throw of(error);
         }
       );
   }
@@ -112,10 +117,15 @@ export class TournamentsDetailsComponent implements OnInit {
     const token = this.userService.getToken();
     const headers = { Authorization: `Bearer ${token}` };
 
-    const winner = this.tournament.users.find(
-      (user: any) => user.username === game.winner.username
-    );
-    game.winner = winner;
+    const selectedWinnerId = this.selectedWinnerIds[game._id];
+    if (selectedWinnerId) {
+      const winner = this.tournament.users.find(
+        (user: any) => user._id === selectedWinnerId
+      );
+      game.winner = winner;
+    } else {
+      game.winner = null;
+    }
 
     this.http
       .patch(
@@ -124,12 +134,30 @@ export class TournamentsDetailsComponent implements OnInit {
         { headers }
       )
       .subscribe(
-        () => {},
+        () => {
+          this.fetchTournament();
+        },
         (error) => {
           this.fetchTournament();
           throw of(error);
         }
       );
+  }
+
+  isAnyGameWinnerSelected(): boolean {
+    return this.tournament.games.some(
+      (game: any) => this.selectedWinnerIds[game._id]
+    );
+  }
+
+  getPointsForUser(username: string): number {
+    let points = 0;
+    this.tournament.games.forEach((game: any) => {
+      if (game.winner && game.winner.username === username) {
+        points += game.score;
+      }
+    });
+    return points;
   }
 
   getBadgeClass(status: string): string {
