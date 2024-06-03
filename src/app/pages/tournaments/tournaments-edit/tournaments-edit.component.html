@@ -1,1 +1,217 @@
-<p>tournaments-edit works!</p>
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
+  <h1>Toernooi maken</h1>
+  <div *ngIf="error" class="p-1 alert alert-danger">
+    <p class="m-0">{{ error }}</p>
+  </div>
+
+  <spinner *ngIf="loading"></spinner>
+
+  <form *ngIf="!loading" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="row">
+      <div class="form-group col-md-6 col-6">
+        <label class="required" for="title">Titel</label>
+        <input
+          id="title"
+          class="form-control"
+          formControlName="title"
+          type="text"
+          required
+          [class.invalid]="
+            form.controls['title'].invalid && form.controls['title'].touched
+          "
+        />
+        <div
+          *ngIf="
+            form.controls['title'].invalid && form.controls['title'].touched
+          "
+          class="validations"
+        >
+          <p *ngIf="form.controls['title'].hasError('required')">
+            Titel is verplicht
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-6">
+        <label class="required" for="date">Datum</label>
+        <input
+          id="date"
+          class="form-control"
+          formControlName="date"
+          type="date"
+          required
+          [class.invalid]="
+            form.controls['date'].invalid && form.controls['date'].touched
+          "
+        />
+        <div
+          *ngIf="form.controls['date'].invalid && form.controls['date'].touched"
+          class="validations"
+        >
+          <p *ngIf="form.controls['date'].hasError('required')">
+            Datum is verplicht
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-3 col-3">
+      <label class="required">Spelers</label>
+      <div formArrayName="userCheckboxes">
+        <div
+          *ngFor="let userCheckbox of userCheckboxes; let i = index"
+          class="form-check"
+        >
+          <input
+            type="checkbox"
+            [formControlName]="i"
+            id="userCheckbox{{ i }}"
+            class="form-check-input"
+            (change)="onUserChange(i, $event)"
+          />
+          <label for="userCheckbox{{ i }}" class="form-check-label">{{
+            userCheckbox.username
+          }}</label>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          form.controls['userCheckboxes'].invalid &&
+          form.controls['userCheckboxes'].touched
+        "
+        class="validations"
+      >
+        <p *ngIf="form.controls['userCheckboxes'].hasError('required')">
+          Ten minste 1 speler is verplicht
+        </p>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex d-flex-gap-5">
+      <h4>Spelletjes</h4>
+      <button
+        type="button"
+        class="btn btn-primary round-btn"
+        (click)="addGame()"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped mt-10">
+        <thead>
+          <tr>
+            <th class="required">Spel</th>
+            <th class="required">Regel</th>
+            <th class="required">Score</th>
+            <th>Actie</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="games">
+          <tr
+            *ngFor="let game of games.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <td>
+              <select formControlName="game" class="form-control">
+                <option value="" disabled>Kies een spel</option>
+                <option *ngFor="let game of allGames" [value]="game._id">
+                  {{ game.name }} - {{ game.platform }}
+                </option>
+              </select>
+              <div
+                *ngIf="game.get('game')?.invalid && game.get('game')?.touched"
+                class="validations"
+              >
+                <p *ngIf="game.get('game')?.hasError('required')">
+                  Spel is verplicht
+                </p>
+              </div>
+            </td>
+            <td *ngIf="selectedGame(i)">
+              <select formControlName="rule" class="form-control">
+                <option value="" disabled>Kies een regel</option>
+                <option
+                  *ngFor="let rule of selectedGame(i).rules"
+                  [value]="
+                    rule.rule +
+                    ' - ' +
+                    rule.playerAmount +
+                    (rule.playerAmount > 1 ? ' spelers' : ' speler')
+                  "
+                >
+                  {{ rule.rule }} - {{ rule.playerAmount }}
+                  <span *ngIf="rule.playerAmount === 1">speler</span
+                  ><span *ngIf="rule.playerAmount > 1">spelers</span>
+                </option>
+              </select>
+              <div
+                *ngIf="game.get('rule')?.invalid && game.get('rule')?.touched"
+                class="validations"
+              >
+                <p *ngIf="game.get('rule')?.hasError('required')">
+                  Regel is verplicht
+                </p>
+              </div>
+            </td>
+            <td *ngIf="!selectedGame(i)">Selecteer een spel</td>
+            <td>
+              <input
+                id="score"
+                class="form-control"
+                formControlName="score"
+                type="number"
+                min="1"
+                required
+                [class.invalid]="
+                  game.get('score')?.invalid && game.get('score')?.touched
+                "
+                (input)="
+                  game.get('score')?.value < 1
+                    ? game.get('score')?.setValue(1)
+                    : game.get('score')?.value > 10
+                    ? game.get('score')?.setValue(10)
+                    : null
+                "
+              />
+              <div
+                *ngIf="game.get('score')?.invalid && game.get('score')?.touched"
+                class="validations"
+              >
+                <p *ngIf="game.get('score')?.hasError('required')">
+                  Score is verplicht
+                </p>
+              </div>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger round-btn"
+                (click)="removeGame(i)"
+                [disabled]="games.controls.length === 1"
+              >
+                <i class="fa fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row mt-10">
+      <div class="col-md-6 col-6">
+        <button routerLink="/tournaments" class="btn btn-primary">
+          <i class="fa fa-arrow-left"></i> Terug naar toernooien
+        </button>
+      </div>
+      <div class="col-md-6 col-6">
+        <button type="submit" class="btn btn-primary submit-button">
+          <i class="fa fa-plus"></i>
+          Aanmaken
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
