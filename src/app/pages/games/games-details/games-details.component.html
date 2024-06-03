@@ -1,12 +1,12 @@
-<div class="col-md-9 p-4 mx-auto content-card">
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
   <spinner *ngIf="loading"></spinner>
 
   <div *ngIf="!loading">
     <div *ngIf="game; else noGame">
-      <div class="row">
-        <h1 class="col-md-8">{{ game.name }}</h1>
+      <div class="row mb-10">
+        <h1 class="col-md-8 col-12">{{ game.name }}</h1>
         <div
-          class="col-md-4 edit-buttons"
+          class="col-md-4 col-12 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
           <div *ngIf="confirmDelete" class="d-flex d-flex-gap-10">
@@ -30,8 +30,11 @@
         </div>
       </div>
       <div class="row">
-        <img [src]="game.imageUrl" class="col-md-3 game-image no-user-select" />
-        <div class="col-md-8">
+        <img
+          [src]="game.imageUrl"
+          class="col-md-3 col-6 game-image no-user-select"
+        />
+        <div class="col-md-8 col-12">
           <h3 class="card-title">{{ game.genre }}</h3>
           <p>
             <i

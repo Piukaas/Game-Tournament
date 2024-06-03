@@ -107,7 +107,8 @@ td .form-control {
 }
 
 .content {
-  margin: 50px 100px 100px 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .bg-purple {
@@ -137,9 +138,16 @@ td .form-control {
 }
 
 .submit-button {
-  margin-top: 10px;
   display: block;
   margin-left: auto;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler {
+  border: none;
 }
 
 .ml-5 {
@@ -273,15 +281,20 @@ td .form-control {
 
 .edit-buttons {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
   gap: 10px;
 }
 
+@media (min-width: 576px) {
+  .edit-buttons {
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
 .round-btn {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  border-radius: 100%;
+  width: auto;
+  height: auto;
 }
 
 .link {
@@ -333,6 +346,11 @@ td .form-control {
   scale: 1.02;
 }
 
+.card.no-hover:hover {
+  cursor: default;
+  scale: 1;
+}
+
 /* Navbar */
 .navbar {
   z-index: 2;
@@ -342,9 +360,7 @@ td .form-control {
 }
 
 .logo {
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 6%;
+  height: 100px;
 }
 
 .logo:hover {
@@ -408,9 +424,11 @@ td .form-control {
   transform-origin: bottom left;
 }
 
-.login a {
-  position: absolute;
-  right: 0px;
+@media (min-width: 900px) {
+  .login a {
+    position: absolute;
+    right: 0px;
+  }
 }
 
 /* Login */
@@ -422,7 +440,7 @@ td .form-control {
 .home-image {
   margin: auto;
   display: block;
-  width: 65%;
+  width: 100%;
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
 }

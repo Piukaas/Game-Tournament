@@ -1,20 +1,20 @@
-<div class="col-md-9 p-4 mx-auto content-card">
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
   <spinner *ngIf="loading"></spinner>
 
   <div *ngIf="!loading">
     <div *ngIf="tournament; else noTournament">
       <div class="row">
-        <h1 class="col-md-8">
-          {{ tournament.title }} -
-          <span [class]="getBadgeClass(tournament.status)">{{
+        <h4 class="col-lg-8 col-md-9 col-12">
+          <span class="mr-20">{{ tournament.title }}</span
+          ><span class="mr-20" [class]="getBadgeClass(tournament.status)">{{
             tournament.status
           }}</span>
-          <span *ngIf="tournament.totalWinner" class="badge bg-warning ml-5">
+          <span *ngIf="tournament.totalWinner" class="badge bg-warning">
             Winnaar: {{ tournament.totalWinner.username }}
           </span>
-        </h1>
+        </h4>
         <div
-          class="col-md-4 edit-buttons"
+          class="col-lg-4 col-md-3 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
           <div *ngIf="confirmDelete" class="d-flex d-flex-gap-10">
@@ -61,52 +61,54 @@
             <li *ngFor="let user of tournament.users">{{ user.username }}</li>
           </h3>
           <h3>Spelletjes:</h3>
-          <table class="table table-bordered table-striped mt-10">
-            <thead>
-              <tr>
-                <th>Spel</th>
-                <th>Regel</th>
-                <th>Type</th>
-                <th>Score</th>
-                <th>Winnaar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let game of tournament.games">
-                <td>{{ game.game.name }}</td>
-                <td>{{ game.rule.type }}</td>
-                <td>{{ game.rule.rule }}</td>
-                <td>{{ game.score }}</td>
-                <td
-                  *ngIf="
-                    tournament.status === 'Actief' &&
-                    userService.isAuthenticated()
-                  "
-                >
-                  <select
-                    [(ngModel)]="game.winner.username"
-                    (change)="updateWinner(game)"
-                    class="form-control"
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped mt-10">
+              <thead>
+                <tr>
+                  <th>Spel</th>
+                  <th>Regel</th>
+                  <th>Type</th>
+                  <th>Score</th>
+                  <th>Winnaar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let game of tournament.games">
+                  <td>{{ game.game.name }}</td>
+                  <td>{{ game.rule.type }}</td>
+                  <td>{{ game.rule.rule }}</td>
+                  <td>{{ game.score }}</td>
+                  <td
+                    *ngIf="
+                      tournament.status === 'Actief' &&
+                      userService.isAuthenticated()
+                    "
                   >
-                    <option
-                      *ngFor="let user of tournament.users"
-                      [value]="user.username"
+                    <select
+                      [(ngModel)]="game.winner.username"
+                      (change)="updateWinner(game)"
+                      class="form-control"
                     >
-                      {{ user.username }}
-                    </option>
-                  </select>
-                </td>
-                <td
-                  *ngIf="
-                    tournament.status !== 'Actief' ||
-                    !userService.isAuthenticated()
-                  "
-                >
-                  {{ game.winner.username }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                      <option
+                        *ngFor="let user of tournament.users"
+                        [value]="user.username"
+                      >
+                        {{ user.username }}
+                      </option>
+                    </select>
+                  </td>
+                  <td
+                    *ngIf="
+                      tournament.status !== 'Actief' ||
+                      !userService.isAuthenticated()
+                    "
+                  >
+                    {{ game.winner.username }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <button routerLink="/tournaments" class="btn btn-primary mt-10">

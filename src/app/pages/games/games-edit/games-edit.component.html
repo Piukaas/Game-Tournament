@@ -1,4 +1,4 @@
-<div class="col-md-9 p-4 mx-auto content-card">
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
   <h1>Spel maken</h1>
   <div *ngIf="error" class="p-1 alert alert-danger">
     <p class="m-0">{{ error }}</p>
@@ -134,7 +134,11 @@
 
         <div class="d-flex d-flex-gap-5">
           <h4>Regels</h4>
-          <button type="button" class="btn btn-primary" (click)="addRule()">
+          <button
+            type="button"
+            class="btn btn-primary round-btn"
+            (click)="addRule()"
+          >
             <i class="fa fa-plus"></i>
           </button>
         </div>
@@ -159,7 +163,7 @@
                 />
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  class="btn btn-danger round-btn"
                   (click)="removeRule(i)"
                   [disabled]="rules.controls.length === 1"
                 >
@@ -177,7 +181,7 @@
             </div>
 
             <div class="row">
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-6">
                 <label class="required" for="playerAmount"
                   >Aantal spelers</label
                 >
@@ -213,7 +217,7 @@
                 </div>
               </div>
 
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-6">
                 <label class="required" for="type">Type</label>
                 <select
                   id="type"
@@ -245,30 +249,35 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!gameId" class="row">
-      <button routerLink="/games" class="btn btn-primary col-md-6 mt-10">
-        <i class="fa fa-arrow-left"></i> Terug naar spelletje
-      </button>
-      <button type="submit" class="btn btn-primary submit-button col-md-6">
-        <i class="fa fa-plus"></i>
-        Aanmaken
-      </button>
+    <div *ngIf="!gameId" class="row mt-10">
+      <div class="col-md-6 col-6">
+        <button routerLink="/games" class="btn btn-primary">
+          <i class="fa fa-arrow-left"></i> Terug naar spelletje
+        </button>
+      </div>
+      <div class="col-md-6 col-6">
+        <button type="submit" class="btn btn-primary submit-button">
+          <i class="fa fa-plus"></i>
+          Aanmaken
+        </button>
+      </div>
     </div>
-    <div *ngIf="gameId" class="row">
-      <button
-        [routerLink]="['/games', gameId]"
-        class="btn btn-primary col-md-6 mt-10"
-      >
-        <i class="fa fa-arrow-left"></i> Terug naar spel
-      </button>
-      <button
-        *ngIf="gameId"
-        type="submit"
-        class="btn btn-primary submit-button col-md-6"
-      >
-        <i class="fa fa-pencil"></i>
-        Bewerken
-      </button>
+    <div *ngIf="gameId" class="row mt-10">
+      <div class="col-md-6 col-6">
+        <button [routerLink]="['/games', gameId]" class="btn btn-primary">
+          <i class="fa fa-arrow-left"></i> Terug naar spel
+        </button>
+      </div>
+      <div class="col-md-6 col-6">
+        <button
+          *ngIf="gameId"
+          type="submit"
+          class="btn btn-primary submit-button"
+        >
+          <i class="fa fa-pencil"></i>
+          Bewerken
+        </button>
+      </div>
     </div>
   </form>
 </div>

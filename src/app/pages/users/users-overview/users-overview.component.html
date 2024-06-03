@@ -1,32 +1,28 @@
-<div class="col-md-9 p-4 mx-auto content-card">
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
   <div class="row">
     <h1 class="col-md-4">Gebruikers</h1>
 
     <spinner *ngIf="loading"></spinner>
 
     <div *ngIf="!loading">
-      <div class="row mt-10">
-        <div *ngFor="let user of users" class="col-md-12">
-          <div class="card">
-            <div class="card-body row">
-              <h4 class="card-title col-md-6">
-                {{ user.username }} - Wins: {{ user.wins }}
-                <span *ngIf="user.isActive" class="badge badge-success"
-                  >Actief</span
-                >
-                <span *ngIf="!user.isActive" class="badge badge-danger"
-                  >Inactief</span
-                >
-              </h4>
-              <div *ngIf="!user.isActive" class="col-md align-right">
-                <button
-                  class="btn-success round-btn"
-                  (click)="activateUser(user._id)"
-                >
-                  <i class="fa fa-check"></i>
-                </button>
-              </div>
-            </div>
+      <div *ngFor="let user of users" class="card no-hover">
+        <div class="card-body row">
+          <h4 class="card-title col-md-11">
+            {{ user.username }} - Wins: {{ user.wins }}
+            <span *ngIf="user.isActive" class="badge badge-success"
+              >Actief</span
+            >
+            <span *ngIf="!user.isActive" class="badge badge-danger"
+              >Inactief</span
+            >
+          </h4>
+          <div *ngIf="!user.isActive" class="col-md">
+            <button
+              class="btn-success round-btn"
+              (click)="activateUser(user._id)"
+            >
+              <i class="fa fa-check"></i>
+            </button>
           </div>
         </div>
       </div>
