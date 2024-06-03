@@ -284,7 +284,7 @@ td .form-control {
   gap: 10px;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 900px) {
   .edit-buttons {
     justify-content: flex-end;
     align-items: center;
@@ -454,7 +454,7 @@ td .form-control {
 
 /* Game */
 .game-image {
-  height: 100%;
+  height: fit-content;
   border-radius: 25px;
   margin-bottom: 10px;
 }
