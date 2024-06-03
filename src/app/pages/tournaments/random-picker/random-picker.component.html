@@ -1,14 +1,8 @@
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="randomPickerModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Random Picker</h5>
+        <h3 class="modal-title">"Wiel" der Fortuinen</h3>
         <button
           type="button"
           class="btn-close"
@@ -16,10 +10,10 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <div class="carousel-container">
+      <div>
+        <div class="carousel-container mb-20">
           <div class="needle"></div>
-          <div class="carousel" [style.transform]="transform">
+          <div class="carousel mb-10" [style.transform]="transform">
             <div
               class="card-picker"
               *ngFor="let item of displayedItems; let i = index"
@@ -33,14 +27,34 @@
             </div>
           </div>
           <button class="btn btn-primary picker-btn" (click)="spin()">
-            Spin
+            <i class="fas fa-skull"></i>
+            Vergok je ziel
           </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+        <div *ngIf="finalSelected" class="mt-20">
+          <div class="align-center">
+            <h4>
+              <i
+                class="fas fa-{{
+                  finalSelected.type === 'Perk'
+                    ? 'face-laugh-beam'
+                    : 'skull-crossbones'
+                }}"
+              ></i>
+              {{ finalSelected.name }}
+            </h4>
+            <p>{{ finalSelected.description }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Sluiten
+          </button>
+        </div>
       </div>
     </div>
   </div>

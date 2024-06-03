@@ -17,7 +17,9 @@
   --danger: red;
   --danger2: darkred;
   --success: green;
-  --success2: darkgreen;
+  --success2: rgb(14, 17, 14);
+  --warning: orange;
+  --warning2: yellow;
 }
 
 body {
@@ -475,12 +477,9 @@ td .form-control {
 /* Random Picker */
 .carousel-container {
   position: relative;
-  width: 300px;
   height: 150px;
   overflow: hidden;
   margin: 0 auto;
-  border: 1px solid #ccc;
-  border-radius: 10px;
 }
 
 .carousel {
@@ -492,21 +491,20 @@ td .form-control {
 .card-picker {
   min-width: 100px;
   margin: 5px;
-  padding: 10px;
   text-align: center;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.5em;
+  width: fit-content !important;
   transition: transform 0.3s, background-color 0.3s;
 }
 
 .card-picker.active {
-  background-color: #ffa500 !important;
-  font-size: 1.2em;
+  background-color: var(--warning);
+  scale: 1.1;
 }
 
 .picker-btn {
-  margin-top: 20px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -520,17 +518,17 @@ td .form-control {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 20px solid red;
+  border-bottom: 20px solid var(--black);
   transform: translateX(-50%) rotate(180deg);
   z-index: 2;
 }
 
 .perk {
-  background-color: #4caf50; /* green */
+  background-color: var(--success);
   color: white;
 }
 
 .weakness {
-  background-color: #f44336; /* red */
+  background-color: var(--danger);
   color: white;
 }

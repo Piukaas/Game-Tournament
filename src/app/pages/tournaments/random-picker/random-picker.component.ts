@@ -5,23 +5,66 @@ import { Component } from '@angular/core';
   templateUrl: './random-picker.component.html',
 })
 export class RandomPickerComponent {
-  items: any[] = [
-    { name: 'Perk 1', type: 'Perk', description: 'This is Perk 1' },
-    { name: 'Weakness 1', type: 'Weakness', description: 'This is Weakness 1' },
-    { name: 'Perk 2', type: 'Perk', description: 'This is Perk 2' },
-    { name: 'Weakness 2', type: 'Weakness', description: 'This is Weakness 2' },
-    { name: 'Perk 3', type: 'Perk', description: 'This is Perk 3' },
-    { name: 'Weakness 3', type: 'Weakness', description: 'This is Weakness 3' },
-    { name: 'Perk 4', type: 'Perk', description: 'This is Perk 4' },
-    { name: 'Weakness 4', type: 'Weakness', description: 'This is Weakness 4' },
-    { name: 'Perk 5', type: 'Perk', description: 'This is Perk 5' },
-    { name: 'Weakness 5', type: 'Weakness', description: 'This is Weakness 5' },
+  items: any = [
+    {
+      name: '10 seconden sneller',
+      description: 'Haal 10 seconden van je eindtijd af',
+      type: 'Perk',
+    },
+    {
+      name: 'Rap alles',
+      description: 'Moet alles wat je zegt rappen gedurende een ronde',
+      type: 'Weakness',
+    },
+    {
+      name: 'Extra beurt',
+      description: 'Krijg een extra kans om een actie uit te voeren',
+      type: 'Perk',
+    },
+    {
+      name: 'Draai en zeg',
+      description:
+        'Moet een draai maken en iets anders zeggen wanneer de tegenstander het zegt',
+      type: 'Weakness',
+    },
+    {
+      name: 'Onverwachte hulp',
+      description: 'Krijg hulp van een andere deelnemer tijdens het spel',
+      type: 'Perk',
+    },
+    {
+      name: 'Blindelings spelen',
+      description: 'Speel een ronde zonder het spel te kunnen zien',
+      type: 'Weakness',
+    },
+    {
+      name: 'Extra klap',
+      description: 'Mag een andere deelnemer een klap geven tijdens het spelen',
+      type: 'Perk',
+    },
+    {
+      name: 'Handen op je rug',
+      description: 'Speel een ronde met je handen op je rug',
+      type: 'Weakness',
+    },
+    {
+      name: 'Sneller denken',
+      description: 'Krijg 30 seconden extra bedenktijd voor elke beslissing',
+      type: 'Perk',
+    },
+    {
+      name: 'Stilte bestraffing',
+      description: 'Krijg een minuut straftijd voor elke keer dat je praat',
+      type: 'Weakness',
+    },
   ];
+
   displayedItems: any[] = [];
   transform: string = '';
   activeIndex: number = 0;
   finalSelectedIndex: number = -1;
   spinning: boolean = false;
+  finalSelected: any = null;
 
   constructor() {
     this.populateDisplayedItems();
@@ -37,6 +80,7 @@ export class RandomPickerComponent {
   spin() {
     if (this.spinning) return;
 
+    this.finalSelected = null;
     this.spinning = true;
     this.finalSelectedIndex = -1;
     const totalItems = this.displayedItems.length;
@@ -48,7 +92,8 @@ export class RandomPickerComponent {
     setTimeout(() => {
       this.spinning = false;
       this.selectItem(randomPosition);
-      alert(`Selected: ${this.items[this.finalSelectedIndex].name}`);
+      this.finalSelected = this.items[this.finalSelectedIndex];
+      console.log('Final selected:', this.finalSelected.name);
     }, 4000); // 4 seconds for spin duration
   }
 
@@ -56,7 +101,7 @@ export class RandomPickerComponent {
     const actualPosition = Math.abs(
       position % (this.displayedItems.length * 110)
     );
-    const centerOffset = 150; // Half of the carousel-container width
+    const centerOffset = 250; // Half of the carousel-container width
     this.finalSelectedIndex =
       Math.floor((actualPosition + centerOffset) / 110) % this.items.length;
   }
