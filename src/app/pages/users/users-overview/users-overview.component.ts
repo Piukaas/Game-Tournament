@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-users-overview',
+  selector: 'users-overview',
   templateUrl: './users-overview.component.html',
 })
 export class UsersOverviewComponent {

@@ -471,3 +471,66 @@ td .form-control {
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
 }
+
+/* Random Picker */
+.carousel-container {
+  position: relative;
+  width: 300px;
+  height: 150px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);
+  will-change: transform;
+}
+
+.card {
+  min-width: 100px;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.card.active {
+  background-color: #ffa500 !important;
+  font-size: 1.2em;
+}
+
+.picker-btn {
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.needle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid red;
+  transform: translateX(-50%) rotate(180deg);
+  z-index: 2;
+}
+
+.perk {
+  background-color: #4caf50; /* green */
+  color: white;
+}
+
+.weakness {
+  background-color: #f44336; /* red */
+  color: white;
+}

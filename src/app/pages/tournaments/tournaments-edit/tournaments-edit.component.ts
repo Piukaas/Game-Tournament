@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-tournaments-edit',
+  selector: 'tournaments-edit',
   templateUrl: './tournaments-edit.component.html',
 })
 export class TournamentsEditComponent {}

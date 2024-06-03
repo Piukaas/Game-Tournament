@@ -1,0 +1,17 @@
+<div class="carousel-container">
+  <div class="needle"></div>
+  <div class="carousel" [style.transform]="transform">
+    <div
+      class="card"
+      *ngFor="let item of displayedItems; let i = index"
+      [ngClass]="{
+        active: isFinalSelected(i),
+        perk: item.type === 'Perk',
+        weakness: item.type === 'Weakness'
+      }"
+    >
+      {{ item.name }}
+    </div>
+  </div>
+  <button class="btn btn-primary picker-btn" (click)="spin()">Spin</button>
+</div>

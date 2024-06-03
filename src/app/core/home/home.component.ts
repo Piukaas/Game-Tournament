@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
+  selector: 'home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnDestroy {
