@@ -543,3 +543,9 @@ td .round-btn {
   background-color: var(--danger);
   color: white;
 }
+
+/* Tournament */
+.draggable-btn:hover,
+.draggable:hover {
+  cursor: move !important;
+}

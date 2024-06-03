@@ -8,7 +8,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -24,13 +24,13 @@ export class TournamentsEditComponent {
   userCheckboxes: any[] = [];
   allGames: any[] = [];
   loading: boolean = false;
+  dragStartIndex!: number;
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService,
-    private route: ActivatedRoute
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -106,6 +106,31 @@ export class TournamentsEditComponent {
 
   addGame() {
     this.games.push(this.createGame());
+  }
+
+  dragStart(event: DragEvent, index: number) {
+    this.dragStartIndex = index;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
+  dragOver(event: DragEvent, index: number) {
+    event.preventDefault();
+    this.moveItemInArray(this.games.controls, this.dragStartIndex, index);
+    this.dragStartIndex = index;
+  }
+
+  dragEnd(event: DragEvent, index: number) {
+    const gameElement = this.games.at(this.dragStartIndex);
+    this.games.removeAt(this.dragStartIndex);
+    this.games.insert(index, gameElement);
+  }
+
+  moveItemInArray(array: any[], fromIndex: number, toIndex: number) {
+    const element = array[fromIndex];
+    array.splice(fromIndex, 1);
+    array.splice(toIndex, 0, element);
   }
 
   onGameChange(index: number, gameId: string): void {

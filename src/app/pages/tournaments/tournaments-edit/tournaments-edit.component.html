@@ -111,8 +111,13 @@
         </thead>
         <tbody formArrayName="games">
           <tr
+            class="draggable"
             *ngFor="let game of games.controls; let i = index"
             [formGroupName]="i"
+            draggable="true"
+            (dragstart)="dragStart($event, i)"
+            (dragover)="dragOver($event, i)"
+            (dragend)="dragEnd($event, i)"
           >
             <td>
               <select formControlName="game" class="form-control">
@@ -193,6 +198,9 @@
                 [disabled]="games.controls.length === 1"
               >
                 <i class="fa fa-trash-can"></i>
+              </button>
+              <button type="button" class="btn btn-secondary round-btn ml-5 draggable-btn">
+                <i class="fa fa-arrows-up-down"></i>
               </button>
             </td>
           </tr>
