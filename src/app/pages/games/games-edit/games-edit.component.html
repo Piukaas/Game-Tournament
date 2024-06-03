@@ -201,9 +201,9 @@
                   "
                   (input)="
                     rule.get('playerAmount')?.value < 1
-                      ? rule.get('playerAmount')?.setValue(1)
+                      ? rule.get('playerAmount')?.setValue('')
                       : rule.get('playerAmount')?.value > 10
-                      ? rule.get('playerAmount')?.setValue(10)
+                      ? rule.get('playerAmount')?.setValue('')
                       : null
                   "
                 />
@@ -255,7 +255,7 @@
     <div *ngIf="!gameId" class="row mt-10">
       <div class="col-md-6 col-6">
         <button routerLink="/games" class="btn btn-primary">
-          <i class="fa fa-arrow-left"></i> Terug naar spelletje
+          <i class="fa fa-arrow-left"></i> Terug
         </button>
       </div>
       <div class="col-md-6 col-6">
@@ -268,7 +268,7 @@
     <div *ngIf="gameId" class="row mt-10">
       <div class="col-md-6 col-6">
         <button [routerLink]="['/games', gameId]" class="btn btn-primary">
-          <i class="fa fa-arrow-left"></i> Terug naar spel
+          <i class="fa fa-arrow-left"></i> Terug
         </button>
       </div>
       <div class="col-md-6 col-6">

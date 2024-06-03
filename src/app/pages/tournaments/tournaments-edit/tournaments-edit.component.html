@@ -8,7 +8,7 @@
 
   <form *ngIf="!loading" (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="row">
-      <div class="form-group col-md-6 col-6">
+      <div class="form-group col-md-6">
         <label class="required" for="title">Titel</label>
         <input
           id="title"
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="form-group col-md-6 col-6">
+      <div class="form-group col-md-6">
         <label class="required" for="date">Datum</label>
         <input
           id="date"
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="form-group col-md-3 col-3">
+    <div class="form-group">
       <label class="required">Spelers</label>
       <div formArrayName="userCheckboxes">
         <div
@@ -103,9 +103,9 @@
       <table class="table table-bordered table-striped mt-10">
         <thead>
           <tr>
-            <th class="required">Spel</th>
-            <th class="required">Regel</th>
-            <th class="required">Score</th>
+            <th class="required w-30">Spel</th>
+            <th class="required w-30">Regel</th>
+            <th class="required w-30">Score</th>
             <th>Actie</th>
           </tr>
         </thead>
@@ -175,9 +175,9 @@
                 "
                 (input)="
                   game.get('score')?.value < 1
-                    ? game.get('score')?.setValue(1)
+                    ? game.get('score')?.setValue('')
                     : game.get('score')?.value > 10
-                    ? game.get('score')?.setValue(10)
+                    ? game.get('score')?.setValue('')
                     : null
                 "
               />
@@ -199,9 +199,6 @@
               >
                 <i class="fa fa-trash-can"></i>
               </button>
-              <button type="button" class="btn btn-secondary round-btn ml-5 draggable-btn">
-                <i class="fa fa-arrows-up-down"></i>
-              </button>
             </td>
           </tr>
         </tbody>
@@ -211,7 +208,7 @@
     <div class="row mt-10">
       <div class="col-md-6 col-6">
         <button routerLink="/tournaments" class="btn btn-primary">
-          <i class="fa fa-arrow-left"></i> Terug naar toernooien
+          <i class="fa fa-arrow-left"></i> Terug
         </button>
       </div>
       <div class="col-md-6 col-6">
