@@ -36,6 +36,15 @@
           </button>
 
           <button
+            type="button"
+            class="btn btn-primary round-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            <i class="fas fa-spinner"></i>
+          </button>
+
+          <button
             *ngIf="tournament.status === 'Aankomend'"
             class="btn btn-success round-btn"
             (click)="startTournament()"
@@ -60,7 +69,7 @@
           <h3>
             Spelers:
             <li *ngFor="let user of tournament.users">
-              {{ user.username }} - Points:
+              {{ user.username }} - Punten:
               {{ getPointsForUser(user.username) }}
             </li>
           </h3>
@@ -131,3 +140,5 @@
     >
   </div>
 </div>
+
+<random-picker></random-picker>
