@@ -489,7 +489,7 @@ td .form-control {
   will-change: transform;
 }
 
-.card {
+.card-picker {
   min-width: 100px;
   margin: 5px;
   padding: 10px;
@@ -500,7 +500,7 @@ td .form-control {
   transition: transform 0.3s, background-color 0.3s;
 }
 
-.card.active {
+.card-picker.active {
   background-color: #ffa500 !important;
   font-size: 1.2em;
 }

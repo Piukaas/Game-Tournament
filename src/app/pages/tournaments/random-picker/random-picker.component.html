@@ -2,7 +2,7 @@
   <div class="needle"></div>
   <div class="carousel" [style.transform]="transform">
     <div
-      class="card"
+      class="card-picker"
       *ngFor="let item of displayedItems; let i = index"
       [ngClass]="{
         active: isFinalSelected(i),
