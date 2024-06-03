@@ -293,8 +293,8 @@ td .form-control {
 
 .round-btn {
   border-radius: 100%;
-  width: auto;
-  height: auto;
+  width: fit-content;
+  height: fit-content;
 }
 
 .link {
@@ -454,7 +454,6 @@ td .form-control {
 
 /* Game */
 .game-image {
-  height: fit-content;
   border-radius: 25px;
   margin-bottom: 10px;
 }
