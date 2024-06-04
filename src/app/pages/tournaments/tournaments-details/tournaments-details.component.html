@@ -90,7 +90,16 @@
               </thead>
               <tbody>
                 <tr *ngFor="let game of tournament.games">
-                  <td>{{ game.game.name }}</td>
+                  <td>
+                    <a
+                      class="link"
+                      [routerLink]="['/games/', game.game._id]"
+                      target="_blank"
+                    >
+                      <img [src]="game.game.imageUrl" class="game-image" />
+                      {{ game.game.name }} - {{ game.game.platform }}
+                    </a>
+                  </td>
                   <td>{{ game.rule }}</td>
                   <td>{{ game.score }}</td>
                   <td

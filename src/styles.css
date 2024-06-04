@@ -320,6 +320,14 @@ td .round-btn {
   text-decoration: underline;
 }
 
+td .link {
+  color: var(--black);
+}
+
+td .link:hover {
+  color: var(--black2);
+}
+
 /* Badges */
 .badge {
   border-radius: 25px;
@@ -469,6 +477,12 @@ td .round-btn {
 .game-image {
   border-radius: 25px;
   margin-bottom: 10px;
+}
+
+td .game-image {
+  border-radius: 10px;
+  margin-bottom: 0px;
+  width: 30px;
 }
 
 .rules {
