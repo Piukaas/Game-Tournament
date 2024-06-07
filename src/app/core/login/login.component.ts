@@ -39,10 +39,13 @@ export class LoginComponent {
     if (this.form.valid) {
       const { username, password } = this.form.value;
       this.http
-        .post<{ token: string }>(`${environment.apiUrl}/users/login`, {
-          username,
-          password,
-        })
+        .post<{ token: string; expiresIn: number }>(
+          `${environment.apiUrl}/users/login`,
+          {
+            username,
+            password,
+          }
+        )
         .pipe(
           catchError((error) => {
             if (error.status === 403) {
@@ -55,8 +58,10 @@ export class LoginComponent {
         )
         .subscribe((response) => {
           if (response !== null) {
+            const expiresAt = response.expiresIn * 1000 + Date.now();
             localStorage.setItem('token', response.token);
             localStorage.setItem('username', username);
+            localStorage.setItem('expires_at', JSON.stringify(expiresAt));
             this.userService.setUsername(username);
             this.router.navigate(['/']);
           }

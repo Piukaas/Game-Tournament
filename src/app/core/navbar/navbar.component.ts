@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   username!: string | null;
   private authSub: Subscription | undefined;
+  private tokenCheckInterval: any;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -17,11 +18,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authSub = this.userService.username$.subscribe((username) => {
       this.username = username;
     });
+    this.checkTokenExpiration();
   }
 
   ngOnDestroy(): void {
     if (this.authSub) {
       this.authSub.unsubscribe();
+    }
+    if (this.tokenCheckInterval) {
+      clearInterval(this.tokenCheckInterval);
     }
   }
 
@@ -32,7 +37,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('expires_at');
     this.userService.setUsername(null);
     this.router.navigate(['/']);
+  }
+
+  checkTokenExpiration() {
+    this.tokenCheckInterval = setInterval(() => {
+      const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '0');
+      if (Date.now() > expiresAt) {
+        this.logout();
+      }
+    }, 60 * 1000);
   }
 }
