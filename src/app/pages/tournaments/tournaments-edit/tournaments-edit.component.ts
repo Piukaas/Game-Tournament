@@ -23,6 +23,8 @@ export class TournamentsEditComponent {
   error!: string;
   userCheckboxes: any[] = [];
   allGames: any[] = [];
+  groupedGames: { [platform: string]: any[] } = {};
+  platforms: string[] = [];
   loading: boolean = false;
   dragStartIndex!: number;
 
@@ -61,6 +63,7 @@ export class TournamentsEditComponent {
     this.http.get(`${environment.apiUrl}/games`).subscribe(
       (games: any) => {
         this.allGames = games;
+        this.groupGamesByPlatform();
         this.loading = false;
       },
       (error) => {
@@ -68,6 +71,16 @@ export class TournamentsEditComponent {
         throw of(error);
       }
     );
+  }
+
+  groupGamesByPlatform(): void {
+    this.allGames.forEach((game) => {
+      if (!this.groupedGames[game.platform]) {
+        this.groupedGames[game.platform] = [];
+        this.platforms.push(game.platform);
+      }
+      this.groupedGames[game.platform].push(game);
+    });
   }
 
   getActiveUsers(): void {

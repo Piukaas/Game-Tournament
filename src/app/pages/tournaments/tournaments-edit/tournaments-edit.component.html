@@ -121,14 +121,17 @@
           >
             <td>
               <select formControlName="game" class="form-control">
-                <optgroup label="Default">
-                  <option value="" disabled>Kies een spel</option>
-                </optgroup>
-                <optgroup label="Spellen">
-                  <option *ngFor="let game of allGames" [value]="game._id">
-                    {{ game.name }} - {{ game.platform }}
-                  </option>
-                </optgroup>
+                <option value="" disabled>Kies een spel</option>
+                <ng-container *ngFor="let platform of platforms">
+                  <optgroup [label]="platform">
+                    <option
+                      *ngFor="let game of groupedGames[platform]"
+                      [value]="game._id"
+                    >
+                      {{ game.name }}
+                    </option>
+                  </optgroup>
+                </ng-container>
               </select>
 
               <div
