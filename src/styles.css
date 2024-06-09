@@ -483,6 +483,7 @@ td .link:hover {
   border-radius: 25px;
   margin-bottom: 10px;
   max-width: 100%;
+  height: fit-content;
   object-fit: cover;
 }
 
