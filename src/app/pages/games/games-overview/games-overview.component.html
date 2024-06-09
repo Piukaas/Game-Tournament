@@ -34,7 +34,22 @@
                   class="img-fluid d-block mx-auto game-image no-user-select"
                 />
               </div>
-              <h4 class="card-title align-center">{{ game.name }}</h4>
+              <h4 class="card-title align-center">
+                <i
+                  *ngIf="game.platform.toLowerCase().includes('xbox')"
+                  class="fab fa-xbox"
+                ></i>
+                <i
+                  *ngIf="game.platform.toLowerCase().includes('playstation')"
+                  class="fab fa-playstation"
+                ></i>
+                <i
+                  *ngIf="game.platform.toLowerCase().includes('pc')"
+                  class="fab fa-windows"
+                >
+                </i>
+                {{ game.name }}
+              </h4>
             </div>
           </div>
         </div>
