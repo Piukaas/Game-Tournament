@@ -43,11 +43,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   checkTokenExpiration() {
-    this.tokenCheckInterval = setInterval(() => {
+    const checkExpiration = () => {
       const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '0');
       if (Date.now() > expiresAt) {
         this.logout();
       }
-    }, 60 * 1000);
+    };
+
+    checkExpiration();
+    this.tokenCheckInterval = setInterval(checkExpiration, 60 * 1000);
   }
 }
