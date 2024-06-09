@@ -90,46 +90,51 @@
               </thead>
               <tbody>
                 <tr *ngFor="let game of tournament.games">
-                  <td>
-                    <a
-                      class="link"
-                      [routerLink]="['/games/', game.game._id]"
-                      target="_blank"
-                    >
-                      <img [src]="game.game.imageUrl" class="game-image" />
-                      {{ game.game.name }} - {{ game.game.platform }}
-                    </a>
-                  </td>
-                  <td>{{ game.rule }}</td>
-                  <td>{{ game.score }}</td>
-                  <td
-                    *ngIf="
-                      tournament.status === 'Actief' &&
-                      userService.isAuthenticated()
-                    "
-                  >
-                    <select
-                      [(ngModel)]="selectedWinnerIds[game._id]"
-                      (change)="updateWinner(game)"
-                      class="form-control"
-                    >
-                      <option value="">Kies een winnaar</option>
-                      <option
-                        *ngFor="let user of tournament.users"
-                        [value]="user._id"
+                  <ng-container *ngIf="game.game && game.game._id; else noGame">
+                    <td>
+                      <a
+                        class="link"
+                        [routerLink]="['/games/', game.game._id]"
+                        target="_blank"
                       >
-                        {{ user.username }}
-                      </option>
-                    </select>
-                  </td>
-                  <td
-                    *ngIf="
-                      tournament.status !== 'Actief' ||
-                      !userService.isAuthenticated()
-                    "
-                  >
-                    {{ game.winner?.username }}
-                  </td>
+                        <img [src]="game.game.imageUrl" class="game-image" />
+                        {{ game.game.name }} - {{ game.game.platform }}
+                      </a>
+                    </td>
+                    <td>{{ game.rule }}</td>
+                    <td>{{ game.score }}</td>
+                    <td
+                      *ngIf="
+                        tournament.status === 'Actief' &&
+                        userService.isAuthenticated()
+                      "
+                    >
+                      <select
+                        [(ngModel)]="selectedWinnerIds[game._id]"
+                        (change)="updateWinner(game)"
+                        class="form-control"
+                      >
+                        <option value="">Kies een winnaar</option>
+                        <option
+                          *ngFor="let user of tournament.users"
+                          [value]="user._id"
+                        >
+                          {{ user.username }}
+                        </option>
+                      </select>
+                    </td>
+                    <td
+                      *ngIf="
+                        tournament.status !== 'Actief' ||
+                        !userService.isAuthenticated()
+                      "
+                    >
+                      {{ game.winner?.username }}
+                    </td>
+                  </ng-container>
+                  <ng-template #noGame>
+                    <td colspan="5">Verwijderd spel</td>
+                  </ng-template>
                 </tr>
               </tbody>
             </table>
