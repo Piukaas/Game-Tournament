@@ -25,6 +25,11 @@ export class UserService {
     return token !== null;
   }
 
+  isAdmin() {
+    const role = localStorage.getItem('role');
+    return role === 'Admin';
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }

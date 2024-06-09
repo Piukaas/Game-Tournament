@@ -39,7 +39,7 @@ export class LoginComponent {
     if (this.form.valid) {
       const { username, password } = this.form.value;
       this.http
-        .post<{ token: string; expiresIn: number }>(
+        .post<{ token: string; expiresIn: number; user: { role: string } }>(
           `${environment.apiUrl}/users/login`,
           {
             username,
@@ -62,6 +62,11 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
             localStorage.setItem('username', username);
             localStorage.setItem('expires_at', JSON.stringify(expiresAt));
+
+            if (response.user.role) {
+              localStorage.setItem('role', response.user.role);
+            }
+
             this.userService.setUsername(username);
             this.router.navigate(['/']);
           }

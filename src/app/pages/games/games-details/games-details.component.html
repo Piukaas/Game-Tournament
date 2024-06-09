@@ -9,13 +9,17 @@
           class="col-md-4 col-12 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
-          <div *ngIf="confirmDelete" class="d-flex d-flex-gap-10">
+          <div
+            *ngIf="confirmDelete && userService.isAdmin()"
+            class="d-flex d-flex-gap-10"
+          >
             <span>Zeker?</span>
             <button class="btn btn-secondary" (click)="confirmDelete = false">
               <i class="fa fa-xmark"></i>
             </button>
           </div>
           <button
+            *ngIf="userService.isAdmin()"
             class="btn btn-danger"
             (click)="confirmDelete ? deleteGame() : (confirmDelete = true)"
           >

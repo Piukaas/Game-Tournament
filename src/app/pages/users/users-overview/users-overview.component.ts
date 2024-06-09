@@ -20,7 +20,7 @@ export class UsersOverviewComponent {
   ) {}
 
   ngOnInit() {
-    if (!this.userService.isAuthenticated()) {
+    if (!this.userService.isAuthenticated() || !this.userService.isAdmin()) {
       this.router.navigate(['/']);
     }
 

@@ -34,10 +34,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.userService.isAuthenticated();
   }
 
+  isAdmin() {
+    return this.userService.isAdmin();
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('role');
     this.userService.setUsername(null);
     this.router.navigate(['/']);
   }

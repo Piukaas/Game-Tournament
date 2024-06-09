@@ -483,6 +483,7 @@ td .link:hover {
   border-radius: 25px;
   margin-bottom: 10px;
   width: fit-content;
+  max-height: 300px;
 }
 
 .rules {

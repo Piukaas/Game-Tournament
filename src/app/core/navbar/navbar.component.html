@@ -23,7 +23,7 @@
       <li class="nav-item ml-10">
         <a class="nav-link" routerLink="/games">Spelletjes</a>
       </li>
-      <li class="nav-item ml-10" *ngIf="isAuthenticated()">
+      <li class="nav-item ml-10" *ngIf="isAuthenticated() && isAdmin()">
         <a class="nav-link" routerLink="/users">Gebruikers</a>
       </li>
       <li class="nav-item login ml-10" *ngIf="!username; else userLogout">
