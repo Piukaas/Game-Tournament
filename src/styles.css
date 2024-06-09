@@ -477,13 +477,12 @@ td .link:hover {
 .game-image {
   border-radius: 25px;
   margin-bottom: 10px;
-  height: 100%;
 }
 
-td .game-image {
-  border-radius: 10px;
-  margin-bottom: 0px;
-  width: 30px;
+.game-image-details {
+  border-radius: 25px;
+  margin-bottom: 10px;
+  height: fit-content;
 }
 
 .rules {
