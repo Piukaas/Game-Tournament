@@ -484,7 +484,6 @@ td .link:hover {
   margin-bottom: 10px;
   max-width: 100%;
   height: fit-content;
-  object-fit: cover;
 }
 
 .rules {
