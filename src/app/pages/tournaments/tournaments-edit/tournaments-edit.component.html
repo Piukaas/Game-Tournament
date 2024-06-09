@@ -121,11 +121,16 @@
           >
             <td>
               <select formControlName="game" class="form-control">
-                <option value="" disabled>Kies een spel</option>
-                <option *ngFor="let game of allGames" [value]="game._id">
-                  {{ game.name }} - {{ game.platform }}
-                </option>
+                <optgroup label="Default">
+                  <option value="" disabled>Kies een spel</option>
+                </optgroup>
+                <optgroup label="Spellen">
+                  <option *ngFor="let game of allGames" [value]="game._id">
+                    {{ game.name }} - {{ game.platform }}
+                  </option>
+                </optgroup>
               </select>
+
               <div
                 *ngIf="game.get('game')?.invalid && game.get('game')?.touched"
                 class="validations"
