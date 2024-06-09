@@ -482,8 +482,8 @@ td .link:hover {
 .game-image-details {
   border-radius: 25px;
   margin-bottom: 10px;
-  max-width: 200px;
-  height: fit-content;
+  max-width: 50vw;
+  height: auto;
 }
 
 .rules {
