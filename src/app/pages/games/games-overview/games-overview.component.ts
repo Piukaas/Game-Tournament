@@ -12,6 +12,7 @@ export class GamesOverviewComponent implements OnInit {
   games: any[] = [];
   loading: boolean = false;
   searchTerm: string = '';
+  platform: string = '';
 
   constructor(private http: HttpClient, public userService: UserService) {}
 
@@ -22,7 +23,9 @@ export class GamesOverviewComponent implements OnInit {
   searchGames() {
     this.loading = true;
     this.http
-      .get(`${environment.apiUrl}/games?search=${this.searchTerm}`)
+      .get(
+        `${environment.apiUrl}/games?search=${this.searchTerm}&platform=${this.platform}`
+      )
       .subscribe(
         (games: any) => {
           this.games = games;

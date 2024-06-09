@@ -1,17 +1,32 @@
 <div class="p-4 col-md-10 col-10 mx-auto content-card">
   <div class="row">
-    <h1 class="col-md-6">Spelletjes</h1>
-    <div class="col-md-6 edit-buttons">
-      <div class="input-group">
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          placeholder="Zoek voor spelletjes"
-          class="form-control"
-          (keyup.enter)="searchGames()"
-          (blur)="searchGames()"
-        />
-      </div>
+    <h1 class="col-md-4 col-12 mb-10">Spelletjes</h1>
+    <div class="col-md-8 col-12 edit-buttons mb-10">
+      <select
+        class="form-control"
+        [(ngModel)]="platform"
+        (change)="searchGames()"
+      >
+        <option value="">Allemaal</option>
+        <option value="Xbox Series X">Xbox Series X</option>
+        <option value="Xbox 360">Xbox 360</option>
+        <option value="Xbox 360 Kinect">Xbox 360 Kinect</option>
+        <option value="Playstation 4">Playstation 4</option>
+        <option value="Playstation 4 VR">Playstation 4 VR</option>
+        <option value="Playstation 2">Playstation 2</option>
+        <option value="Playstation 1">Playstation 1</option>
+        <option value="Nintendo Switch">Nintendo Switch</option>
+        <option value="Gameboy">Gameboy</option>
+        <option value="PC">PC</option>
+      </select>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Zoek voor spelletjes"
+        class="form-control"
+        (keyup.enter)="searchGames()"
+        (blur)="searchGames()"
+      />
       <button
         *ngIf="userService.isAuthenticated()"
         class="btn btn-primary round-btn"
