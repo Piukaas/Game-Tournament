@@ -482,8 +482,9 @@ td .link:hover {
 .game-image-details {
   border-radius: 25px;
   margin-bottom: 10px;
-  width: fit-content;
-  max-height: 40vh;
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: cover;
 }
 
 .rules {
