@@ -477,6 +477,7 @@ td .link:hover {
 .game-image {
   border-radius: 25px;
   margin-bottom: 10px;
+  height: fit-content;
 }
 
 td .game-image {
