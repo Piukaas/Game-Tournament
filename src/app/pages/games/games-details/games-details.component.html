@@ -54,6 +54,10 @@
               class="fab fa-windows"
             >
             </i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('mobiel')"
+              class="fab fa-apple"
+            ></i>
             {{ game.platform }}
           </p>
           <h4>Regels:</h4>
