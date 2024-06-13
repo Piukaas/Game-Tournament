@@ -46,6 +46,7 @@ export class TournamentsEditComponent {
       userCheckboxes: this.fb.array([], this.minSelectedCheckboxes(1)),
       users: this.fb.array([]),
       games: this.fb.array([this.createGame()]),
+      image: [''],
     });
 
     this.getActiveUsers();

@@ -69,80 +69,84 @@
           </button>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <h4>
-            {{ tournament.date | date : "dd-MM-yyyy" }}
-          </h4>
-          <h3>
-            Spelers
-            <li *ngFor="let user of tournament.users">
-              {{ user.username }} - Punten:
-              {{ getPointsForUser(user.username) }}
-            </li>
-          </h3>
-          <h3>Spelletjes</h3>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped mt-10">
-              <thead>
-                <tr>
-                  <th>Spel</th>
-                  <th>Regel</th>
-                  <th>Score</th>
-                  <th>Winnaar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let game of tournament.games">
-                  <ng-container *ngIf="game.game && game.game._id; else noGame">
-                    <td>
-                      <a
-                        class="link"
-                        [routerLink]="['/games/', game.game._id]"
-                        target="_blank"
-                      >
-                        {{ game.game.name }} - {{ game.game.platform }}
-                      </a>
-                    </td>
-                    <td>{{ game.rule }}</td>
-                    <td>{{ game.score }}</td>
-                    <td
-                      *ngIf="
-                        tournament.status === 'Actief' &&
-                        userService.isAuthenticated()
-                      "
+
+      <h4>
+        {{ tournament.date | date : "dd-MM-yyyy" }}
+      </h4>
+
+      <img
+        *ngIf="tournament.image"
+        [src]="tournament.image"
+        class="tournament-banner no-user-select"
+      />
+
+      <h3>
+        Spelers
+        <li *ngFor="let user of tournament.users">
+          {{ user.username }} - Punten:
+          {{ getPointsForUser(user.username) }}
+        </li>
+      </h3>
+      <h3>Spelletjes</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped mt-10">
+          <thead>
+            <tr>
+              <th>Spel</th>
+              <th>Regel</th>
+              <th>Score</th>
+              <th>Winnaar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let game of tournament.games">
+              <ng-container *ngIf="game.game && game.game._id; else noGame">
+                <td>
+                  <a
+                    class="link"
+                    [routerLink]="['/games/', game.game._id]"
+                    target="_blank"
+                  >
+                    {{ game.game.name }} - {{ game.game.platform }}
+                  </a>
+                </td>
+                <td>{{ game.rule }}</td>
+                <td>{{ game.score }}</td>
+                <td
+                  *ngIf="
+                    tournament.status === 'Actief' &&
+                    userService.isAuthenticated()
+                  "
+                >
+                  <select
+                    [(ngModel)]="selectedWinnerIds[game._id]"
+                    (change)="updateWinner(game)"
+                    class="form-control"
+                  >
+                    <option value="">Kies een winnaar</option>
+                    <option
+                      *ngFor="let user of tournament.users"
+                      [value]="user._id"
                     >
-                      <select
-                        [(ngModel)]="selectedWinnerIds[game._id]"
-                        (change)="updateWinner(game)"
-                        class="form-control"
-                      >
-                        <option value="">Kies een winnaar</option>
-                        <option
-                          *ngFor="let user of tournament.users"
-                          [value]="user._id"
-                        >
-                          {{ user.username }}
-                        </option>
-                      </select>
-                    </td>
-                    <td
-                      *ngIf="
-                        tournament.status !== 'Actief' ||
-                        !userService.isAuthenticated()
-                      "
-                    >
-                      {{ game.winner?.username }}
-                    </td>
-                  </ng-container>
-                  <ng-template #noGame>
-                    <td colspan="5">Verwijderd spel</td>
-                  </ng-template>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                      {{ user.username }}
+                    </option>
+                  </select>
+                </td>
+                <td
+                  *ngIf="
+                    tournament.status !== 'Actief' ||
+                    !userService.isAuthenticated()
+                  "
+                >
+                  {{ game.winner?.username }}
+                </td>
+              </ng-container>
+              <ng-template #noGame>
+                <td colspan="5">Verwijderd spel</td>
+              </ng-template>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <button routerLink="/tournaments" class="btn btn-primary mt-10">
         <i class="fa fa-arrow-left"></i> Terug

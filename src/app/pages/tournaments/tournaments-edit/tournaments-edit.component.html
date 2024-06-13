@@ -8,6 +8,22 @@
 
   <form *ngIf="!loading" (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="row">
+      <img
+        [src]="form.get('image')?.value"
+        class="tournament-banner no-user-select"
+        *ngIf="form.get('image')?.value"
+      />
+
+      <div class="form-group">
+        <label for="image">Afbeelding URL</label>
+        <input
+          id="image"
+          class="form-control"
+          formControlName="image"
+          type="text"
+        />
+      </div>
+
       <div class="form-group col-md-6">
         <label class="required" for="title">Titel</label>
         <input
