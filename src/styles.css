@@ -482,6 +482,7 @@ td .link:hover {
 .game-image-details {
   border-radius: 25px;
   margin-bottom: 10px;
+  height: auto;
 }
 
 @supports (height: fit-content) {
