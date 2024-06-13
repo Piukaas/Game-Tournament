@@ -482,19 +482,13 @@ td .link:hover {
 .game-image-details {
   border-radius: 25px;
   margin-bottom: 10px;
+  max-width: 20vw;
   height: auto;
-}
-
-@supports (height: fit-content) {
-  .game-image-details {
-    height: fit-content;
-  }
 }
 
 @media (max-width: 900px) {
   .game-image-details {
     max-width: 50vw;
-    height: auto !important;
   }
 }
 

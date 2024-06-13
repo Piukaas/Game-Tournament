@@ -33,42 +33,36 @@
           </button>
         </div>
       </div>
-      <div class="row">
-        <img
-          [src]="game.imageUrl"
-          class="col-md-3 game-image-details no-user-select"
-        />
-        <div class="col-md-8">
-          <h3 class="card-title">{{ game.genre }}</h3>
-          <p>
-            <i
-              *ngIf="game.platform.toLowerCase().includes('xbox')"
-              class="fab fa-xbox"
-            ></i>
-            <i
-              *ngIf="game.platform.toLowerCase().includes('playstation')"
-              class="fab fa-playstation"
-            ></i>
-            <i
-              *ngIf="game.platform.toLowerCase().includes('pc')"
-              class="fab fa-windows"
-            >
-            </i>
-            <i
-              *ngIf="game.platform.toLowerCase().includes('mobiel')"
-              class="fab fa-apple"
-            ></i>
-            {{ game.platform }}
-          </p>
-          <h4>Regels:</h4>
-          <div class="rules mt-10" *ngFor="let rule of game.rules">
-            <h5>{{ rule.type }} - {{ rule.rule }}</h5>
-            <p>
-              {{ rule.playerAmount }}
-              {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
-            </p>
-          </div>
-        </div>
+      <h3 class="card-title">{{ game.genre }}</h3>
+      <p>
+        <i
+          *ngIf="game.platform.toLowerCase().includes('xbox')"
+          class="fab fa-xbox"
+        ></i>
+        <i
+          *ngIf="game.platform.toLowerCase().includes('playstation')"
+          class="fab fa-playstation"
+        ></i>
+        <i
+          *ngIf="game.platform.toLowerCase().includes('pc')"
+          class="fab fa-windows"
+        >
+        </i>
+        <i
+          *ngIf="game.platform.toLowerCase().includes('mobiel')"
+          class="fab fa-apple"
+        ></i>
+        {{ game.platform }}
+      </p>
+      <img [src]="game.imageUrl" class="game-image-details no-user-select" />
+
+      <h4>Regels:</h4>
+      <div class="rules mt-10" *ngFor="let rule of game.rules">
+        <h5>{{ rule.type }} - {{ rule.rule }}</h5>
+        <p>
+          {{ rule.playerAmount }}
+          {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
+        </p>
       </div>
       <button routerLink="/games" class="btn btn-primary mt-10">
         <i class="fa fa-arrow-left"></i> Terug
