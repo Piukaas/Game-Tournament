@@ -64,6 +64,7 @@ export class TournamentsEditComponent {
     this.http.get(`${environment.apiUrl}/games`).subscribe(
       (games: any) => {
         this.allGames = games;
+        this.groupedGames = {};
         this.groupGamesByPlatform();
         this.loading = false;
       },
