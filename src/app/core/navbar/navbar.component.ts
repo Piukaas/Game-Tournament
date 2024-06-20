@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'navbar',
@@ -12,13 +14,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authSub: Subscription | undefined;
   private tokenCheckInterval: any;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.authSub = this.userService.username$.subscribe((username) => {
       this.username = username;
     });
     this.checkTokenExpiration();
+
+    // Ping the API
+    this.http.get(`${environment.apiUrl}/users/ping`).subscribe();
   }
 
   ngOnDestroy(): void {
