@@ -18,8 +18,8 @@
   --danger2: darkred;
   --success: green;
   --success2: rgb(14, 17, 14);
-  --warning: orange;
-  --warning2: yellow;
+  --warning: #ffc107;
+  --warning2: #e4a11b;
 }
 
 body {
@@ -215,73 +215,100 @@ td .form-control {
 /* Buttons */
 .btn-primary {
   width: fit-content;
-  background-color: var(--accent);
-  color: var(--white);
+  background-color: var(--accent) !important;
+  color: var(--white) !important;
   border-radius: 25px;
   border: none;
   transition: 1s;
 }
 
 .btn-primary:hover {
-  background-color: var(--accent2);
-  color: var(--white);
+  background-color: var(--accent2) !important;
+  color: var(--white) !important;
   transform: scale(1.1);
-  border-color: #c9bb50;
+}
+
+.btn-clear {
+  width: fit-content;
+  background-color: none;
+  color: var(--black);
+  border-radius: 25px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-clear:hover {
+  background-color: var(--gray);
+  transform: scale(1.1);
 }
 
 .btn-secondary {
-  background-color: var(--gray);
-  color: var(--white);
+  background-color: var(--gray) !important;
+  color: var(--white) !important;
   border-radius: 25px;
   border: none;
   transition: 1s;
 }
 
 .btn-secondary:hover {
-  background-color: var(--gray2);
-  color: var(--white);
+  background-color: var(--gray2) !important;
+  color: var(--white) !important;
   transform: scale(1.1);
 }
 
 .btn-danger {
-  background-color: var(--danger);
-  color: var(--white);
+  background-color: var(--danger) !important;
+  color: var(--white) !important;
   border-radius: 25px;
   border: none;
   transition: 1s;
 }
 
 .btn-danger:hover {
-  background-color: var(--danger2);
-  color: var(--white);
+  background-color: var(--danger2) !important;
+  color: var(--white) !important;
   transform: scale(1.1);
 }
 
 .btn-success {
-  background-color: var(--success);
-  color: var(--white);
+  background-color: var(--success) !important;
+  color: var(--white) !important;
   border-radius: 25px;
   border: none;
   transition: 1s;
 }
 
 .btn-success:hover {
-  background-color: var(--success2);
-  color: var(--white);
+  background-color: var(--success2) !important;
+  color: var(--white) !important;
   transform: scale(1.1);
 }
 
 .btn-dark {
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--black) !important;
+  color: var(--white) !important;
   border-radius: 25px;
   border: none;
   transition: 1s;
 }
 
 .btn-dark:hover {
-  background-color: var(--black2);
-  color: var(--white);
+  background-color: var(--black2) !important;
+  color: var(--white) !important;
+  transform: scale(1.1);
+}
+
+.btn-warning {
+  background-color: var(--warning) !important;
+  color: var(--black) !important;
+  border-radius: 25px;
+  border: none;
+  transition: 1s;
+}
+
+.btn-warning:hover {
+  background-color: var(--warning2) !important;
+  color: var(--black) !important;
   transform: scale(1.1);
 }
 
@@ -293,6 +320,18 @@ td .form-control {
 @media (min-width: 900px) {
   .edit-buttons {
     justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.edit-buttons-left {
+  display: flex;
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .edit-buttons-left {
+    justify-content: flex-start;
     align-items: center;
   }
 }

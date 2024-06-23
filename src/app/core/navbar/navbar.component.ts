@@ -25,9 +25,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.username = username;
     });
     this.checkTokenExpiration();
-
-    // Ping the API
-    this.http.get(`${environment.apiUrl}/users/ping`).subscribe();
   }
 
   ngOnDestroy(): void {

@@ -87,20 +87,59 @@
           {{ getPointsForUser(user.username) }}
         </li>
       </h3>
-      <h3>Spelletjes</h3>
-      <div class="table-responsive">
+
+      <div class="row">
+        <h3 class="col-md-6">Spelletjes</h3>
+
+        <div class="col-md-6 edit-buttons">
+          <button
+            *ngIf="!editMode && tournament.status != 'Afgerond'"
+            class="btn btn-primary round-btn"
+            (click)="editMode = true"
+          >
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button
+            *ngIf="editMode && tournament.status != 'Afgerond'"
+            class="btn btn-secondary round-btn"
+            (click)="editMode = false"
+          >
+            <i class="fa fa-xmark"></i>
+          </button>
+          <button
+            class="btn btn-clear round-btn"
+            [class.btn-warning]="tableView"
+            (click)="tableView = true"
+          >
+            <i class="fa fa-table"></i>
+          </button>
+          /
+          <button
+            class="btn btn-clear round-btn"
+            [class.btn-warning]="!tableView"
+            (click)="tableView = false"
+          >
+            <i class="fa fa-ticket"></i>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="tableView" class="table-responsive">
         <table class="table table-bordered table-striped mt-10">
           <thead>
             <tr>
+              <th>#</th>
               <th>Spel</th>
               <th>Regel</th>
               <th>Score</th>
-              <th>Winnaar</th>
+              <th *ngIf="tournament.status != 'Aankomend'">Winnaar</th>
+              <th *ngIf="editMode && userService.isAdmin()">Acties</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let game of tournament.games">
+            <tr *ngFor="let game of tournament.games; let i = index">
               <ng-container *ngIf="game.game && game.game._id; else noGame">
+                <td>{{ i + 1 }}</td>
                 <td>
                   <a
                     class="link"
@@ -111,7 +150,19 @@
                   </a>
                 </td>
                 <td>{{ game.rule }}</td>
-                <td>{{ game.score }}</td>
+                <td *ngIf="editMode">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [(ngModel)]="selectedScores[game._id]"
+                    (keyup.enter)="updateScore(game)"
+                    (blur)="updateScore(game)"
+                    min="1"
+                    max="10"
+                    (input)="validateScore(game._id)"
+                  />
+                </td>
+                <td *ngIf="!editMode">{{ game.score }}</td>
                 <td
                   *ngIf="
                     tournament.status === 'Actief' &&
@@ -134,20 +185,115 @@
                 </td>
                 <td
                   *ngIf="
-                    tournament.status !== 'Actief' ||
+                    tournament.status === 'Afgerond' ||
                     !userService.isAuthenticated()
                   "
                 >
                   {{ game.winner?.username }}
                 </td>
+                <td *ngIf="editMode && userService.isAdmin()">
+                  <div class="edit-buttons-left">
+                    <div *ngIf="confirmDeleteGame[game.game._id]">
+                      Zeker?
+                      <button
+                        class="btn btn-secondary round-btn"
+                        (click)="confirmDeleteGame[game.game._id] = false"
+                      >
+                        <i class="fa fa-xmark"></i>
+                      </button>
+                    </div>
+                    <button
+                      class="btn btn-danger round-btn"
+                      (click)="
+                        confirmDeleteGame[game.game._id]
+                          ? deleteGame(game.game._id)
+                          : (confirmDeleteGame[game.game._id] = true)
+                      "
+                      [disabled]="tournament.games.length === 1"
+                    >
+                      <i class="fa fa-trash-can"></i>
+                    </button>
+                  </div>
+                </td>
               </ng-container>
+
               <ng-template #noGame>
+                <td>{{ i + 1 }}</td>
                 <td colspan="5">Verwijderd spel</td>
               </ng-template>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <div *ngIf="!tableView">
+        <div *ngIf="tournament.games[currentGameIndex] as currentGame">
+          <div *ngIf="currentGame.game; else noName">
+            <h3>
+              {{ currentGame.game.name }} - {{ currentGame.game.platform }}
+            </h3>
+            <p>Rule: {{ currentGame.rule }}</p>
+            <p>Score: {{ currentGame.score }}</p>
+            <p>Winner:</p>
+            <select
+              *ngIf="
+                tournament.status === 'Actief' && userService.isAuthenticated()
+              "
+              [(ngModel)]="selectedWinnerIds[currentGame.game._id]"
+              (change)="updateWinner(currentGame)"
+              class="form-control"
+            >
+              <option value="">Kies een winnaar</option>
+              <option *ngFor="let user of tournament.users" [value]="user._id">
+                {{ user.username }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                tournament.status !== 'Actief' || !userService.isAuthenticated()
+              "
+            >
+              {{ currentGame.winner?.username }}
+            </div>
+            <button class="btn btn-primary round-btn" (click)="previousGame()">
+              <i class="fas fa-arrow-left-long"></i>
+            </button>
+            <button class="btn btn-primary round-btn" (click)="nextGame()">
+              <i class="fas fa-arrow-right-long"></i>
+            </button>
+            <div
+              *ngIf="editMode && userService.isAdmin()"
+              class="edit-buttons-left"
+            >
+              <div
+                *ngIf="confirmDeleteGame[currentGame.game._id]"
+                class="d-flex d-flex-gap-10"
+              >
+                <span>Zeker?</span>
+                <button
+                  class="btn btn-secondary round-btn"
+                  (click)="confirmDeleteGame[currentGame.game._id] = false"
+                >
+                  <i class="fa fa-xmark"></i>
+                </button>
+              </div>
+              <button
+                class="btn btn-danger round-btn"
+                (click)="
+                  confirmDeleteGame[currentGame.game._id]
+                    ? deleteGame(currentGame.game._id)
+                    : (confirmDeleteGame[currentGame.game._id] = true)
+                "
+                [disabled]="tournament.games.length === 1"
+              >
+                <i class="fa fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+          <ng-template #noName><h5>Verwijderd spel</h5></ng-template>
+        </div>
+      </div>
+
       <button routerLink="/tournaments" class="btn btn-primary mt-10">
         <i class="fa fa-arrow-left"></i> Terug
       </button>
@@ -162,6 +308,6 @@
       </button></ng-template
     >
   </div>
-</div>
 
-<random-picker></random-picker>
+  <random-picker></random-picker>
+</div>
