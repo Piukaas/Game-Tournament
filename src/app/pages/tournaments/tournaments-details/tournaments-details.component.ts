@@ -50,7 +50,7 @@ export class TournamentsDetailsComponent implements OnInit {
             this.selectedScores[game._id] = game.score || 1;
           });
 
-          if (tournament.status === "Actief") {
+          if (tournament.status === 'Actief') {
             this.tableView = false;
           }
 

@@ -76,6 +76,10 @@ td,
   font-size: 1.5em;
 }
 
+td span {
+  font-size: 1em;
+}
+
 .d-flex-gap-5 {
   gap: 5px;
 }
