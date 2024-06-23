@@ -50,6 +50,10 @@ export class TournamentsDetailsComponent implements OnInit {
             this.selectedScores[game._id] = game.score || 1;
           });
 
+          if (tournament.status === "Actief") {
+            this.tableView = false;
+          }
+
           this.editMode = false;
           this.setInitialGame();
         },
