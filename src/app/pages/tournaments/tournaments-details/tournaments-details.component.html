@@ -94,8 +94,9 @@
         <div class="col-md-6 edit-buttons">
           <button
             *ngIf="
-              userService.isAuthenticated() ||
-              (!editMode && tournament.status != 'Afgerond')
+              userService.isAuthenticated() &&
+              !editMode &&
+              tournament.status != 'Afgerond'
             "
             class="btn btn-primary round-btn"
             (click)="editMode = true"
@@ -104,8 +105,9 @@
           </button>
           <button
             *ngIf="
-              userService.isAuthenticated() ||
-              (editMode && tournament.status != 'Afgerond')
+              userService.isAuthenticated() &&
+              editMode &&
+              tournament.status != 'Afgerond'
             "
             class="btn btn-secondary round-btn"
             (click)="editMode = false"
