@@ -20,6 +20,7 @@ export class TournamentsDetailsComponent implements OnInit {
   tableView: boolean = true;
   currentGameIndex: number = 0;
   editMode: boolean = false;
+  finishedGames: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +50,10 @@ export class TournamentsDetailsComponent implements OnInit {
             this.selectedWinnerIds[game._id] = game.winner?._id || '';
             this.selectedScores[game._id] = game.score || 1;
           });
+
+          this.finishedGames = this.tournament.games.filter(
+            (game: any) => game.winner
+          ).length;
 
           if (tournament.status === 'Actief') {
             this.tableView = false;

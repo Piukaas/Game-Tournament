@@ -89,7 +89,12 @@
       </h3>
 
       <div class="row mb-10">
-        <h3 class="col-md-6">Spelletjes</h3>
+        <h3 *ngIf="finishedGames > 0" class="col-md-6">
+          Spelletjes ({{ finishedGames }}/{{ tournament.games.length }})
+        </h3>
+        <h3 *ngIf="finishedGames === 0" class="col-md-6">
+          Spelletjes ({{ tournament.games.length }})
+        </h3>
 
         <div class="col-md-6 edit-buttons">
           <button
@@ -243,7 +248,7 @@
                 [routerLink]="['/games/', currentGame.game._id]"
                 target="_blank"
               >
-                {{ currentGame.game.name }} -
+                #{{ currentGameIndex + 1 }} - {{ currentGame.game.name }} -
                 <i
                   *ngIf="
                     currentGame.game.platform.toLowerCase().includes('xbox')
