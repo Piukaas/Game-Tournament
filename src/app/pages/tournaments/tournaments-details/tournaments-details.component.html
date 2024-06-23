@@ -239,7 +239,7 @@
               *ngIf="
                 tournament.status === 'Actief' && userService.isAuthenticated()
               "
-              [(ngModel)]="selectedWinnerIds[currentGame.game._id]"
+              [(ngModel)]="selectedWinnerIds[currentGame._id]"
               (change)="updateWinner(currentGame)"
               class="form-control"
             >
