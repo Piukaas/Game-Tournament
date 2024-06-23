@@ -367,6 +367,14 @@ td .link:hover {
   color: var(--black2);
 }
 
+h3 .link {
+  color: var(--black);
+}
+
+h3 .link:hover {
+  color: var(--black2);
+}
+
 /* Badges */
 .badge {
   border-radius: 25px;

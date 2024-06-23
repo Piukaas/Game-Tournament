@@ -50,6 +50,7 @@ export class TournamentsDetailsComponent implements OnInit {
             this.selectedScores[game._id] = game.score || 1;
           });
 
+          this.editMode = false;
           this.setInitialGame();
         },
         (error) => {
