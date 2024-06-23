@@ -146,92 +146,86 @@
           </thead>
           <tbody>
             <tr *ngFor="let game of tournament.games; let i = index">
-              <ng-container *ngIf="game.game && game.game._id; else noGame">
-                <td>{{ i + 1 }}</td>
-                <td>
-                  <a
-                    class="link"
-                    [routerLink]="['/games/', game.game._id]"
-                    target="_blank"
-                  >
-                    {{ game.game.name }} - {{ game.game.platform }}
-                  </a>
-                </td>
-                <td>{{ game.rule }}</td>
-                <td *ngIf="editMode">
-                  <input
-                    type="number"
-                    class="form-control"
-                    [(ngModel)]="selectedScores[game._id]"
-                    (keyup.enter)="updateScore(game)"
-                    (blur)="updateScore(game)"
-                    min="1"
-                    max="10"
-                    (input)="validateScore(game._id)"
-                  />
-                </td>
-                <td *ngIf="!editMode">{{ game.score }}</td>
-                <td
-                  *ngIf="
-                    tournament.status === 'Actief' &&
-                    userService.isAuthenticated()
-                  "
+              <td>{{ i + 1 }}</td>
+              <td *ngIf="game.game">
+                <a
+                  class="link"
+                  [routerLink]="['/games/', game.game._id]"
+                  target="_blank"
                 >
-                  <select
-                    [(ngModel)]="selectedWinnerIds[game._id]"
-                    (change)="updateWinner(game)"
-                    class="form-control"
-                  >
-                    <option value="">Kies een winnaar</option>
-                    <option
-                      *ngFor="let user of tournament.users"
-                      [value]="user._id"
-                    >
-                      {{ user.username }}
-                    </option>
-                  </select>
-                </td>
-                <td
-                  *ngIf="
-                    tournament.status === 'Afgerond' ||
-                    !userService.isAuthenticated()
-                  "
+                  {{ game.game.name }} - {{ game.game.platform }}
+                </a>
+              </td>
+              <td *ngIf="!game.game">Verwijderd spel</td>
+              <td>{{ game.rule }}</td>
+              <td *ngIf="editMode">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="selectedScores[game._id]"
+                  (keyup.enter)="updateScore(game)"
+                  (blur)="updateScore(game)"
+                  min="1"
+                  max="10"
+                  (input)="validateScore(game._id)"
+                />
+              </td>
+              <td *ngIf="!editMode">{{ game.score }}</td>
+              <td
+                *ngIf="
+                  tournament.status === 'Actief' &&
+                  userService.isAuthenticated()
+                "
+              >
+                <select
+                  [(ngModel)]="selectedWinnerIds[game._id]"
+                  (change)="updateWinner(game)"
+                  class="form-control"
                 >
-                  {{ game.winner?.username }}
-                </td>
-                <td *ngIf="editMode && userService.isAdmin()">
-                  <div class="edit-buttons-left">
-                    <div
-                      *ngIf="confirmDeleteGame[game.game._id]"
-                      class="d-flex d-flex-gap-10"
-                    >
-                      <span>Zeker?</span>
-                      <button
-                        class="btn btn-secondary round-btn"
-                        (click)="confirmDeleteGame[game.game._id] = false"
-                      >
-                        <i class="fa fa-xmark"></i>
-                      </button>
-                    </div>
+                  <option value="">Kies een winnaar</option>
+                  <option
+                    *ngFor="let user of tournament.users"
+                    [value]="user._id"
+                  >
+                    {{ user.username }}
+                  </option>
+                </select>
+              </td>
+              <td
+                *ngIf="
+                  tournament.status === 'Afgerond' ||
+                  !userService.isAuthenticated()
+                "
+              >
+                {{ game.winner?.username }}
+              </td>
+              <td *ngIf="editMode && userService.isAdmin()">
+                <div class="edit-buttons-left">
+                  <div
+                    *ngIf="confirmDeleteGame[game.game._id]"
+                    class="d-flex d-flex-gap-10"
+                  >
+                    <span>Zeker?</span>
                     <button
-                      class="btn btn-danger round-btn"
-                      (click)="
-                        confirmDeleteGame[game.game._id]
-                          ? deleteGame(game.game._id)
-                          : (confirmDeleteGame[game.game._id] = true)
-                      "
-                      [disabled]="tournament.games.length === 1"
+                      class="btn btn-secondary round-btn"
+                      (click)="confirmDeleteGame[game.game._id] = false"
                     >
-                      <i class="fa fa-trash-can"></i>
+                      <i class="fa fa-xmark"></i>
                     </button>
                   </div>
-                </td>
-              </ng-container>
-
-              <ng-template #noGame>
-                <td>{{ i + 1 }}</td>
-                <td colspan="5">Verwijderd spel</td>
-              </ng-template>
+                  <button
+                    class="btn btn-danger round-btn"
+                    (click)="
+                      confirmDeleteGame[game.game._id]
+                        ? deleteGame(game.game._id)
+                        : (confirmDeleteGame[game.game._id] = true)
+                    "
+                    [disabled]="tournament.games.length === 1"
+                  >
+                    <i class="fa fa-trash-can"></i>
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
