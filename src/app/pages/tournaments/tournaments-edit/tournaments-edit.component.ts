@@ -57,6 +57,13 @@ export class TournamentsEditComponent {
         this.onGameChange(index, gameId);
       });
     });
+
+    this.loadFormDataFromLocalStorage();
+
+    // Subscribe to changes in the games FormArray
+    this.games.valueChanges.subscribe(() => {
+      setTimeout(() => this.saveFormDataToLocalStorage(), 0);
+    });
   }
 
   getAllGames(): void {
@@ -231,11 +238,36 @@ export class TournamentsEditComponent {
         )
         .subscribe((response: any) => {
           if (response._id) {
+            localStorage.removeItem('tournamentFormData');
             this.router.navigate(['/tournaments', response._id]);
           }
         });
     } else {
       this.error = 'Voer alle velden in';
+    }
+  }
+
+  saveFormDataToLocalStorage(): void {
+    const formData = this.form.value;
+    localStorage.setItem('tournamentFormData', JSON.stringify(formData));
+  }
+
+  loadFormDataFromLocalStorage(): void {
+    const savedFormData = localStorage.getItem('tournamentFormData');
+    if (savedFormData) {
+      const formData = JSON.parse(savedFormData);
+      // Patch the form without the games and userCheckboxes arrays
+      const { games, userCheckboxes, ...rest } = formData;
+      this.form.patchValue(rest);
+
+      // Clear and repopulate the games FormArray
+      const gamesFormArray = this.games;
+      gamesFormArray.clear();
+      games.forEach((game: any) => {
+        const gameFormGroup = this.createGame();
+        gameFormGroup.patchValue(game);
+        gamesFormArray.push(gameFormGroup);
+      });
     }
   }
 }
