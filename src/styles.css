@@ -628,3 +628,15 @@ h3 .link:hover {
 .draggable:hover {
   cursor: move !important;
 }
+
+.player-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .player-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

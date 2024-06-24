@@ -82,10 +82,11 @@
 
       <h3>
         Spelers
-        <li *ngFor="let user of tournament.users">
-          {{ user.username }} - Punten:
-          {{ getPointsForUser(user.username) }}
-        </li>
+        <ul [ngClass]="{ 'player-columns': tournament.users.length > 6 }">
+          <li *ngFor="let user of tournament.users">
+            {{ user.username }} - Punten: {{ getPointsForUser(user.username) }}
+          </li>
+        </ul>
       </h3>
 
       <div class="row mb-10">

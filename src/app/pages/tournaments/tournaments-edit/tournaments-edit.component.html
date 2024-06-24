@@ -73,7 +73,10 @@
 
     <div class="form-group">
       <label class="required">Spelers</label>
-      <div formArrayName="userCheckboxes">
+      <div
+        formArrayName="userCheckboxes"
+        [ngClass]="{ 'player-columns': userCheckboxes.length > 6 }"
+      >
         <div
           *ngFor="let userCheckbox of userCheckboxes; let i = index"
           class="form-check"
