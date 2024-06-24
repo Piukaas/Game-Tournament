@@ -1,20 +1,68 @@
-<div class="d-flex justify-content-center">
-  <div class="col-lg-6 col-md-10 col-11 p-4 content-card position-absolute">
-    <button
-      *ngIf="isLoggedIn; else notLoggedIn"
-      class="btn btn-primary home-button position-absolute"
-      routerLink="/tournaments/create"
-    >
-      Start een een toernooi
-    </button>
-    <ng-template #notLoggedIn>
-      <button
-        class="btn btn-primary home-button position-absolute"
-        routerLink="/games"
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
+  <spinner *ngIf="loading"></spinner>
+
+  <div *ngIf="!loading" class="row">
+    <h2>Meest recente toernooi</h2>
+    <div *ngIf="tournament" class="col-12 mb-20">
+      <div
+        class="card h-100 mx-auto"
+        routerLink="/tournaments/{{ tournament._id }}"
       >
-        Spelletjes overzicht
-      </button>
-    </ng-template>
-    <img src="../../../assets/images/start.png" class="home-image" />
+        <div class="card-body">
+          <div class="card-img-top">
+            <img
+              [src]="tournament.image"
+              class="img-fluid d-block mx-auto game-image no-user-select"
+            />
+          </div>
+          <h4 class="card-title text-center">
+            <span class="mr-20">{{ tournament.title }}</span
+            ><span class="mr-20" [class]="getBadgeClass(tournament.status)">{{
+              tournament.status
+            }}</span>
+            <span *ngIf="tournament.totalWinner" class="badge bg-warning">
+              Winnaar: {{ tournament.totalWinner.username }}
+            </span>
+          </h4>
+          <p class="text-center">
+            {{ tournament.date | date : "dd-MM-yyyy" }}
+            - Spelletjes: {{ tournament.games.length }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Uitgelichte spelletjes</h2>
+    <div *ngFor="let game of games" class="col-lg-2 col-sm-4 col-12 mb-10">
+      <div class="card h-100 mx-auto" routerLink="/games/{{ game._id }}">
+        <div class="card-body">
+          <div class="card-img-top">
+            <img
+              [src]="game.imageUrl"
+              class="img-fluid d-block mx-auto game-image no-user-select"
+            />
+          </div>
+          <h4 class="card-title text-center">
+            <i
+              *ngIf="game.platform.toLowerCase().includes('xbox')"
+              class="fab fa-xbox"
+            ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('playstation')"
+              class="fab fa-playstation"
+            ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('pc')"
+              class="fab fa-windows"
+            ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('mobiel')"
+              class="fab fa-apple"
+            ></i>
+            {{ game.name }}
+          </h4>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
