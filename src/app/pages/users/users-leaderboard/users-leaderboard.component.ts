@@ -28,7 +28,7 @@ export class UsersLeaderboardComponent {
     this.http.get(`${environment.apiUrl}/users`).subscribe(
       (users: any) => {
         users.sort((a: any, b: any) => b.wins - a.wins);
-        this.users = users;
+        this.users = users.slice(0, 3);
         this.loading = false;
       },
       (error) => {

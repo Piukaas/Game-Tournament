@@ -31,7 +31,10 @@
                   : 3
               }}.
             </h1>
-            <h5>{{ user.username }} - {{ user.wins }} overwinningen</h5>
+            <h5>
+              {{ user.username }} - {{ user.wins }}
+              {{ user.wins === 1 ? "overwinning" : "overwinningen" }}
+            </h5>
           </div>
         </div>
       </div>
