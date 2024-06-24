@@ -10,6 +10,7 @@ import { GamesOverviewComponent } from './pages/games/games-overview/games-overv
 import { TournamentsDetailsComponent } from './pages/tournaments/tournaments-details/tournaments-details.component';
 import { TournamentsEditComponent } from './pages/tournaments/tournaments-edit/tournaments-edit.component';
 import { TournamentsOverviewComponent } from './pages/tournaments/tournaments-overview/tournaments-overview.component';
+import { UsersLeaderboardComponent } from './pages/users/users-leaderboard/users-leaderboard.component';
 import { UsersOverviewComponent } from './pages/users/users-overview/users-overview.component';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'users', component: UsersOverviewComponent },
+  { path: 'leaderboard', component: UsersLeaderboardComponent },
 
   // Games
   { path: 'games', component: GamesOverviewComponent },

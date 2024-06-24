@@ -18,6 +18,7 @@ import { TournamentsDetailsComponent } from './pages/tournaments/tournaments-det
 import { UsersOverviewComponent } from './pages/users/users-overview/users-overview.component';
 import { TournamentsEditComponent } from './pages/tournaments/tournaments-edit/tournaments-edit.component';
 import { RandomPickerComponent } from './pages/tournaments/random-picker/random-picker.component';
+import { UsersLeaderboardComponent } from './pages/users/users-leaderboard/users-leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RandomPickerComponent } from './pages/tournaments/random-picker/random-
     UsersOverviewComponent,
     TournamentsEditComponent,
     RandomPickerComponent,
+    UsersLeaderboardComponent,
   ],
   imports: [
     BrowserModule,

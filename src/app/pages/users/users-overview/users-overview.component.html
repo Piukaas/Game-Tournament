@@ -8,7 +8,7 @@
       <div *ngFor="let user of users" class="card no-hover">
         <div class="card-body row">
           <h4 class="card-title col-md-11">
-            {{ user.username }} - Wins: {{ user.wins }}
+            {{ user.username }} - Overwinningen: {{ user.wins }}
             <span *ngIf="user.isActive" class="badge badge-success"
               >Actief</span
             >
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="users.length === 0" class="no-games-found">
+      <div *ngIf="users.length === 0">
         <p>Geen gebruikers gevonden</p>
       </div>
     </div>

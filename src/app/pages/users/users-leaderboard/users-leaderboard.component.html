@@ -1,0 +1,43 @@
+<div class="col-md-10 col-10 p-4 mx-auto content-card">
+  <h1>Scorebord</h1>
+  <spinner *ngIf="loading"></spinner>
+
+  <div *ngIf="!loading" class="row">
+    <ng-container *ngFor="let user of users; let i = index">
+      <div
+        *ngIf="i < 3 || users[i].wins === users[i - 1].wins"
+        class="col-lg-4 col-md-4 col-sm-4 col-12 leaderboard-container"
+      >
+        <div
+          class="card no-hover leaderboard-stand"
+          [ngClass]="{
+            'first-place': users[0].wins === user.wins,
+            'second-place':
+              users[0].wins !== user.wins &&
+              (i === 1 || users[1].wins === user.wins),
+            'third-place':
+              users[0].wins !== user.wins &&
+              users[1].wins !== user.wins &&
+              (i === 2 || users[2].wins === user.wins)
+          }"
+        >
+          <div class="card-body">
+            <h1 class="card-title">
+              {{
+                users[0].wins === user.wins
+                  ? 1
+                  : users[1].wins === user.wins
+                  ? 2
+                  : 3
+              }}.
+            </h1>
+            <h5>{{ user.username }} - {{ user.wins }} overwinningen</h5>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="users.length === 0">
+      <p>Geen gebruikers gevonden</p>
+    </div>
+  </div>
+</div>

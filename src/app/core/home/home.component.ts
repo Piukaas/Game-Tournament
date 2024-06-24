@@ -48,7 +48,7 @@ export class HomeComponent implements OnDestroy {
 
   getMostRecentGames() {
     this.loading = true;
-    const numberOfGames = window.innerWidth <= 768 ? 3 : 6;
+    const numberOfGames = window.innerWidth <= 1000 ? 3 : 6;
 
     this.http
       .get(`${environment.apiUrl}/games/random/${numberOfGames}`)
