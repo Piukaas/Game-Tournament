@@ -204,7 +204,12 @@
                   </option>
                 </select>
               </td>
-              <td *ngIf="tournament.status === 'Afgerond'">
+              <td
+                *ngIf="
+                  tournament.status === 'Afgerond' ||
+                  !userService.isAuthenticated()
+                "
+              >
                 {{
                   game.winner?.username ? game.winner?.username : "Geen winnaar"
                 }}
@@ -367,7 +372,12 @@
                     </select>
                   </div>
                 </div>
-                <p *ngIf="tournament.status === 'Afgerond'">
+                <p
+                  *ngIf="
+                    tournament.status === 'Afgerond' ||
+                    !userService.isAuthenticated()
+                  "
+                >
                   {{
                     currentGame.winner?.username
                       ? currentGame.winner?.username
