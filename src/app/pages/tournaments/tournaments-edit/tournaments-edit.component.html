@@ -175,15 +175,28 @@
                 <option
                   *ngFor="let rule of selectedGame(i).rules"
                   [value]="
+                    rule.type +
+                    ' / ' +
                     rule.rule +
                     ' - ' +
                     rule.playerAmount +
-                    (rule.playerAmount > 1 ? ' spelers' : ' speler')
+                    (rule.playerAmount > 1 ? ' spelers' : ' speler') +
+                    ' per ' +
+                    rule.time +
+                    (rule.time > 1 ? ' minuten' : ' minuut')
                   "
                 >
-                  {{ rule.rule }} - {{ rule.playerAmount }}
-                  <span *ngIf="rule.playerAmount === 1">speler</span
-                  ><span *ngIf="rule.playerAmount > 1">spelers</span>
+                  {{
+                    rule.type +
+                      " / " +
+                      rule.rule +
+                      " - " +
+                      rule.playerAmount +
+                      (rule.playerAmount > 1 ? " spelers" : " speler") +
+                      " per " +
+                      rule.time +
+                      (rule.time > 1 ? " minuten" : " minuut")
+                  }}
                 </option>
               </select>
               <div
