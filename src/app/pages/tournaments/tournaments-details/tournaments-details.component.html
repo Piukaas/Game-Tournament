@@ -379,10 +379,20 @@
               class="col-lg-4 col-sm-4 col-12"
             >
               <label>Volgorde</label>
-              <ul *ngIf="!gameOrder.length && !matchOrder.length">
+              <ul
+                *ngIf="
+                  !gameOrder.length &&
+                  !matchOrder.length &&
+                  !dividedOrder.length
+                "
+              >
                 <li><p>Geen volgorde</p></li>
               </ul>
-              <ul *ngIf="gameOrder.length || matchOrder.length">
+              <ul
+                *ngIf="
+                  gameOrder.length || matchOrder.length || dividedOrder.length
+                "
+              >
                 <li *ngFor="let item of gameOrder; let i = index">
                   <p>{{ getPlayerById(gameOrder[i])?.username }}</p>
                 </li>
@@ -390,6 +400,15 @@
                   <p>
                     {{ getPlayerById(match.player1)?.username }} vs
                     {{ getPlayerById(match.player2)?.username }}
+                  </p>
+                </li>
+                <li *ngFor="let match of dividedOrder; let i = index">
+                  <p *ngIf="match.player2">
+                    {{ getPlayerById(match.player1)?.username }} met
+                    {{ getPlayerById(match.player2)?.username }}
+                  </p>
+                  <p *ngIf="!match.player2">
+                    {{ getPlayerById(match.player1)?.username }}
                   </p>
                 </li>
               </ul>

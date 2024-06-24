@@ -72,6 +72,7 @@ export class TournamentsEditComponent {
       (games: any) => {
         this.allGames = games;
         this.groupedGames = {};
+        this.platforms = [];
         this.groupGamesByPlatform();
         this.loading = false;
       },

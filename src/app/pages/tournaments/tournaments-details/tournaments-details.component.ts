@@ -24,6 +24,7 @@ export class TournamentsDetailsComponent implements OnInit {
   initialGameIndex: number = 0;
   gameOrder: string[] = [];
   matchOrder: any[] = [];
+  dividedOrder: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +76,7 @@ export class TournamentsDetailsComponent implements OnInit {
   determineGameOrder(game: any) {
     this.gameOrder = [];
     this.matchOrder = [];
+    this.dividedOrder = [];
 
     if (this.tournament.status === 'Actief') {
       const gameRule = game.rule;
@@ -84,9 +86,20 @@ export class TournamentsDetailsComponent implements OnInit {
       if (maxPlayersPerGame === 1) {
         // Sort by points, then randomly for equal points
         this.sortPlayersByPointsAndRandom();
-      } else if (this.tournament.users.length > 2 && maxPlayersPerGame === 2) {
+      } else if (
+        this.tournament.users.length > 2 &&
+        maxPlayersPerGame === 2 &&
+        this.getTypeFromGameRule(gameRule) === 'Versus'
+      ) {
         // Create a mini-tournament setup
         this.createMiniTournamentSetup();
+      } else if (
+        this.tournament.users.length > 2 &&
+        maxPlayersPerGame === 2 &&
+        this.getTypeFromGameRule(gameRule) !== 'Versus'
+      ) {
+        // Divide players to save time
+        this.dividePlayers();
       }
     }
   }
@@ -140,6 +153,37 @@ export class TournamentsDetailsComponent implements OnInit {
     }
 
     this.matchOrder = matchOrder;
+  }
+
+  dividePlayers() {
+    const playersWithPoints = this.tournament.users.map((player: any) => ({
+      ...player,
+      points: this.getPointsForUser(player.username),
+    }));
+
+    playersWithPoints.sort((a: any, b: any) => {
+      if (a.points > b.points) {
+        return -1;
+      } else if (a.points < b.points) {
+        return 1;
+      } else {
+        return Math.random() - 0.5;
+      }
+    });
+
+    const dividedOrder: any[] = [];
+
+    // Divide all players in groups of 2, if odd number of players, last player is alone
+    for (let i = 0; i < playersWithPoints.length; i += 2) {
+      let match: { [key: string]: any } = { player1: playersWithPoints[i]._id };
+      if (playersWithPoints[i + 1]) {
+        match[`player2`] = playersWithPoints[i + 1]._id;
+      }
+      dividedOrder.push(match);
+    }
+
+    console.log(dividedOrder);
+    this.dividedOrder = dividedOrder;
   }
 
   getPlayerById(id: string) {
@@ -364,5 +408,22 @@ export class TournamentsDetailsComponent implements OnInit {
       default:
         return 'badge';
     }
+  }
+
+  getTypeFromGameRule(gameRule: string): string {
+    const typePart = gameRule.split('/')[0].trim(); // Split by '/' and take the first part
+    return typePart;
+  }
+
+  getPlayerAmountFromGameRule(gameRule: string): number {
+    const playerAmountPart = gameRule.split('-')[1].trim(); // Split by '-' and take the second part
+    const playerAmount = parseInt(playerAmountPart.split(' ')[0]); // Extract the number
+    return playerAmount;
+  }
+
+  getMinutesFromGameRule(gameRule: string): number {
+    const minutesPart = gameRule.split('(')[1].split(')')[0].trim(); // Split by '(' then ')' to extract minutes
+    const minutes = parseInt(minutesPart.split(' ')[0]); // Extract the number
+    return minutes;
   }
 }

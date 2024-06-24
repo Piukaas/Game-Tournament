@@ -109,7 +109,7 @@
     <hr />
 
     <div class="d-flex d-flex-gap-5">
-      <h4>Spelletjes</h4>
+      <h4>Spelletjes ({{ games.length }})</h4>
       <button
         type="button"
         class="btn btn-primary round-btn"
@@ -129,6 +129,7 @@
       <table class="table table-bordered table-striped mt-10">
         <thead>
           <tr>
+            <th>#</th>
             <th class="required w-30">Spel</th>
             <th class="required w-30">Regel</th>
             <th class="required w-30">Score</th>
@@ -145,6 +146,7 @@
             (dragover)="dragOver($event, i)"
             (dragend)="dragEnd($event, i)"
           >
+            <td>{{ i + 1 }}</td>
             <td>
               <select formControlName="game" class="form-control">
                 <option value="" disabled>Kies een spel</option>
