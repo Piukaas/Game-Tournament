@@ -310,62 +310,86 @@
             </div>
           </div>
           <div class="card-body row">
-            <div>
-              <label>Regel: </label>
-              <p>{{ currentGame.rule }}</p>
-            </div>
-            <div>
-              <label>Score: </label>
-              <div *ngIf="editMode">
-                <div class="col-md-1">
-                  <input
-                    type="number"
-                    class="form-control"
-                    [(ngModel)]="selectedScores[currentGame._id]"
-                    (keyup.enter)="updateScore(currentGame)"
-                    (blur)="updateScore(currentGame)"
-                    min="1"
-                    max="10"
-                    (input)="validateScore(currentGame._id)"
-                  />
-                </div>
+            <div class="col-md-8">
+              <div>
+                <label>Regel: </label>
+                <p>{{ currentGame.rule }}</p>
               </div>
-              <p *ngIf="!editMode">
-                {{ currentGame.score }}
-              </p>
-            </div>
-            <div>
-              <label>Winnaar:</label>
-              <div
-                *ngIf="
-                  tournament.status === 'Actief' &&
-                  userService.isAuthenticated()
-                "
-              >
-                <div class="col-md-4">
-                  <select
-                    [(ngModel)]="selectedWinnerIds[currentGame._id]"
-                    (change)="updateWinner(currentGame)"
-                    class="form-control"
-                  >
-                    <option value="">Kies een winnaar</option>
-                    <option
-                      *ngFor="let user of tournament.users"
-                      [value]="user._id"
+              <div>
+                <label>Score: </label>
+                <div *ngIf="editMode">
+                  <div class="col-md-1">
+                    <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="selectedScores[currentGame._id]"
+                      (keyup.enter)="updateScore(currentGame)"
+                      (blur)="updateScore(currentGame)"
+                      min="1"
+                      max="10"
+                      (input)="validateScore(currentGame._id)"
+                    />
+                  </div>
+                </div>
+                <p *ngIf="!editMode">
+                  {{ currentGame.score }}
+                </p>
+              </div>
+              <div>
+                <label>Winnaar:</label>
+                <div
+                  *ngIf="
+                    tournament.status === 'Actief' &&
+                    userService.isAuthenticated()
+                  "
+                >
+                  <div class="col-md-4">
+                    <select
+                      [(ngModel)]="selectedWinnerIds[currentGame._id]"
+                      (change)="updateWinner(currentGame)"
+                      class="form-control"
                     >
-                      {{ user.username }}
-                    </option>
-                  </select>
+                      <option value="">Kies een winnaar</option>
+                      <option
+                        *ngFor="let user of tournament.users"
+                        [value]="user._id"
+                      >
+                        {{ user.username }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
+                <p
+                  *ngIf="
+                    tournament.status !== 'Actief' ||
+                    !userService.isAuthenticated()
+                  "
+                >
+                  {{ currentGame.winner?.username }}
+                </p>
               </div>
-              <p
-                *ngIf="
-                  tournament.status !== 'Actief' ||
-                  !userService.isAuthenticated()
-                "
-              >
-                {{ currentGame.winner?.username }}
-              </p>
+            </div>
+            <div
+              *ngIf="
+                currentGameIndex === initialGameIndex && !currentGame.winner
+              "
+              class="col-md-4"
+            >
+              <label>Volgorde</label>
+              <ul *ngIf="!gameOrder.length && !matchOrder.length">
+                <li><p>Geen volgorde</p></li>
+              </ul>
+              <ul *ngIf="gameOrder.length || matchOrder.length">
+                <li *ngFor="let item of gameOrder; let i = index">
+                  <p>{{ getPlayerById(gameOrder[i])?.username }}</p>
+                </li>
+                <li *ngFor="let match of matchOrder">
+                  <p>
+                    {{ getPlayerById(match.player1)?.username }} vs
+                    {{ getPlayerById(match.player2)?.username }}
+                  </p>
+                </li>
+              </ul>
             </div>
           </div>
           <div class="card-footer d-flex d-flex-gap-10">

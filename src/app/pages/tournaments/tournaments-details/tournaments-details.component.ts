@@ -21,6 +21,9 @@ export class TournamentsDetailsComponent implements OnInit {
   currentGameIndex: number = 0;
   editMode: boolean = false;
   finishedGames: number = 0;
+  initialGameIndex: number = 0;
+  gameOrder: string[] = [];
+  matchOrder: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +72,77 @@ export class TournamentsDetailsComponent implements OnInit {
       );
   }
 
+  determineGameOrder(game: any) {
+    this.gameOrder = [];
+    this.matchOrder = [];
+    const gameRule = game.rule;
+    const ruleParts = gameRule.split('-');
+    const maxPlayersPerGame = parseInt(ruleParts[1].trim().split(' ')[0]);
+
+    if (maxPlayersPerGame === 1) {
+      // Sort by points, then randomly for equal points
+      this.sortPlayersByPointsAndRandom();
+    } else if (this.tournament.users.length > 2 && maxPlayersPerGame === 2) {
+      // Create a mini-tournament setup
+      this.createMiniTournamentSetup();
+    }
+  }
+
+  sortPlayersByPointsAndRandom() {
+    const playersWithPoints = this.tournament.users.map((player: any) => ({
+      ...player,
+      points: this.getPointsForUser(player.username),
+    }));
+
+    playersWithPoints.sort((a: any, b: any) => {
+      if (a.points > b.points) {
+        return -1;
+      } else if (a.points < b.points) {
+        return 1;
+      } else {
+        return Math.random() - 0.5;
+      }
+    });
+
+    this.gameOrder = playersWithPoints.map((player: any) => player._id);
+  }
+
+  createMiniTournamentSetup() {
+    const playersWithPoints = this.tournament.users.map((player: any) => ({
+      ...player,
+      points: this.getPointsForUser(player.username),
+    }));
+
+    playersWithPoints.sort((a: any, b: any) => {
+      if (a.points > b.points) {
+        return -1;
+      } else if (a.points < b.points) {
+        return 1;
+      } else {
+        return Math.random() - 0.5;
+      }
+    });
+
+    const matchOrder: any[] = [];
+
+    // Iterate through all players
+    for (let i = 0; i < playersWithPoints.length; i++) {
+      for (let j = i + 1; j < playersWithPoints.length; j++) {
+        // For each pair, create a match
+        let match: { [key: string]: any } = {};
+        match[`player1`] = playersWithPoints[i]._id;
+        match[`player2`] = playersWithPoints[j]._id;
+        matchOrder.push(match);
+      }
+    }
+
+    this.matchOrder = matchOrder;
+  }
+
+  getPlayerById(id: string) {
+    return this.tournament.users.find((player: any) => player._id === id);
+  }
+
   setInitialGame() {
     const lastGameWithWinnerIndex = this.tournament.games
       .map((game: any) => !!game.winner)
@@ -91,6 +165,9 @@ export class TournamentsDetailsComponent implements OnInit {
       // If no game has a winner or all games have winners, default to the first game
       this.currentGameIndex = 0;
     }
+
+    this.initialGameIndex = this.currentGameIndex;
+    this.determineGameOrder(this.tournament.games[this.currentGameIndex]);
   }
 
   nextGame() {
