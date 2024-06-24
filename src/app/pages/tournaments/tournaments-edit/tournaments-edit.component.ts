@@ -27,6 +27,7 @@ export class TournamentsEditComponent {
   platforms: string[] = [];
   loading: boolean = false;
   dragStartIndex!: number;
+  totalPlayTime: string = '0 uur en 0 minuten';
 
   constructor(
     private http: HttpClient,
@@ -63,6 +64,7 @@ export class TournamentsEditComponent {
     // Subscribe to changes in the games FormArray
     this.games.valueChanges.subscribe(() => {
       setTimeout(() => this.saveFormDataToLocalStorage(), 0);
+      setTimeout(() => this.calculateTotalPlayTime(), 0);
     });
   }
 
@@ -178,6 +180,8 @@ export class TournamentsEditComponent {
         usersFormArray.removeAt(idx);
       }
     }
+
+    this.calculateTotalPlayTime();
   }
 
   validateScore(event: KeyboardEvent): void {
@@ -270,5 +274,52 @@ export class TournamentsEditComponent {
         gamesFormArray.push(gameFormGroup);
       });
     }
+  }
+
+  getPlayerAmountFromGameRule(gameRule: string): number {
+    if (!gameRule) return 0;
+    const match = gameRule.match(/(\d+)\s*speler(s)?/);
+    if (match && match[1]) {
+      const playerAmount = parseInt(match[1]);
+      return isNaN(playerAmount) ? 0 : playerAmount;
+    }
+    return 0;
+  }
+
+  getMinutesFromGameRule(gameRule: string): number {
+    if (!gameRule) return 0;
+    const match = gameRule.match(/per\s*(\d+)\s*m/);
+    if (match && match[1]) {
+      const minutes = parseInt(match[1]);
+      return isNaN(minutes) ? 0 : minutes;
+    }
+    return 0;
+  }
+
+  calculateTotalPlayTime() {
+    let totalMinutes = 0;
+    const activeUserCount = this.form
+      .get('userCheckboxes')
+      ?.value.filter((v: any) => v).length;
+
+    this.games.controls.forEach((gameControl) => {
+      const gameRule = gameControl.get('rule')?.value;
+      if (gameRule) {
+        const playerAmount = this.getPlayerAmountFromGameRule(gameRule);
+        const minutesPerGame = this.getMinutesFromGameRule(gameRule);
+        const amountOfMatches = Math.max(
+          1,
+          Math.ceil(activeUserCount / playerAmount)
+        );
+
+        totalMinutes += minutesPerGame * amountOfMatches;
+      }
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    this.totalPlayTime = `${hours} uur en ${minutes} ${
+      minutes === 1 ? 'minuut' : 'minuten'
+    }`;
   }
 }

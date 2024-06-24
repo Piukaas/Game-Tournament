@@ -109,21 +109,25 @@
     <hr />
 
     <div class="d-flex d-flex-gap-5">
-      <h4>Spelletjes ({{ games.length }})</h4>
-      <button
-        type="button"
-        class="btn btn-primary round-btn"
-        (click)="addGame()"
-      >
-        <i class="fa fa-plus"></i>
-      </button>
-      <button
-        type="button"
-        class="btn btn-warning round-btn"
-        (click)="getAllGames()"
-      >
-        <i class="fa fa-refresh"></i>
-      </button>
+      <h4 class="col-md-7">
+        Spelletjes ({{ games.length }}) ongeveer {{ totalPlayTime }} lang
+      </h4>
+      <div class="col-md-5 edit-buttons">
+        <button
+          type="button"
+          class="btn btn-primary round-btn"
+          (click)="addGame()"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning round-btn"
+          (click)="getAllGames()"
+        >
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
     </div>
     <div class="table-responsive">
       <table class="table table-bordered table-striped mt-10">
