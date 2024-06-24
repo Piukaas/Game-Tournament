@@ -167,6 +167,7 @@
               <td *ngIf="editMode">
                 <input
                   type="number"
+                  pattern="\d*"
                   class="form-control"
                   [(ngModel)]="selectedScores[game._id]"
                   (keyup.enter)="updateScore(game)"
@@ -319,6 +320,7 @@
                   <div class="col-md-1">
                     <input
                       type="number"
+                      pattern="\d*"
                       class="form-control"
                       [(ngModel)]="selectedScores[currentGame._id]"
                       (keyup.enter)="updateScore(currentGame)"
