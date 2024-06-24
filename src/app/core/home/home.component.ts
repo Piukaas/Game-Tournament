@@ -37,7 +37,6 @@ export class HomeComponent implements OnDestroy {
     this.http.get(`${environment.apiUrl}/tournaments/recent`).subscribe(
       (response: any) => {
         this.tournament = response;
-        console.log(this.tournament);
         this.loading = false;
       },
       (error) => {

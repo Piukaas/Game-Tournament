@@ -93,7 +93,6 @@ export class RandomPickerComponent {
       this.spinning = false;
       this.selectItem(randomPosition);
       this.finalSelected = this.items[this.finalSelectedIndex];
-      console.log('Final selected:', this.finalSelected.name);
     }, 4000); // 4 seconds for spin duration
   }
 
