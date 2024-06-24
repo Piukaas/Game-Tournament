@@ -62,6 +62,7 @@ export class GamesEditComponent {
       rule: ['', [Validators.required]],
       playerAmount: ['', [Validators.required]],
       type: ['', [Validators.required]],
+      time: ['', [Validators.required]],
     });
   }
 

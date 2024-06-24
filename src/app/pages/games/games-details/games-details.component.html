@@ -62,6 +62,8 @@
         <p>
           {{ rule.playerAmount }}
           {{ rule.playerAmount == 1 ? "speler" : "spelers" }}
+          ({{ rule.time }} {{ rule.time == 1 ? "minuut" : "minuten" }} per
+          potje)
         </p>
       </div>
       <button routerLink="/games" class="btn btn-primary mt-10">

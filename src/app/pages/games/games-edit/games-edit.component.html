@@ -196,6 +196,7 @@
                   type="number"
                   pattern="\d*"
                   min="1"
+                  max="10"
                   required
                   [class.invalid]="
                     rule.get('playerAmount')?.invalid &&
@@ -248,6 +249,38 @@
                     Type is verplicht
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="required" for="time">Lengte van een potje</label>
+              <div class="d-flex d-flex-gap-10">
+                <input
+                  id="time"
+                  class="form-control"
+                  formControlName="time"
+                  type="number"
+                  pattern="\d*"
+                  min="1"
+                  required
+                  [class.invalid]="
+                    rule.get('time')?.invalid && rule.get('time')?.touched
+                  "
+                  (input)="
+                    rule.get('time')?.value < 1
+                      ? rule.get('time')?.setValue('')
+                      : null
+                  "
+                />
+                <span>minuten</span>
+              </div>
+              <div
+                *ngIf="rule.get('time')?.invalid && rule.get('time')?.touched"
+                class="validations"
+              >
+                <p *ngIf="rule.get('time')?.hasError('required')">
+                  Lengte van een potje is verplicht
+                </p>
               </div>
             </div>
           </div>
