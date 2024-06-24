@@ -75,16 +75,19 @@ export class TournamentsDetailsComponent implements OnInit {
   determineGameOrder(game: any) {
     this.gameOrder = [];
     this.matchOrder = [];
-    const gameRule = game.rule;
-    const ruleParts = gameRule.split('-');
-    const maxPlayersPerGame = parseInt(ruleParts[1].trim().split(' ')[0]);
 
-    if (maxPlayersPerGame === 1) {
-      // Sort by points, then randomly for equal points
-      this.sortPlayersByPointsAndRandom();
-    } else if (this.tournament.users.length > 2 && maxPlayersPerGame === 2) {
-      // Create a mini-tournament setup
-      this.createMiniTournamentSetup();
+    if (this.tournament.status === 'Actief') {
+      const gameRule = game.rule;
+      const ruleParts = gameRule.split('-');
+      const maxPlayersPerGame = parseInt(ruleParts[1].trim().split(' ')[0]);
+
+      if (maxPlayersPerGame === 1) {
+        // Sort by points, then randomly for equal points
+        this.sortPlayersByPointsAndRandom();
+      } else if (this.tournament.users.length > 2 && maxPlayersPerGame === 2) {
+        // Create a mini-tournament setup
+        this.createMiniTournamentSetup();
+      }
     }
   }
 

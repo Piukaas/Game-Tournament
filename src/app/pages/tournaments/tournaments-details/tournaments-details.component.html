@@ -197,13 +197,10 @@
                   </option>
                 </select>
               </td>
-              <td
-                *ngIf="
-                  tournament.status === 'Afgerond' ||
-                  !userService.isAuthenticated()
-                "
-              >
-                {{ game.winner?.username }}
+              <td *ngIf="tournament.status === 'Afgerond'">
+                {{
+                  game.winner?.username ? game.winner?.username : "Geen winnaar"
+                }}
               </td>
               <td *ngIf="editMode && userService.isAdmin()">
                 <div class="edit-buttons-left">
@@ -311,7 +308,7 @@
             </div>
           </div>
           <div class="card-body row">
-            <div class="col-md-8">
+            <div class="col-lg-8 col-sm-8 col-12 mb-20">
               <div>
                 <label>Regel: </label>
                 <p>{{ currentGame.rule }}</p>
@@ -337,7 +334,9 @@
                 </p>
               </div>
               <div>
-                <label>Winnaar:</label>
+                <label *ngIf="tournament.status !== 'Aankomend'"
+                  >Winnaar:</label
+                >
                 <div
                   *ngIf="
                     tournament.status === 'Actief' &&
@@ -360,21 +359,22 @@
                     </select>
                   </div>
                 </div>
-                <p
-                  *ngIf="
-                    tournament.status !== 'Actief' ||
-                    !userService.isAuthenticated()
-                  "
-                >
-                  {{ currentGame.winner?.username }}
+                <p *ngIf="tournament.status === 'Afgerond'">
+                  {{
+                    currentGame.winner?.username
+                      ? currentGame.winner?.username
+                      : "Geen winnaar"
+                  }}
                 </p>
               </div>
             </div>
             <div
               *ngIf="
-                currentGameIndex === initialGameIndex && !currentGame.winner
+                currentGameIndex === initialGameIndex &&
+                !currentGame.winner &&
+                tournament.status === 'Actief'
               "
-              class="col-md-4"
+              class="col-lg-4 col-sm-4 col-12"
             >
               <label>Volgorde</label>
               <ul *ngIf="!gameOrder.length && !matchOrder.length">
