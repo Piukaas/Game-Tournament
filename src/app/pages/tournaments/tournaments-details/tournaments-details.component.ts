@@ -182,7 +182,6 @@ export class TournamentsDetailsComponent implements OnInit {
       dividedOrder.push(match);
     }
 
-    console.log(dividedOrder);
     this.dividedOrder = dividedOrder;
   }
 
@@ -411,19 +410,51 @@ export class TournamentsDetailsComponent implements OnInit {
   }
 
   getTypeFromGameRule(gameRule: string): string {
-    const typePart = gameRule.split('/')[0].trim(); // Split by '/' and take the first part
+    if (!gameRule) return '';
+    const parts = gameRule.split('/');
+    if (parts.length === 0) return '';
+    const typePart = parts[0].trim();
     return typePart;
   }
 
   getPlayerAmountFromGameRule(gameRule: string): number {
-    const playerAmountPart = gameRule.split('-')[1].trim(); // Split by '-' and take the second part
-    const playerAmount = parseInt(playerAmountPart.split(' ')[0]); // Extract the number
-    return playerAmount;
+    if (!gameRule) return 0;
+    const match = gameRule.match(/(\d+)\s*speler(s)?/);
+    if (match && match[1]) {
+      const playerAmount = parseInt(match[1]);
+      return isNaN(playerAmount) ? 0 : playerAmount;
+    }
+    return 0;
   }
 
   getMinutesFromGameRule(gameRule: string): number {
-    const minutesPart = gameRule.split('(')[1].split(')')[0].trim(); // Split by '(' then ')' to extract minutes
-    const minutes = parseInt(minutesPart.split(' ')[0]); // Extract the number
-    return minutes;
+    if (!gameRule) return 0;
+    const match = gameRule.match(/per\s*(\d+)\s*m/);
+    if (match && match[1]) {
+      const minutes = parseInt(match[1]);
+      return isNaN(minutes) ? 0 : minutes;
+    }
+    return 0;
+  }
+
+  getTotalPlayTime(): string {
+    let totalMinutes = 0;
+    this.tournament.games.forEach((game: any) => {
+      const gameRule = game.rule;
+      if (gameRule) {
+        const minutesPerGame = this.getMinutesFromGameRule(gameRule);
+        const playerAmount = this.getPlayerAmountFromGameRule(gameRule);
+        const amountOfMatches = Math.max(
+          1,
+          Math.ceil(this.tournament.users.length / playerAmount)
+        );
+
+        totalMinutes += minutesPerGame * amountOfMatches;
+      }
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours} uur en ${minutes} ${minutes === 1 ? 'minuut' : 'minuten'}`;
   }
 }
