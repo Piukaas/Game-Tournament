@@ -109,7 +109,7 @@
               tournament.status != 'Afgerond'
             "
             class="btn btn-primary round-btn"
-            (click)="editMode = true"
+            (click)="changeEditMode()"
           >
             <i class="fa fa-pencil"></i>
           </button>
@@ -120,7 +120,7 @@
               tournament.status != 'Afgerond'
             "
             class="btn btn-secondary round-btn"
-            (click)="editMode = false"
+            (click)="changeEditMode()"
           >
             <i class="fa fa-xmark"></i>
           </button>
@@ -247,47 +247,71 @@
       <div *ngIf="!tableView" class="card no-hover row">
         <div *ngIf="tournament.games[currentGameIndex] as currentGame">
           <div class="card-header row">
-            <h3
-              *ngIf="currentGame.game; else noName"
-              class="col-lg-8 col-md-6 col-12"
-            >
-              <a
-                class="link"
-                [routerLink]="['/games/', currentGame.game._id]"
-                target="_blank"
-              >
-                #{{ currentGameIndex + 1 }} - {{ currentGame.game.name }} -
-                <i
-                  *ngIf="
-                    currentGame.game.platform.toLowerCase().includes('xbox')
-                  "
-                  class="fab fa-xbox"
-                ></i>
-                <i
-                  *ngIf="
-                    currentGame.game.platform
-                      .toLowerCase()
-                      .includes('playstation')
-                  "
-                  class="fab fa-playstation"
-                ></i>
-                <i
-                  *ngIf="currentGame.game.platform.toLowerCase().includes('pc')"
-                  class="fab fa-windows"
+            <div *ngIf="!editMode" class="col-lg-8 col-md-6 col-12">
+              <h3 *ngIf="currentGame.game; else noName">
+                <a
+                  *ngIf="!editMode"
+                  class="link"
+                  [routerLink]="['/games/', currentGame.game._id]"
+                  target="_blank"
                 >
-                </i>
-                <i
-                  *ngIf="
-                    currentGame.game.platform.toLowerCase().includes('mobiel')
-                  "
-                  class="fab fa-apple"
-                ></i>
-                {{ currentGame.game.platform }}
-              </a>
-            </h3>
-            <ng-template #noName>
-              <h3>Verwijderd spel</h3>
-            </ng-template>
+                  #{{ currentGameIndex + 1 }} - {{ currentGame.game.name }} -
+                  <i
+                    *ngIf="
+                      currentGame.game.platform.toLowerCase().includes('xbox')
+                    "
+                    class="fab fa-xbox"
+                  ></i>
+                  <i
+                    *ngIf="
+                      currentGame.game.platform
+                        .toLowerCase()
+                        .includes('playstation')
+                    "
+                    class="fab fa-playstation"
+                  ></i>
+                  <i
+                    *ngIf="
+                      currentGame.game.platform.toLowerCase().includes('pc')
+                    "
+                    class="fab fa-windows"
+                  >
+                  </i>
+                  <i
+                    *ngIf="
+                      currentGame.game.platform.toLowerCase().includes('mobiel')
+                    "
+                    class="fab fa-apple"
+                  ></i>
+                  {{ currentGame.game.platform }}
+                </a>
+              </h3>
+              <ng-template #noName>
+                <h3>Verwijderd spel</h3>
+              </ng-template>
+            </div>
+            <div *ngIf="editMode" class="col-lg-8 col-md-6 col-12">
+              <h5>{{ currentGame.game.name }}</h5>
+              <select
+                [(ngModel)]="selectedGames[currentGame.game._id]"
+                class="form-control"
+                (change)="
+                  activateRulesDropdown(selectedGames[currentGame.game._id])
+                "
+              >
+                <ng-container *ngFor="let platform of platforms">
+                  <optgroup [label]="platform">
+                    <option
+                      *ngFor="let game of groupedGames[platform]"
+                      [value]="game._id"
+                    >
+                      {{ game.name }}
+                    </option>
+                  </optgroup>
+                </ng-container>
+              </select>
+            </div>
+
             <div
               *ngIf="editMode && userService.isAdmin()"
               class="col-lg-4 col-md-6 col-12 edit-buttons"
@@ -322,11 +346,44 @@
               <div>
                 <label>Regel: </label>
                 <p>{{ currentGame.rule }}</p>
+                <select
+                  *ngIf="editMode && ruleDropdownActive"
+                  [(ngModel)]="selectedRules[currentGame._id]"
+                  (change)="updateTournamentGame(currentGame)"
+                  class="form-control"
+                >
+                  <option
+                    *ngFor="let rule of rules"
+                    [value]="
+                      rule.type +
+                      ' / ' +
+                      rule.rule +
+                      ' - ' +
+                      rule.playerAmount +
+                      (rule.playerAmount > 1 ? ' spelers' : ' speler') +
+                      ' per ' +
+                      rule.time +
+                      (rule.time > 1 ? ' minuten' : ' minuut')
+                    "
+                  >
+                    {{
+                      rule.type +
+                        " / " +
+                        rule.rule +
+                        " - " +
+                        rule.playerAmount +
+                        (rule.playerAmount > 1 ? " spelers" : " speler") +
+                        " per " +
+                        rule.time +
+                        (rule.time > 1 ? " minuten" : " minuut")
+                    }}
+                  </option>
+                </select>
               </div>
               <div>
                 <label>Score: </label>
                 <div *ngIf="editMode">
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <input
                       type="number"
                       pattern="\d*"

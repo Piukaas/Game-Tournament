@@ -27,6 +27,13 @@ export class TournamentsDetailsComponent implements OnInit {
   dividedOrder: any[] = [];
   displayMode!: 'items' | 'games';
   playerAmount!: number;
+  allGames: any[] = [];
+  groupedGames: { [platform: string]: any[] } = {};
+  platforms: string[] = [];
+  selectedGames: { [gameId: string]: string } = {};
+  selectedRules: { [gameId: string]: string } = {};
+  ruleDropdownActive: boolean = false;
+  rules: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +46,47 @@ export class TournamentsDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.tournamentId = params['tournamentId'];
       this.fetchTournament();
+      this.getAllGames();
+    });
+  }
+
+  changeEditMode() {
+    this.editMode = !this.editMode;
+    this.selectedGames = {};
+    this.selectedRules = {};
+    this.ruleDropdownActive = false;
+  }
+
+  getAllGames(): void {
+    this.loading = true;
+    this.http.get(`${environment.apiUrl}/games`).subscribe(
+      (games: any) => {
+        this.allGames = games;
+        this.groupedGames = {};
+        this.platforms = [];
+        this.groupGamesByPlatform();
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        throw of(error);
+      }
+    );
+  }
+
+  groupGamesByPlatform(): void {
+    this.allGames.forEach((game) => {
+      if (!this.groupedGames[game.platform]) {
+        this.groupedGames[game.platform] = [];
+        this.platforms.push(game.platform);
+      }
+      this.groupedGames[game.platform].push(game);
     });
   }
 
   fetchTournament() {
     this.loading = true;
+    this.ruleDropdownActive = false;
     this.http
       .get(`${environment.apiUrl}/tournaments/${this.tournamentId}`)
       .subscribe(
@@ -372,6 +415,40 @@ export class TournamentsDetailsComponent implements OnInit {
     const headers = { Authorization: `Bearer ${token}` };
 
     game.score = this.selectedScores[game._id];
+
+    this.http
+      .patch(
+        `${environment.apiUrl}/tournaments/${this.tournament._id}`,
+        this.tournament,
+        { headers }
+      )
+      .subscribe(
+        () => {
+          this.fetchTournament();
+        },
+        (error) => {
+          this.fetchTournament();
+          throw of(error);
+        }
+      );
+  }
+
+  activateRulesDropdown(gameId: string): void {
+    this.ruleDropdownActive = true;
+    this.setGameRules(gameId);
+  }
+
+  setGameRules(gameId: string) {
+    this.rules = this.allGames.find((game) => game._id === gameId).rules;
+  }
+
+  updateTournamentGame(game: any): void {
+    this.loading = true;
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    game.rule = this.selectedRules[game._id];
+    game.game = this.selectedGames[game.game._id];
 
     this.http
       .patch(
