@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'random-picker',
   templateUrl: './random-picker.component.html',
 })
 export class RandomPickerComponent {
+  @Input() displayMode!: 'items' | 'games';
+  @Input() playerAmount!: number;
+
   items: any = [
     {
       name: '10 seconden sneller',
@@ -58,7 +61,27 @@ export class RandomPickerComponent {
       type: 'Weakness',
     },
   ];
-
+  games2Players: any = [
+    { title: 'Game 1', platform: 'PC' },
+    { title: 'Game 2', platform: 'Xbox' },
+    { title: 'Game 3', platform: 'Playstation' },
+    { title: 'Game 4', platform: 'PC' },
+    { title: 'Game 5', platform: 'Xbox' },
+    { title: 'Game 6', platform: 'Playstation' },
+    // Add more games as needed
+  ];
+  games4Players: any = [
+    { title: 'Ling 1', platform: 'PC' },
+    { title: 'Ling 2', platform: 'Xbox' },
+    { title: 'Ling 3', platform: 'Playstation' },
+    { title: 'Ling 4', platform: 'PC' },
+    { title: 'Ling 5', platform: 'Xbox' },
+    { title: 'Ling 6', platform: 'Playstation' },
+    { title: 'Ling 7', platform: 'PC' },
+    { title: 'Ling 8', platform: 'Xbox' },
+    { title: 'Ling 9', platform: 'Playstation' },
+    // Add more games as needed
+  ];
   displayedItems: any[] = [];
   transform: string = '';
   activeIndex: number = 0;
@@ -70,10 +93,26 @@ export class RandomPickerComponent {
     this.populateDisplayedItems();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // Check if displayMode or playerAmount has changed
+    if (changes['displayMode'] || changes['playerAmount']) {
+      this.displayedItems = [];
+      this.populateDisplayedItems();
+      this.finalSelected = null;
+    }
+  }
+
   populateDisplayedItems() {
-    // Loop over items to create a larger list for spinning
+    this.displayedItems = [];
+    let sourceArray = [];
+    if (this.displayMode === 'items') {
+      sourceArray = this.items;
+    } else {
+      sourceArray =
+        this.playerAmount === 2 ? this.games2Players : this.games4Players;
+    }
     for (let i = 0; i < 10; i++) {
-      this.displayedItems = this.displayedItems.concat(this.items);
+      this.displayedItems = this.displayedItems.concat(sourceArray);
     }
   }
 
@@ -92,7 +131,13 @@ export class RandomPickerComponent {
     setTimeout(() => {
       this.spinning = false;
       this.selectItem(randomPosition);
-      this.finalSelected = this.items[this.finalSelectedIndex];
+      if (this.displayMode === 'items') {
+        this.finalSelected = this.items[this.finalSelectedIndex];
+      } else {
+        const gamesArray =
+          this.playerAmount === 2 ? this.games2Players : this.games4Players;
+        this.finalSelected = gamesArray[this.finalSelectedIndex];
+      }
     }, 4000); // 4 seconds for spin duration
   }
 
@@ -101,15 +146,28 @@ export class RandomPickerComponent {
       position % (this.displayedItems.length * 110)
     );
     const centerOffset = 250; // Half of the carousel-container width
+    const sourceArrayLength =
+      this.displayMode === 'items'
+        ? this.items.length
+        : this.playerAmount === 2
+        ? this.games2Players.length
+        : this.games4Players.length;
     this.finalSelectedIndex =
-      Math.floor((actualPosition + centerOffset) / 110) % this.items.length;
+      Math.floor((actualPosition + centerOffset) / 110) % sourceArrayLength;
   }
 
   isFinalSelected(index: number): boolean {
-    return index % this.items.length === this.finalSelectedIndex;
+    const arrayLength =
+      this.displayMode === 'items'
+        ? this.items.length
+        : this.playerAmount === 2
+        ? this.games2Players.length
+        : this.games4Players.length;
+    return index % arrayLength === this.finalSelectedIndex;
   }
 
   getItemColor(item: string): string {
+    if (this.displayMode === 'games') return 'blue';
     return item.startsWith('Perk') ? 'green' : 'red';
   }
 }

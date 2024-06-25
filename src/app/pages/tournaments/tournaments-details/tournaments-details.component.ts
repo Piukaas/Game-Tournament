@@ -25,6 +25,8 @@ export class TournamentsDetailsComponent implements OnInit {
   gameOrder: string[] = [];
   matchOrder: any[] = [];
   dividedOrder: any[] = [];
+  displayMode!: 'items' | 'games';
+  playerAmount!: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,6 +73,14 @@ export class TournamentsDetailsComponent implements OnInit {
           throw of(error);
         }
       );
+  }
+
+  prepareAndOpenModal(displayMode: 'items' | 'games', playerAmount: number) {
+    this.displayMode = displayMode;
+    this.playerAmount = playerAmount;
+    document
+      .getElementById('randomPickerModal')
+      ?.dispatchEvent(new Event('show.bs.modal'));
   }
 
   determineGameOrder(game: any) {

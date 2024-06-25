@@ -23,6 +23,7 @@
   --gold: gold;
   --silver: silver;
   --bronze: #cd7f32;
+  --blue: #1e90ff;
 }
 
 body {
@@ -623,6 +624,11 @@ h3 .link:hover {
 
 .weakness {
   background-color: var(--danger);
+  color: white;
+}
+
+.game {
+  background-color: var(--blue);
   color: white;
 }
 

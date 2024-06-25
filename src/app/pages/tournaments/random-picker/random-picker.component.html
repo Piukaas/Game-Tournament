@@ -19,31 +19,75 @@
               *ngFor="let item of displayedItems; let i = index"
               [ngClass]="{
                 active: isFinalSelected(i),
-                perk: item.type === 'Perk',
-                weakness: item.type === 'Weakness'
+                perk: displayMode === 'items' ? item.type === 'Perk' : false,
+                weakness:
+                  displayMode === 'items' ? item.type === 'Weakness' : false,
+                game: displayMode === 'games' ? true : false
               }"
             >
-              {{ item.name }}
+              {{ displayMode === "items" ? item.name : item.title }}
             </div>
           </div>
-          <button class="btn btn-primary picker-btn" (click)="spin()">
+          <button
+            *ngIf="displayMode === 'items'"
+            class="btn btn-primary picker-btn"
+            (click)="spin()"
+          >
             <i class="fas fa-skull"></i>
             Vergok je ziel
+          </button>
+          <button
+            *ngIf="displayMode === 'games'"
+            class="btn btn-primary picker-btn"
+            (click)="spin()"
+          >
+            <i class="fas fa-skull"></i>
+            Besluit het lot
           </button>
         </div>
         <div *ngIf="finalSelected" class="mt-20">
           <div class="align-center">
             <h4>
               <i
+                *ngIf="displayMode === 'items'"
                 class="fas fa-{{
                   finalSelected.type === 'Perk'
                     ? 'face-laugh-beam'
                     : 'skull-crossbones'
                 }}"
               ></i>
-              {{ finalSelected.name }}
+              {{
+                displayMode === "items"
+                  ? finalSelected.name
+                  : finalSelected.title
+              }}
             </h4>
-            <p>{{ finalSelected.description }}</p>
+            <p *ngIf="displayMode === 'items'">
+              {{ finalSelected.description }}
+            </p>
+
+            <p *ngIf="displayMode === 'games'">
+              <i
+                *ngIf="finalSelected.platform.toLowerCase().includes('xbox')"
+                class="fab fa-xbox"
+              ></i>
+              <i
+                *ngIf="
+                  finalSelected.platform.toLowerCase().includes('playstation')
+                "
+                class="fab fa-playstation"
+              ></i>
+              <i
+                *ngIf="finalSelected.platform.toLowerCase().includes('pc')"
+                class="fab fa-windows"
+              >
+              </i>
+              <i
+                *ngIf="finalSelected.platform.toLowerCase().includes('mobiel')"
+                class="fab fa-apple"
+              ></i>
+              {{ finalSelected.platform }}
+            </p>
           </div>
         </div>
         <div class="modal-footer">

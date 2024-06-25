@@ -4,7 +4,7 @@
   <div *ngIf="!loading">
     <div *ngIf="tournament; else noTournament">
       <div class="row">
-        <h4 class="col-lg-8 col-md-6 col-12">
+        <h4 class="col-lg-9 col-md-6 col-12">
           <span class="mr-20">{{ tournament.title }}</span
           ><span class="mr-20" [class]="getBadgeClass(tournament.status)">{{
             tournament.status
@@ -14,7 +14,7 @@
           </span>
         </h4>
         <div
-          class="col-lg-4 col-md-6 col-12 edit-buttons"
+          class="col-lg-3 col-md-6 col-12 edit-buttons"
           *ngIf="userService.isAuthenticated()"
         >
           <div
@@ -40,12 +40,10 @@
           </button>
 
           <button
-            *ngIf="
-              tournament.status === 'Aankomend' ||
-              tournament.status === 'Actief'
-            "
+            *ngIf="tournament.status !== 'Afgerond'"
             type="button"
             class="btn btn-warning round-btn"
+            (click)="displayMode = 'items'; playerAmount = 0"
             data-bs-toggle="modal"
             data-bs-target="#randomPickerModal"
           >
@@ -428,6 +426,30 @@
                   </p>
                 </li>
               </ul>
+              <div>
+                <label>Beslissingswedstrijd</label>
+              </div>
+              <button
+                type="button"
+                class="btn btn-warning mr-10"
+                (click)="displayMode = 'games'; playerAmount = 2"
+                data-bs-toggle="modal"
+                data-bs-target="#randomPickerModal"
+              >
+                <i class="fas fa-user-group"></i>
+                2 spelers
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="displayMode = 'games'; playerAmount = 3"
+                data-bs-toggle="modal"
+                data-bs-target="#randomPickerModal"
+              >
+                <i class="fas fa-users"></i>
+
+                3 spelers
+              </button>
             </div>
           </div>
           <div class="card-footer d-flex d-flex-gap-10">
@@ -464,5 +486,8 @@
     >
   </div>
 
-  <random-picker></random-picker>
+  <random-picker
+    [displayMode]="displayMode"
+    [playerAmount]="playerAmount"
+  ></random-picker>
 </div>
