@@ -10,8 +10,8 @@ export class RandomPickerComponent {
 
   items: any = [
     {
-      name: '10 seconden sneller',
-      description: 'Haal 10 seconden van je eindtijd af',
+      name: '5 seconden sneller',
+      description: 'Haal 5 seconden van je eindtijd af',
       type: 'Perk',
     },
     {
@@ -20,24 +20,14 @@ export class RandomPickerComponent {
       type: 'Weakness',
     },
     {
-      name: 'Extra beurt',
-      description: 'Krijg een extra kans om een actie uit te voeren',
+      name: 'Extra poging',
+      description: 'Krijg een extra poging',
       type: 'Perk',
     },
     {
-      name: 'Draai en zeg',
+      name: 'Rondje draaien',
       description:
-        'Moet een draai maken en iets anders zeggen wanneer de tegenstander het zegt',
-      type: 'Weakness',
-    },
-    {
-      name: 'Onverwachte hulp',
-      description: 'Krijg hulp van een andere deelnemer tijdens het spel',
-      type: 'Perk',
-    },
-    {
-      name: 'Blindelings spelen',
-      description: 'Speel een ronde zonder het spel te kunnen zien',
+        'Moet een rondje draaien wanneer de tegenstanders het zeggen',
       type: 'Weakness',
     },
     {
@@ -46,18 +36,9 @@ export class RandomPickerComponent {
       type: 'Perk',
     },
     {
-      name: 'Handen op je rug',
-      description: 'Speel een ronde met je handen op je rug',
-      type: 'Weakness',
-    },
-    {
-      name: 'Sneller denken',
-      description: 'Krijg 30 seconden extra bedenktijd voor elke beslissing',
-      type: 'Perk',
-    },
-    {
       name: 'Stilte bestraffing',
-      description: 'Krijg een minuut straftijd voor elke keer dat je praat',
+      description:
+        'Krijg 10 seconden straftijd voor elke keer dat je praat gedurende een ronde',
       type: 'Weakness',
     },
   ];
