@@ -571,9 +571,10 @@ h3 .link:hover {
 /* Random Picker */
 .carousel-container {
   position: relative;
-  height: 150px;
+  height: auto;
   overflow: hidden;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 .carousel {
@@ -583,7 +584,7 @@ h3 .link:hover {
 }
 
 .card-picker {
-  min-width: 100px;
+  min-width: 150px;
   margin: 5px;
   text-align: center;
   border: none;

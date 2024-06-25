@@ -18,7 +18,7 @@
               class="card-picker"
               *ngFor="let item of displayedItems; let i = index"
               [ngClass]="{
-                active: isFinalSelected(i),
+                active: finalSelected ? isFinalSelected(i) : false,
                 perk: displayMode === 'items' ? item.type === 'Perk' : false,
                 weakness:
                   displayMode === 'items' ? item.type === 'Weakness' : false,

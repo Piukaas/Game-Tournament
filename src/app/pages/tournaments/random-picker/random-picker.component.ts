@@ -62,25 +62,24 @@ export class RandomPickerComponent {
     },
   ];
   games2Players: any = [
-    { title: 'Game 1', platform: 'PC' },
-    { title: 'Game 2', platform: 'Xbox' },
-    { title: 'Game 3', platform: 'Playstation' },
-    { title: 'Game 4', platform: 'PC' },
-    { title: 'Game 5', platform: 'Xbox' },
-    { title: 'Game 6', platform: 'Playstation' },
-    // Add more games as needed
+    { title: 'Mortal Kombat X', platform: 'Xbox Series X' },
+    { title: 'Human Fall Flat', platform: 'Xbox Series X' },
+    { title: 'Star Wars Battlefront', platform: 'Xbox Series X' },
+    { title: 'Mortal Kombat 11', platform: 'Xbox Series X' },
+    { title: 'Star Wars Battlefront 2', platform: 'Xbox Series X' },
+    { title: 'Rocket League', platform: 'Xbox Series X' },
+    { title: 'Rayman Legends', platform: 'Xbox Series X' },
   ];
   games4Players: any = [
-    { title: 'Ling 1', platform: 'PC' },
-    { title: 'Ling 2', platform: 'Xbox' },
-    { title: 'Ling 3', platform: 'Playstation' },
-    { title: 'Ling 4', platform: 'PC' },
-    { title: 'Ling 5', platform: 'Xbox' },
-    { title: 'Ling 6', platform: 'Playstation' },
-    { title: 'Ling 7', platform: 'PC' },
-    { title: 'Ling 8', platform: 'Xbox' },
-    { title: 'Ling 9', platform: 'Playstation' },
-    // Add more games as needed
+    { title: 'Gang Beasts', platform: 'Xbox Series X' },
+    { title: 'Goat Simulator', platform: 'Xbox Series X' },
+    { title: 'Guns, Gore & Cannoli', platform: 'Xbox Series X' },
+    { title: 'Party Animals', platform: 'Xbox Series X' },
+    { title: 'Runbow', platform: 'Xbox Series X' },
+    { title: 'Goat Simulator 3', platform: 'Xbox Series X' },
+    { title: 'Speedrunners', platform: 'Xbox Series X' },
+    { title: 'Tricky Towers', platform: 'Xbox Series X' },
+    { title: 'Ultimate Chicken Horse', platform: 'Xbox Series X' },
   ];
   displayedItems: any[] = [];
   transform: string = '';
@@ -123,7 +122,7 @@ export class RandomPickerComponent {
     this.spinning = true;
     this.finalSelectedIndex = -1;
     const totalItems = this.displayedItems.length;
-    const totalWidth = totalItems * 110; // 100px card width + 10px margin
+    const totalWidth = totalItems * 160; // 100px card width + 10px margin
     const randomPosition = -Math.floor(Math.random() * totalWidth);
 
     this.transform = `translateX(${randomPosition}px)`;
@@ -143,7 +142,7 @@ export class RandomPickerComponent {
 
   selectItem(position: number) {
     const actualPosition = Math.abs(
-      position % (this.displayedItems.length * 110)
+      position % (this.displayedItems.length * 160)
     );
     const centerOffset = 250; // Half of the carousel-container width
     const sourceArrayLength =
@@ -153,7 +152,7 @@ export class RandomPickerComponent {
         ? this.games2Players.length
         : this.games4Players.length;
     this.finalSelectedIndex =
-      Math.floor((actualPosition + centerOffset) / 110) % sourceArrayLength;
+      Math.floor((actualPosition + centerOffset) / 160) % sourceArrayLength;
   }
 
   isFinalSelected(index: number): boolean {
