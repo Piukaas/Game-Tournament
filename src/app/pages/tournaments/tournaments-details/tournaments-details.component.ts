@@ -92,7 +92,6 @@ export class TournamentsDetailsComponent implements OnInit {
       .subscribe(
         (tournament: any) => {
           this.tournament = tournament;
-          this.loading = false;
 
           // Initialize selectedScores for each game
           this.tournament.games.forEach((game: any) => {
@@ -110,6 +109,7 @@ export class TournamentsDetailsComponent implements OnInit {
 
           this.editMode = false;
           this.setInitialGame();
+          this.loading = false;
         },
         (error) => {
           this.loading = false;
