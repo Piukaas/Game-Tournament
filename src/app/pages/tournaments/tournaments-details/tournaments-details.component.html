@@ -315,7 +315,9 @@
             <div
               *ngIf="editMode && userService.isAdmin()"
               class="col-lg-4 col-md-6 col-12 edit-buttons"
+              [ngClass]="{ 'mt-10-responsive': editMode }"
             >
+              >
               <div
                 *ngIf="confirmDeleteGame[currentGame.game._id]"
                 class="d-flex d-flex-gap-10"

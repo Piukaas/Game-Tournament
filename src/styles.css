@@ -192,6 +192,12 @@ td .form-control {
   margin-top: 10px;
 }
 
+@media (max-width: 900px) {
+  .mt-10-responsive {
+    margin-top: 10px;
+  }
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
