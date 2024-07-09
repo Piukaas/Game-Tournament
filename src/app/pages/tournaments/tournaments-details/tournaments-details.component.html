@@ -249,6 +249,10 @@
           <div class="card-header row">
             <div *ngIf="!editMode" class="col-lg-8 col-md-6 col-12">
               <h3 *ngIf="currentGame.game; else noName">
+                <img
+                  [src]="currentGame.game.imageUrl"
+                  class="tiny-image no-user-select"
+                />
                 <a
                   *ngIf="!editMode"
                   class="link"
@@ -538,7 +542,10 @@
     </div>
     <ng-template #noTournament>
       <h1 class="align-center">Het toernooi is niet gevonden</h1>
-      <button routerLink="/tournaments" class="btn btn-primary center-button mt-10">
+      <button
+        routerLink="/tournaments"
+        class="btn btn-primary center-button mt-10"
+      >
         Terug
       </button>
     </ng-template>

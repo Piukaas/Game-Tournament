@@ -557,6 +557,18 @@ h3 .link:hover {
   }
 }
 
+.tiny-image {
+  border-radius: 5px;
+  max-width: 4vw;
+  height: auto;
+}
+
+@media (max-width: 1000px) {
+  .tiny-image {
+    max-width: 8vw;
+  }
+}
+
 .tournament-banner {
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
