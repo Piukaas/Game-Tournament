@@ -4,8 +4,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserService } from '../../../services/user.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'games-edit',
@@ -15,6 +15,7 @@ export class GamesEditComponent {
   form!: FormGroup;
   error!: string;
   gameId!: string | null;
+  artworks: string[] = [];
 
   constructor(
     private http: HttpClient,
@@ -114,5 +115,35 @@ export class GamesEditComponent {
     } else {
       this.error = 'Voer alle velden in';
     }
+  }
+
+  searchArtworks(gameName: string): void {
+    this.artworks = [];
+
+    this.http
+      .post(`${environment.apiUrl}/games/artworks`, { gameName: gameName })
+      .subscribe(
+        (response: any) => {
+          this.artworks = response
+            .map((game: any) => [
+              ...(game.cover
+                ? [game.cover.url.replace('t_thumb', 't_1080p')]
+                : []),
+              ...(game.artworks
+                ? game.artworks.map((artwork: any) =>
+                    artwork.url.replace('t_thumb', 't_1080p')
+                  )
+                : []),
+            ])
+            .flat();
+        },
+        (error) => {
+          throw of(error);
+        }
+      );
+  }
+
+  handleImageUrl(imageUrl: string): void {
+    this.form.controls['imageUrl'].setValue(imageUrl);
   }
 }

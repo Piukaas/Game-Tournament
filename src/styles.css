@@ -242,6 +242,10 @@ td .form-control {
   transform: scale(1.1);
 }
 
+.btn.no-zoom:hover {
+  transform: none !important;
+}
+
 .btn-clear {
   width: fit-content;
   background-color: none;
@@ -572,6 +576,19 @@ h3 .link:hover {
   width: 65%;
   border-radius: 25px;
   box-shadow: 3px 3px 10px var(--black);
+}
+
+.artwork {
+  margin: 10px auto;
+  height: 100%;
+  display: block;
+  border-radius: 25px;
+  transition: 1s;
+}
+
+.artwork:hover {
+  cursor: pointer;
+  scale: 1.1;
 }
 
 /* Random Picker */

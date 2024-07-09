@@ -6,7 +6,7 @@
 
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3 mr-20">
         <img
           [src]="form.get('imageUrl')?.value"
           class="preview-image no-user-select"
@@ -43,16 +43,29 @@
       <div class="col-md-8">
         <div class="form-group">
           <label class="required" for="name">Naam</label>
-          <input
-            id="name"
-            class="form-control"
-            formControlName="name"
-            type="text"
-            required
-            [class.invalid]="
-              form.controls['name'].invalid && form.controls['name'].touched
-            "
-          />
+          <div class="input-group">
+            <input
+              id="name"
+              class="form-control"
+              formControlName="name"
+              type="text"
+              required
+              [class.invalid]="
+                form.controls['name'].invalid && form.controls['name'].touched
+              "
+            />
+            <button
+              type="button"
+              class="btn btn-primary no-zoom"
+              (click)="searchArtworks(form.controls['name'].value)"
+              [disabled]="!form.controls['name'].value"
+              data-bs-toggle="modal"
+              data-bs-target="#artworksModal"
+            >
+              <i class="fas fa-image"></i>
+              Zoek
+            </button>
+          </div>
           <div
             *ngIf="
               form.controls['name'].invalid && form.controls['name'].touched
@@ -322,4 +335,10 @@
       </div>
     </div>
   </form>
+
+  <artworks-modal
+    [artworks]="artworks"
+    [gameName]="form.controls['name'].value"
+    (imageUrl)="handleImageUrl($event)"
+  ></artworks-modal>
 </div>

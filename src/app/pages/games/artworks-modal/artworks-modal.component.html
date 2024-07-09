@@ -1,0 +1,44 @@
+<div
+    class="modal fade modal-lg"
+    id="artworksModal"
+    tabindex="-1"
+    aria-hidden="true"
+    #artworksModal
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Afbeeldingen voor {{ gameName }}</h3>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="row mr-10 ml-10 mb-20 mt-20">
+        <div *ngIf="!artworks.length" class="p-1 alert alert-danger">
+          <p class="m-0">Geen afbeeldingen gevonden voor {{ gameName }}</p>
+        </div>
+        <img
+          *ngFor="let artwork of artworks"
+          [src]="artwork"
+          class="artwork no-user-select col-md-3 col-6"
+          (click)="selectImage(artwork)"
+          data-bs-dismiss="modal"
+        />
+      </div>
+      <div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Sluiten
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
