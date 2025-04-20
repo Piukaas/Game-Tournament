@@ -287,6 +287,12 @@
                     "
                     class="fab fa-apple"
                   ></i>
+                  <i
+                    *ngIf="
+                      currentGame.game.platform.toLowerCase().includes('irl')
+                    "
+                    class="fas fa-person-walking"
+                  ></i>
                   {{ currentGame.game.platform }}
                 </a>
               </h3>
