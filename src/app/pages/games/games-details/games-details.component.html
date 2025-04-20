@@ -52,6 +52,10 @@
           *ngIf="game.platform.toLowerCase().includes('mobiel')"
           class="fab fa-apple"
         ></i>
+        <i
+          *ngIf="game.platform.toLowerCase().includes('irl')"
+          class="fas fa-person-walking"
+        ></i>
         {{ game.platform }}
       </p>
       <img [src]="game.imageUrl" class="game-image-details no-user-select" />

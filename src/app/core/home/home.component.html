@@ -56,6 +56,10 @@
               *ngIf="game.platform.toLowerCase().includes('mobiel')"
               class="fab fa-apple"
             ></i>
+            <i
+              *ngIf="game.platform.toLowerCase().includes('irl')"
+              class="fas fa-person-walking"
+            ></i>
             {{ game.name }}
           </h4>
         </div>

@@ -86,6 +86,10 @@
                 *ngIf="finalSelected.platform.toLowerCase().includes('mobiel')"
                 class="fab fa-apple"
               ></i>
+              <i
+                *ngIf="finalSelected.platform.toLowerCase().includes('irl')"
+                class="fas fa-person-walking"
+              ></i>
               {{ finalSelected.platform }}
             </p>
           </div>
