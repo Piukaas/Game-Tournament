@@ -29,7 +29,10 @@ export class UsersOverviewComponent {
 
   getUsers() {
     this.loading = true;
-    this.http.get(`${environment.apiUrl}/users`).subscribe(
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http.get(`${environment.apiUrl}/users`, {headers}).subscribe(
       (users: any) => {
         this.users = users;
         this.loading = false;
