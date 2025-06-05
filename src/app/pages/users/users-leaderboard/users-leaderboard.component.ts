@@ -29,7 +29,10 @@ export class UsersLeaderboardComponent {
 
   getUsers() {
     this.loading = true;
-    this.http.get(`${environment.apiUrl}/users`).subscribe(
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http.get(`${environment.apiUrl}/users`, {headers}).subscribe(
       (users: any) => {
         users.sort((a: any, b: any) => b.wins - a.wins);
         this.users = users.slice(0, 3);
