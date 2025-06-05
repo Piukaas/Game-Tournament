@@ -20,6 +20,10 @@ export class UsersLeaderboardComponent {
   ) {}
 
   ngOnInit() {
+    if (!this.userService.isAuthenticated()) {
+      this.router.navigate(['/']);
+    }
+
     this.getUsers();
   }
 
