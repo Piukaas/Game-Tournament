@@ -97,7 +97,10 @@ export class TournamentsEditComponent {
 
   getActiveUsers(): void {
     this.loading = true;
-    this.http.get(`${environment.apiUrl}/users`).subscribe(
+    const token = this.userService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http.get(`${environment.apiUrl}/users`, {headers}).subscribe(
       (users: any) => {
         const activeUsers = users.filter((user: any) => user.isActive);
         const userCheckboxesFormArray = this.form.get(
